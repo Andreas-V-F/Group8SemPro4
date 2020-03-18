@@ -1,0 +1,13 @@
+platform=1584535304099
+cluster.bin=1584535304098
+cluster.etc=1584535304098
+cluster.extra=1584535304099
+cluster.java=1584535304099
+cluster.joelpeternal=1584535304099
+cluster.platform=1584535304099
+user=1584535304099
+crc=7
+locale=en_GB
+branding=joelpeternal
+java.version=1.8.0_181
+java.vm.version=25.181-b13

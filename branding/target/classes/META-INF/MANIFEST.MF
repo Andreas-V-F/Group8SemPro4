@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: sdu/mmmi/softwareengineering/joelp_e
+ ternal/branding/Bundle.properties
+AutoUpdate-Essential-Module: true
+OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Implementation-Version: 1.0-20200318
+OpenIDE-Module-Build-Version: 202003181241
+OpenIDE-Module: sdu.mmmi.softwareengineering.Joelp_Eternal.branding
+OpenIDE-Module-Public-Packages: -
+OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1
+OpenIDE-Module-Display-Category: sdu.mmmi.softwareengineering
+OpenIDE-Module-Name: Joelp_Eternal-branding
+OpenIDE-Module-Short-Description: <undefined>
+OpenIDE-Module-Long-Description: <undefined>
+OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo
+ n/1 > 1.33
+
