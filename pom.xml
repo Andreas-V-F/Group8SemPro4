@@ -20,6 +20,10 @@
         you can remove the netbeans repository section
         -->
         <repository>
+            <id>gdx-nightlies</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
             <id>netbeans</id>
             <name>NetBeans</name>
             <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
@@ -49,11 +53,11 @@
                         <target>1.8</target>
                     </configuration>
                 </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.2</version>
-            </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -61,6 +65,8 @@
     <modules>
         <module>branding</module>
         <module>application</module>
+        <module>Core</module>
+        <module>Common</module>
     </modules>
 
     <properties>
