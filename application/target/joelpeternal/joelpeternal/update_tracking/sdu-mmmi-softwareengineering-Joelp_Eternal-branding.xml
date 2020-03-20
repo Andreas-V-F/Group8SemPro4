@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="sdu.mmmi.softwareengineering.Joelp_Eternal.branding">
-    <module_version install_time="1584535320403" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1584711368525" last="true" origin="installer" specification_version="1.0">
         <file crc="3967992175" name="config/Modules/sdu-mmmi-softwareengineering-Joelp_Eternal-branding.xml"/>
-        <file crc="636077230" name="core/locale/core_joelpeternal.jar"/>
-        <file crc="4183496342" name="modules/locale/org-netbeans-core-windows_joelpeternal.jar"/>
-        <file crc="102477871" name="modules/locale/org-netbeans-core_joelpeternal.jar"/>
-        <file crc="365731525" name="modules/sdu-mmmi-softwareengineering-Joelp_Eternal-branding.jar"/>
-        <file crc="23786831" name="update_tracking/sdu-mmmi-softwareengineering-Joelp_Eternal-branding.xml"/>
+        <file crc="2443697345" name="modules/sdu-mmmi-softwareengineering-Joelp_Eternal-branding.jar"/>
     </module_version>
 </module>

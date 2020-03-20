@@ -45,7 +45,6 @@ public class Game implements ApplicationListener {
 
     private Texture texture;
     private Sprite sprite;
-    private TextureRegion backgroundTexture;
     private SpriteBatch batch;
 
     @Override
@@ -55,9 +54,7 @@ public class Game implements ApplicationListener {
 
         texture = new Texture("C:\\Users\\krute\\Documents\\NetBeansProjects\\Group8SemPro4\\Core\\src\\main\\java\\assets\\RoomGraphic800x600.png");
         sprite = new Sprite(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        sprite.setPosition(0, 0);
         batch = new SpriteBatch();
-//        backgroundTexture = new TextureRegion(new Texture("C:\\Users\\krute\\Documents\\NetBeansProjects\\Group8SemPro4\\Core\\src\\main\\java\\assets\\RoomGraphic800x600.png"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
@@ -82,12 +79,10 @@ public class Game implements ApplicationListener {
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Draw the background image
         batch.begin();
         sprite.draw(batch);
-//        batch.draw(backgroundTexture, 0, 0);
-//        //I believe texture region takes the upper left corner as 0,0 and batch.Draw the bottom left.
-//        //So you might need to do something like this:
-//        batch.draw(backgroundTexture, 0, Gdx.graphics.getHeight());
         batch.end();
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
