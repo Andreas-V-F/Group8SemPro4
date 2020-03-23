@@ -25,3 +25,4 @@ hs_err_pid*
 /Core/target/
 /application/target/
 /branding/target/
+/target/
