@@ -25,3 +25,6 @@ hs_err_pid*
 /Core/target/
 /application/target/
 /branding/target/
+/OSGiExtender/target/
+/OSGiCommon/target/
+/OSGiCore/target/

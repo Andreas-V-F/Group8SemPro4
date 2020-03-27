@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module-Install: sdu/mmmi/softwareengineering/core/Installer.class
-OpenIDE-Module-Localizing-Bundle: sdu/mmmi/softwareengineering/core/Bundle.properties
-
