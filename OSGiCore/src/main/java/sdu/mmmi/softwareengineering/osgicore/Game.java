@@ -33,8 +33,6 @@ public class Game implements ApplicationListener {
 
     private void init() {
         
-        System.out.println("Hey");
-
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
         cfg.width = 800;
@@ -100,8 +98,9 @@ public class Game implements ApplicationListener {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
-
+            
             sr.end();
+            
         }
     }
 
