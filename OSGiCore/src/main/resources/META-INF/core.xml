@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.mmmi.softwareengineering.osgicore.Game">
+    <implementation class="sdu.mmmi.softwareengineering.osgicore.Game"/>
+
+    <reference bind="addPostEntityProcessingService" cardinality="0..n"
+               interface="sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingService"
+               name="IPostEntityProcessingService" policy="dynamic" unbind="removePostEntityProcessingService"/>
+
+    <reference bind="addEntityProcessingService" cardinality="0..n"
+               interface="sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService"
+               name="IEntityProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
+
+    <reference bind="addGamePluginService" cardinality="0..n"
+               interface="sdu.mmmi.softwareengineering.osgicommon.services.IGamePluginService"
+               name="IGamePluginService" policy="dynamic" unbind="removeGamePluginService"/>
+</scr:component>

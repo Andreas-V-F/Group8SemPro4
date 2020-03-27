@@ -28,3 +28,4 @@ hs_err_pid*
 /OSGiExtender/target/
 /OSGiCommon/target/
 /OSGiCore/target/
+/OSGiUpdater/target/

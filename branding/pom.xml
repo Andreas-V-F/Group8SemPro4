@@ -3,15 +3,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-      <groupId>sdu.mmmi.softwareengineering</groupId>
-      <artifactId>Joelp_Eternal-parent</artifactId>
+      <groupId>dk.sdu.mmmi.cbse</groupId>
+      <artifactId>AsteroidsOSGi-parent</artifactId>
       <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>Joelp_Eternal-branding</artifactId>
+  <artifactId>AsteroidsOSGi-branding</artifactId>
   <packaging>nbm</packaging>
 
-  <name>Joelp_Eternal-branding</name>
+  <name>AsteroidsOSGi-branding</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +28,7 @@
   <build>
       <plugins>
             <plugin>
-                <groupId>org.apache.netbeans.utilities</groupId>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
             </plugin>
             <plugin>
@@ -36,9 +36,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <!-- to have the jar plugin pickup the nbm generated manifest -->
-                    <archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
       </plugins>
