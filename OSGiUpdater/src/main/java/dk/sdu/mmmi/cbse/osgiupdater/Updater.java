@@ -65,7 +65,7 @@ public class Updater implements BundleActivator {
             }
         });
 
-        exector.scheduleAtFixedRate(doCheck, 10000, 10000, TimeUnit.MILLISECONDS);
+        exector.scheduleAtFixedRate(doCheck, 5000, 5000, TimeUnit.MILLISECONDS);
     }
 
     private static final Runnable doCheck = new Runnable() {

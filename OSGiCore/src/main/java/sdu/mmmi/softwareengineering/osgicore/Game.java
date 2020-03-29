@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
@@ -16,6 +18,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
+import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
 
 public class Game implements ApplicationListener {
 
@@ -27,12 +32,14 @@ public class Game implements ApplicationListener {
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    public Game(){
+    private SpriteBatch spriteBatch;
+
+    public Game() {
         init();
     }
 
     private void init() {
-        
+
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
         cfg.width = 800;
@@ -45,6 +52,8 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+        spriteBatch = new SpriteBatch();
+
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -56,12 +65,23 @@ public class Game implements ApplicationListener {
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
+        // Loading Assets
+        AssetMan.load();
+        // Printing the process on the loading
+        while (!AssetMan.manager.update()) {
+            System.out.println(AssetMan.manager.getProgress() * 100 + "%");
+        };
+        if (AssetMan.manager.getProgress() == 1) {
+            System.out.println("100%");
+            System.out.println("All Assets have done loaded!");
+        }
     }
 
     @Override
     public void render() {
         // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
@@ -69,6 +89,21 @@ public class Game implements ApplicationListener {
 
         update();
         draw();
+
+        // Sets a texture for every entity in the "world"
+        for (Entity entity : world.getEntities()) {
+            PositionPart positionPart = entity.getPart(PositionPart.class);
+            
+            System.out.println("In game class: x: " + positionPart.getX() + " - y: " + positionPart.getY());
+            System.out.println("");
+            if (entity.getTexture() != null) {
+//                entity.setTexture("C:\\Users\\krute\\Documents\\NetBeansProjects\\Group8SemPro4\\OSGiCore\\src\\main\\java\\assets\\CharacterUp.png");
+                spriteBatch.begin();
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (100/2), positionPart.getY() - (72/2));
+                spriteBatch.end();
+            }
+        }
+
     }
 
     private void update() {
@@ -98,9 +133,9 @@ public class Game implements ApplicationListener {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
-            
+
             sr.end();
-            
+
         }
     }
 

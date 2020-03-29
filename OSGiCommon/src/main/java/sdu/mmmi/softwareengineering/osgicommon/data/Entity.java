@@ -74,7 +74,7 @@ public class Entity implements Serializable {
         return this.texture;
     }
     
-    public void setTexture(String s){
-        this.texture = new Texture(s);
+    public void setTexture(Texture texture){
+        this.texture = texture;
     }
 }
