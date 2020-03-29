@@ -24,6 +24,7 @@ public class Collision implements IPostEntityProcessingService {
         float[] fX = f.getShapeX();
         float[] fY = f.getShapeY();
         
+        
         if(eX[1] > fX[3] || fX[1] > eX[3]){
             return false;
         }
@@ -38,12 +39,14 @@ public class Collision implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
             for (Entity f : world.getEntities()) {
-                if(e.getID().equals(f.getID())){
+                if(e.getID().equals(f.getID()) || e.getClass().equals(f.getClass())){
                     continue;
                 }
+
                 if(detectCollision(e,f) ){
                     world.removeEntity(e);
                     world.removeEntity(f);
+                    
                 }
             }
         }

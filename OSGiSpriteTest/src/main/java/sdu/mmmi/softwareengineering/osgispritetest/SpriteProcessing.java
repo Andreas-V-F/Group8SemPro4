@@ -5,13 +5,16 @@
  */
 package sdu.mmmi.softwareengineering.osgispritetest;
 
-import com.badlogic.gdx.assets.AssetManager;
+import static java.lang.System.currentTimeMillis;
 import sdu.mmmi.softwareengineering.osgicommon.bullet.BulletSPI;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
+import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.ShootingPart;
 import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 /**
@@ -19,9 +22,8 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  * @author andre
  */
 public class SpriteProcessing implements IEntityProcessingService {
-    
-    
-    private BulletSPI blt;
+
+    private long time;
 
 //    private SpriteManager spritemanager = new SpriteManager();
 //    
@@ -33,19 +35,37 @@ public class SpriteProcessing implements IEntityProcessingService {
 
             PositionPart positionPart = entity.getPart(PositionPart.class);
             MovingPart movingPart = entity.getPart(MovingPart.class);
-            double random = Math.random();
-            movingPart.setLeft(random < 0.2);
-            movingPart.setRight(random > 0.3 && random < 0.5);
-            movingPart.setUp(random > 0.7 && random < 0.9);
-            
-            if (random > 0.98) {
-                Entity bullet;
-                bullet = blt.createBullet(entity, gameData);
-                world.addEntity(bullet);
+            ShootingPart shootingPart = entity.getPart(ShootingPart.class);
+            LifePart lifePart = entity.getPart(LifePart.class);
+
+            movingPart.setLeft(gameData.getKeys().isDown(GameKeys.A));
+            movingPart.setRight(gameData.getKeys().isDown(GameKeys.D));
+            movingPart.setUp(gameData.getKeys().isDown(GameKeys.W));
+
+            if (currentTimeMillis() - time > 100) {
+                if (gameData.getKeys().isDown(GameKeys.UP)) {
+                shootingPart.setIsShooting(true);
+                shootingPart.setDirection("UP");
+            } else if (gameData.getKeys().isDown(GameKeys.DOWN)) {
+                shootingPart.setIsShooting(true);
+                shootingPart.setDirection("DOWN");
+            } else if (gameData.getKeys().isDown(GameKeys.LEFT)) {
+                shootingPart.setIsShooting(true);
+                shootingPart.setDirection("LEFT");
+            } else if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
+                shootingPart.setIsShooting(true);
+                shootingPart.setDirection("RIGHT");
             }
+                time = currentTimeMillis();
+            }
+
+            
 
             movingPart.process(gameData, entity);
             positionPart.process(gameData, entity);
+            shootingPart.process(gameData, entity);
+            lifePart.process(gameData, entity);
+
             updateShape(entity);
 
         }

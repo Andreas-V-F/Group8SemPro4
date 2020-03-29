@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1585510570047
+Bnd-LastModified: 1585520054384
 Build-Jdk: 1.8.0_241
 Built-By: andre
 Bundle-ClassPath: .,org.osgi.core-4.3.0.jar,gdx-1.9.6.jar,gdx-platform-1

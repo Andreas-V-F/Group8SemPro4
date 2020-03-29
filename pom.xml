@@ -76,7 +76,8 @@
     <module>OSGiCommonBullet</module>
     <module>OSGiCollision</module>
         <module>OSGiSpriteTest</module>
-    </modules>
+    <module>OSGiEnemy</module>
+  </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

@@ -22,7 +22,7 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IGamePluginService;
 public class SpritePlugin implements IGamePluginService {
 
     private String spritetestID;
-    private String spritetestID2;
+   
     
     
     public SpritePlugin() {
@@ -33,8 +33,7 @@ public class SpritePlugin implements IGamePluginService {
         // Add entities to the world
         Entity spritetest = createSpritetestShip(gameData);
         spritetestID = world.addEntity(spritetest);
-        Entity spritetest2 = createSpritetestShip(gameData);
-        spritetestID2 = world.addEntity(spritetest2);
+        
         
         
     }
@@ -53,7 +52,7 @@ public class SpritePlugin implements IGamePluginService {
         spritetestShip.setRadius(4);
         spritetestShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         spritetestShip.add(new PositionPart(x, y, radians));
-        spritetestShip.add(new ShootingPart());
+        spritetestShip.add(new ShootingPart(spritetestID));
         
 
         return spritetestShip;
@@ -63,7 +62,7 @@ public class SpritePlugin implements IGamePluginService {
     public void stop(GameData gameData, World world) {
         // Remove entities
         world.removeEntity(spritetestID);
-        world.removeEntity(spritetestID2);
+       
         
     }
 
