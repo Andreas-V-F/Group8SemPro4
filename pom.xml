@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dk.sdu.mmmi.cbse</groupId>
+    <groupId>sdu.mmmi.softwareengineering</groupId>
     <artifactId>JoelpEternal</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -73,8 +73,10 @@
         <module>OSGiCore</module>
         <module>OSGiCommon</module>
         <module>OSGiUpdater</module>
-    <module>OGSiSpriteTest</module>
-  </modules>
+    <module>OSGiCommonBullet</module>
+    <module>OSGiCollision</module>
+        <module>OSGiSpriteTest</module>
+    </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

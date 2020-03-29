@@ -30,3 +30,6 @@ hs_err_pid*
 /OSGiCore/target/
 /OSGiUpdater/target/
 /OGSiSpriteTest/target/
+/OSGiCommonBullet/target/
+/OSGiCollision/target/
+/OSGiCollisionTest/target/
