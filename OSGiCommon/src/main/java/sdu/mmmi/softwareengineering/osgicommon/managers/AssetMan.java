@@ -23,11 +23,10 @@ public class AssetMan {
 //    public static final String playerLeft = "C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterLeft.png";
 //    public static final String playerRight = "C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterRight.png";
 
-    public static final AssetDescriptor<Texture> characterUp = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterUp.png", Texture.class);
-    public static final AssetDescriptor<Texture> characterDown = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterDown.png", Texture.class);
-    public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterLeft.png", Texture.class);
-    public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterRight.png", Texture.class);
-//    
+    public static final AssetDescriptor<Texture> characterUp = new AssetDescriptor<Texture>("sdu/mmmi/softwareengineering/osgicommon/assets/CharacterUp.png", Texture.class);
+    public static final AssetDescriptor<Texture> characterDown = new AssetDescriptor<Texture>("sdu/mmmi/softwareengineering/osgicommon/assets/CharacterDown.png", Texture.class);
+    public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("sdu/mmmi/softwareengineering/osgicommon/assets/CharacterLeft.png", Texture.class);
+    public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("sdu/mmmi/softwareengineering/osgicommon/assets/CharacterRight.png", Texture.class);
     public static void load() {
         manager.load(characterUp);
         manager.load(characterDown);
