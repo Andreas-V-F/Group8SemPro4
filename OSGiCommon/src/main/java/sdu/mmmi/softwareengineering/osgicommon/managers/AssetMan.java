@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import java.io.File;
 
 /**
  *
@@ -18,25 +19,17 @@ public class AssetMan {
 
     public static final AssetManager manager = new AssetManager();
 
-//    public static final String playerUp = "C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterUp.png";
-//    public static final String playerDown = "C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterDown.png";
-//    public static final String playerLeft = "C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterLeft.png";
-//    public static final String playerRight = "C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterRight.png";
+    // Character assets
+    public static final AssetDescriptor<Texture> characterUp = new AssetDescriptor<Texture>("assets/character/CharacterUp.png", Texture.class);
+    public static final AssetDescriptor<Texture> characterDown = new AssetDescriptor<Texture>("assets/character/CharacterDown.png", Texture.class);
+    public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("assets/character/CharacterLeft.png", Texture.class);
+    public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("assets/character/CharacterRight.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> characterUp = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterUp.png", Texture.class);
-    public static final AssetDescriptor<Texture> characterDown = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterDown.png", Texture.class);
-    public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterLeft.png", Texture.class);
-    public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/CharacterRight.png", Texture.class);
-//    
-    public static void load() {
+    public static void loadAssets() {
         manager.load(characterUp);
         manager.load(characterDown);
         manager.load(characterLeft);
         manager.load(characterRight);
-
-//        manager.load("C:/Users/krute/Documents/NetBeansProjects/Group8SemPro4/OSGiCommon/src/main/java/sdu/mmmi/softwareengineering/osgicommon/assets/char.png", Texture.class);
-//        manager.load(charTexture);
-//        manager.finishLoading();
     }
 
     public void dispose() {

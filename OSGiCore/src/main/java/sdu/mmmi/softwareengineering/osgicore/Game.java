@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import java.io.File;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
@@ -66,14 +67,14 @@ public class Game implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         // Loading Assets
-        AssetMan.load();
+        AssetMan.loadAssets();
         // Printing the process on the loading
         while (!AssetMan.manager.update()) {
             System.out.println(AssetMan.manager.getProgress() * 100 + "%");
         };
         if (AssetMan.manager.getProgress() == 1) {
             System.out.println("100%");
-            System.out.println("All Assets have done loaded!");
+            System.out.println("All Assets has been loaded!");
         }
     }
 
@@ -81,7 +82,7 @@ public class Game implements ApplicationListener {
     public void render() {
         // clear screen to black
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
+        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
@@ -89,17 +90,19 @@ public class Game implements ApplicationListener {
 
         update();
         draw();
-
+//
+        // Maybe we should make the assets load here??
+        // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
+//        
         // Sets a texture for every entity in the "world"
         for (Entity entity : world.getEntities()) {
             PositionPart positionPart = entity.getPart(PositionPart.class);
-            
+
             System.out.println("In game class: x: " + positionPart.getX() + " - y: " + positionPart.getY());
             System.out.println("");
             if (entity.getTexture() != null) {
-//                entity.setTexture("C:\\Users\\krute\\Documents\\NetBeansProjects\\Group8SemPro4\\OSGiCore\\src\\main\\java\\assets\\CharacterUp.png");
                 spriteBatch.begin();
-                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (100/2), positionPart.getY() - (72/2));
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (100 / 2), positionPart.getY() - (72 / 2));
                 spriteBatch.end();
             }
         }

@@ -25,15 +25,15 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  * @author andre
  */
 public class SpriteProcessing implements IEntityProcessingService {
-
+    
     @Override
     public void process(GameData gameData, World world) {
-
+        
         for (Entity entity : world.getEntities(SpriteTest.class)) {
-
+            
             PositionPart positionPart = entity.getPart(PositionPart.class);
             MovingPart movingPart = entity.getPart(MovingPart.class);
-
+            
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
 //            if (gameData.getKeys().isDown(GameKeys.UP)) {
 //                entity.setTexture(AssetMan.manager.get(AssetMan.characterUp));
@@ -51,39 +51,43 @@ public class SpriteProcessing implements IEntityProcessingService {
 //            }
 
             System.out.println("process method: x: " + positionPart.getX() + " - y: " + positionPart.getY());
-
+            
             movingPart.process(gameData, entity);
             positionPart.process(gameData, entity);
-            updateShape(gameData, entity );
+            updateShape(gameData, entity);
             System.out.println("process method 2: x: " + positionPart.getX() + " - y: " + positionPart.getY());
-
+            
         }
     }
-
+    
     private void updateShape(GameData gameData, Entity entity) {
-
+        
         float[] shapex = entity.getShapeX();
         float[] shapey = entity.getShapeY();
         PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
-
+        
         shapex[0] = (float) (x + Math.cos(radians) * 8);
         shapey[0] = (float) (y + Math.sin(radians) * 8);
-
+        
         shapex[1] = (float) (x + Math.cos(radians - 4 * 3.1415f / 5) * 8);
         shapey[1] = (float) (y + Math.sin(radians - 4 * 3.1145f / 5) * 8);
-
+        
         shapex[2] = (float) (x + Math.cos(radians + 3.1415f) * 5);
         shapey[2] = (float) (y + Math.sin(radians + 3.1415f) * 5);
-
+        
         shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * 8);
         shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * 8);
         System.out.println("updateShape method: x: " + positionPart.getX() + " - y: " + positionPart.getY());
-
+        
         if (gameData.getKeys().isDown(GameKeys.UP)) {
-              entity.setTexture(AssetMan.manager.get(AssetMan.characterUp));
+            entity.setTexture(AssetMan.manager.get(AssetMan.characterUp));
+        }
+        if (gameData.getKeys().isDown(GameKeys.DOWN)) {
+//              entity.setTexture(AssetMan.manager.get(AssetMan.characterDown));
+            entity.setTexture(AssetMan.manager.get("assets/character/CharacterDown.png"));
         }
         if (gameData.getKeys().isDown(GameKeys.LEFT)) {
             entity.setTexture(AssetMan.manager.get(AssetMan.characterLeft));
