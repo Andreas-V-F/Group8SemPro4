@@ -73,7 +73,8 @@
         <module>OSGiCore</module>
         <module>OSGiCommon</module>
         <module>OSGiUpdater</module>
-    </modules>
+    <module>OSGiPlayer</module>
+  </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

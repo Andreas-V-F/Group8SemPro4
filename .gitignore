@@ -29,3 +29,5 @@ hs_err_pid*
 /OSGiCommon/target/
 /OSGiCore/target/
 /OSGiUpdater/target/
+/OSGiLibGDX/target/
+/OSGiPlayer/target/
