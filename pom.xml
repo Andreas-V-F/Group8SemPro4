@@ -74,6 +74,7 @@
         <module>OSGiCommon</module>
         <module>OSGiUpdater</module>
     <module>OGSiSpriteTest</module>
+    <module>OSGiEnemy</module>
   </modules>
 
     <properties>
