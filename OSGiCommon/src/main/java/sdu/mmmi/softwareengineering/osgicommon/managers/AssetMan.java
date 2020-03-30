@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.mmmi.softwareengineering.osgicommon.managers;
 
 import com.badlogic.gdx.Gdx;
@@ -25,17 +20,30 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("assets/character/CharacterLeft.png", Texture.class);
     public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("assets/character/CharacterRight.png", Texture.class);
     
+    // Default assets
     public static final AssetDescriptor<Texture> defaultAsset = new AssetDescriptor<Texture>("assets/default/BossMonster.png", Texture.class);
+    
+    // Enemy assets
+    public static final AssetDescriptor<Texture> enemyUp = new AssetDescriptor<Texture>("assets/enemy/enemy_up.png", Texture.class);
+    public static final AssetDescriptor<Texture> enemyDown = new AssetDescriptor<Texture>("assets/enemy/enemy_down.png", Texture.class);
+    public static final AssetDescriptor<Texture> enemyLeft = new AssetDescriptor<Texture>("assets/enemy/enemy_left.png", Texture.class);
+    public static final AssetDescriptor<Texture> enemyRight = new AssetDescriptor<Texture>("assets/enemy/enemy_right.png", Texture.class);
 
-    public static void loadAssets() {
+    public static void load() {
         // Loads default assets
         manager.load(defaultAsset);
-        
-        // Loads Character assets
+
+        //Loading main character
         manager.load(characterUp);
         manager.load(characterDown);
         manager.load(characterLeft);
         manager.load(characterRight);
+
+        //Loading enemy
+        manager.load(enemyUp);
+        manager.load(enemyDown);
+        manager.load(enemyLeft);
+        manager.load(enemyRight);
     }
 
     public void dispose() {

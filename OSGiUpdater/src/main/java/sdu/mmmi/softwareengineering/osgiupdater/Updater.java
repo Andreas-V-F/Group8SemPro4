@@ -23,7 +23,10 @@ public class Updater implements BundleActivator {
     private final List<Bundle> failedBundles = new ArrayList<>();
 
     public void start(BundleContext bundleContext) throws Exception {
-        Path MODULES_DIRECTORY = Paths.get("C:\\ProjectJar");
+
+        File filePath = createDirectory("C:\\ProjectJar");
+
+        Path MODULES_DIRECTORY = Paths.get(filePath.getPath());
 
         this.bundleContext = bundleContext;
 
@@ -56,8 +59,9 @@ public class Updater implements BundleActivator {
                     try {
                         final Bundle bundle = findBundleFromFilename(filename.getFileName().toString());
 
-                        if (bundle != null)
+                        if (bundle != null) {
                             uninstall(bundle);
+                        }
                     } catch (BundleException ex) {
                         ex.printStackTrace();
                     }
@@ -68,6 +72,14 @@ public class Updater implements BundleActivator {
         exector.scheduleAtFixedRate(doCheck, 5000, 5000, TimeUnit.MILLISECONDS);
     }
 
+    private File createDirectory(String directoryName) {
+        File directory = new File(directoryName);
+        if (!directory.exists()) {
+            directory.mkdir();
+
+        }
+        return directory;
+    }
     private static final Runnable doCheck = new Runnable() {
         @Override
         public void run() {
