@@ -17,7 +17,7 @@ public class Entity implements Serializable {
     private float[] colour;
     private Map<Class, EntityPart> parts;
     private Texture texture; 
-    private String type;
+    
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -79,10 +79,5 @@ public class Entity implements Serializable {
         this.texture = new Texture(s);
     }
     
-    public void setType(String s){
-        this.type = s;
-    }
-    public String getType(){
-       return this.type;
-    }
+   
 }

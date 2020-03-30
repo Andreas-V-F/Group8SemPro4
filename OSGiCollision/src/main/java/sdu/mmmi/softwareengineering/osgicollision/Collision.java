@@ -30,8 +30,8 @@ public class Collision implements IPostEntityProcessingService {
         }
         if(eY[1] < fY[3] || fY[1] < eY[3]){
             return false;
-        }
-                
+        }   
+             
         return true;
     }
 
