@@ -6,7 +6,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import java.io.File;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
@@ -16,6 +19,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
+import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
 
 public class Game implements ApplicationListener {
 
@@ -27,13 +33,13 @@ public class Game implements ApplicationListener {
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    public Game(){
+    private SpriteBatch spriteBatch;
+
+    public Game() {
         init();
     }
 
     private void init() {
-        
-        System.out.println("Hey");
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
@@ -47,6 +53,8 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+        spriteBatch = new SpriteBatch();
+
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -58,12 +66,23 @@ public class Game implements ApplicationListener {
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
+        // Loading Assets
+        AssetMan.loadAssets();
+        // Printing the process on the loading
+        while (!AssetMan.manager.update()) {
+            System.out.println(AssetMan.manager.getProgress() * 100 + "%");
+        };
+        if (AssetMan.manager.getProgress() == 1) {
+            System.out.println("100%");
+            System.out.println("All Assets has been loaded!");
+        }
     }
 
     @Override
     public void render() {
         // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
@@ -71,6 +90,29 @@ public class Game implements ApplicationListener {
 
         update();
         draw();
+//
+        // Maybe we should make the assets load here??
+        // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
+//        
+        // Sets a texture for every entity in the "world"
+        for (Entity entity : world.getEntities()) {
+            PositionPart positionPart = entity.getPart(PositionPart.class);
+
+            if (entity.getTexture() != null) {
+                spriteBatch.begin();
+                // Don't know if the math is right!
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                spriteBatch.end();
+            }
+            // Sets a default asset for the entity
+            if (entity.getTexture() == null) {
+                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
+                spriteBatch.begin();
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                spriteBatch.end();
+            }
+        }
+
     }
 
     private void update() {
@@ -102,6 +144,7 @@ public class Game implements ApplicationListener {
             }
 
             sr.end();
+
         }
     }
 

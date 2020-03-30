@@ -1,5 +1,6 @@
 package sdu.mmmi.softwareengineering.osgicommon.data;
 
+import com.badlogic.gdx.graphics.Texture;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.EntityPart;
 import java.io.Serializable;
 import java.util.Map;
@@ -15,6 +16,8 @@ public class Entity implements Serializable {
     private float radius;
     private float[] colour;
     private Map<Class, EntityPart> parts;
+    
+    private Texture texture; 
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -66,5 +69,13 @@ public class Entity implements Serializable {
 
     public void setColour(float[] c) {
         this.colour = c;
+    }
+    
+    public Texture getTexture(){
+        return this.texture;
+    }
+    
+    public void setTexture(Texture texture){
+        this.texture = texture;
     }
 }

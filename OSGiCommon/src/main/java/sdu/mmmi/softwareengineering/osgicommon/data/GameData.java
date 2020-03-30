@@ -4,6 +4,7 @@ import sdu.mmmi.softwareengineering.osgicommon.events.Event;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 
 public class GameData {
 
@@ -12,6 +13,12 @@ public class GameData {
     private int displayHeight;
     private final GameKeys keys = new GameKeys();
     private List<Event> events = new CopyOnWriteArrayList<>();
+    
+    private AssetMan assetsMan = new AssetMan();
+
+    public AssetMan getAssetsMan() {
+        return assetsMan;
+    }
 
     public void addEvent(Event e) {
         events.add(e);

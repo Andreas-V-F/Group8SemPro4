@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>dk.sdu.mmmi.cbse</groupId>
-        <artifactId>AsteroidsOSGi-parent</artifactId>
+        <artifactId>JoelpEternal</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>OSGiCommon</artifactId>
@@ -24,6 +24,12 @@
             <artifactId>org-openide-util-ui</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx</artifactId>
+            <version>1.9.10</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -32,8 +38,8 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Export-Package>sdu.mmmi.softwareengineering.osgicommon.data,sdu.mmmi.softwareengineering.osgicommon.data.entityParts,sdu.mmmi.softwareengineering.osgicommon.events,sdu.mmmi.softwareengineering.osgicommon.services</Export-Package>
-                        <Private-Package>sdu.mmmi.softwareengineering.osgicommon.data.*,sdu.mmmi.softwareengineering.osgicommon.events.*,sdu.mmmi.softwareengineering.osgicommon.services.*</Private-Package>
+                        <Export-Package>sdu.mmmi.softwareengineering.osgicommon.data,sdu.mmmi.softwareengineering.osgicommon.data.entityParts,sdu.mmmi.softwareengineering.osgicommon.events,sdu.mmmi.softwareengineering.osgicommon.managers,sdu.mmmi.softwareengineering.osgicommon.services</Export-Package>
+                        <Private-Package>sdu.mmmi.softwareengineering.osgicommon.data.*,sdu.mmmi.softwareengineering.osgicommon.events.*,sdu.mmmi.softwareengineering.osgicommon.managers.*,sdu.mmmi.softwareengineering.osgicommon.services.*</Private-Package>
                     </instructions>
                 </configuration>
             </plugin>

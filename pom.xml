@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dk.sdu.mmmi.cbse</groupId>
-    <artifactId>AsteroidsOSGi-parent</artifactId>
+    <artifactId>JoelpEternal</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>AsteroidsOSGi-parent</name>
+    <name>JoelpEternal</name>
 
     <repositories>
         <!--
@@ -73,7 +73,8 @@
         <module>OSGiCore</module>
         <module>OSGiCommon</module>
         <module>OSGiUpdater</module>
-    </modules>
+    <module>OGSiSpriteTest</module>
+  </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
