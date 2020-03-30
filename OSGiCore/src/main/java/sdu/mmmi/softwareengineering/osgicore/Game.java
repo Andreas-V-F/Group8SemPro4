@@ -98,11 +98,17 @@ public class Game implements ApplicationListener {
         for (Entity entity : world.getEntities()) {
             PositionPart positionPart = entity.getPart(PositionPart.class);
 
-            System.out.println("In game class: x: " + positionPart.getX() + " - y: " + positionPart.getY());
-            System.out.println("");
             if (entity.getTexture() != null) {
                 spriteBatch.begin();
-                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (100 / 2), positionPart.getY() - (72 / 2));
+                // Don't know if the math is right!
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                spriteBatch.end();
+            }
+            // Sets a default asset for the entity
+            if (entity.getTexture() == null) {
+                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
+                spriteBatch.begin();
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
                 spriteBatch.end();
             }
         }

@@ -24,8 +24,14 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> characterDown = new AssetDescriptor<Texture>("assets/character/CharacterDown.png", Texture.class);
     public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("assets/character/CharacterLeft.png", Texture.class);
     public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("assets/character/CharacterRight.png", Texture.class);
+    
+    public static final AssetDescriptor<Texture> defaultAsset = new AssetDescriptor<Texture>("assets/default/BossMonster.png", Texture.class);
 
     public static void loadAssets() {
+        // Loads default assets
+        manager.load(defaultAsset);
+        
+        // Loads Character assets
         manager.load(characterUp);
         manager.load(characterDown);
         manager.load(characterLeft);

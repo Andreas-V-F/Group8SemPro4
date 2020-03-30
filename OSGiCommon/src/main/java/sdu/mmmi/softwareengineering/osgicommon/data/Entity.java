@@ -16,6 +16,7 @@ public class Entity implements Serializable {
     private float radius;
     private float[] colour;
     private Map<Class, EntityPart> parts;
+    
     private Texture texture; 
 
     public Entity() {
