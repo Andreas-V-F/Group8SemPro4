@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: sdu/mmmi/softwareengineering/common/
+ Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Implementation-Version: 1.0-20200326
+OpenIDE-Module-Build-Version: 202003262207
+OpenIDE-Module: sdu.mmmi.softwareengineering.Common
+OpenIDE-Module-Public-Packages: sdu.mmmi.softwareengineering.common.da
+ ta.*, sdu.mmmi.softwareengineering.common.data.entityparts.*, sdu.mmm
+ i.softwareengineering.common.services.*
+OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1
+OpenIDE-Module-Display-Category: sdu.mmmi.softwareengineering
+OpenIDE-Module-Name: Common
+OpenIDE-Module-Short-Description: <undefined>
+OpenIDE-Module-Long-Description: <undefined>
+X-Class-Path: ext/sdu.mmmi.softwareengineering.Common/com-badlogicgame
+ s-gdx/gdx.jar
+Maven-Class-Path: com.badlogicgames.gdx:gdx:1.9.10
+OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo
+ n/1 > 1.33
+

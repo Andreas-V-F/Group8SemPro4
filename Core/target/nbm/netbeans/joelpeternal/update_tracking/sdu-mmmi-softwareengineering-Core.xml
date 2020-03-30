@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="sdu.mmmi.softwareengineering.Core">
+    <module_version install_time="1585260436913" last="true" origin="installer" specification_version="1.0">
+        <file crc="468394574" name="config/Modules/sdu-mmmi-softwareengineering-Core.xml"/>
+        <file crc="2975890568" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx-backend-lwjgl.jar"/>
+        <file crc="89921408" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx-box2d-platform-natives-desktop.jar"/>
+        <file crc="2560753400" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx-box2d.jar"/>
+        <file crc="3017778363" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx-freetype-platform-natives-desktop.jar"/>
+        <file crc="335919804" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx-freetype.jar"/>
+        <file crc="4188977031" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx-platform-natives-desktop.jar"/>
+        <file crc="3764980079" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-gdx/gdx.jar"/>
+        <file crc="1146210713" name="modules/ext/sdu.mmmi.softwareengineering.Core/com-badlogicgames-jlayer/jlayer.jar"/>
+        <file crc="426864957" name="modules/ext/sdu.mmmi.softwareengineering.Core/net-java-jinput/jinput.jar"/>
+        <file crc="1529865491" name="modules/ext/sdu.mmmi.softwareengineering.Core/net-java-jutils/jutils.jar"/>
+        <file crc="2846045197" name="modules/ext/sdu.mmmi.softwareengineering.Core/org-jcraft/jorbis.jar"/>
+        <file crc="4257286244" name="modules/ext/sdu.mmmi.softwareengineering.Core/org-lwjgl-lwjgl/lwjgl-platform-natives-linux.jar"/>
+        <file crc="195738200" name="modules/ext/sdu.mmmi.softwareengineering.Core/org-lwjgl-lwjgl/lwjgl-platform-natives-osx.jar"/>
+        <file crc="4182559041" name="modules/ext/sdu.mmmi.softwareengineering.Core/org-lwjgl-lwjgl/lwjgl-platform-natives-windows.jar"/>
+        <file crc="1131781346" name="modules/ext/sdu.mmmi.softwareengineering.Core/org-lwjgl-lwjgl/lwjgl.jar"/>
+        <file crc="1311417881" name="modules/ext/sdu.mmmi.softwareengineering.Core/org-lwjgl-lwjgl/lwjgl_util.jar"/>
+        <file crc="901679685" name="modules/sdu-mmmi-softwareengineering-Core.jar"/>
+    </module_version>
+</module>

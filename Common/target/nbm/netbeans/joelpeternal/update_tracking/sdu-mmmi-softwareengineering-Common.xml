@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="sdu.mmmi.softwareengineering.Common">
+    <module_version install_time="1585260434914" last="true" origin="installer" specification_version="1.0">
+        <file crc="2673930085" name="config/Modules/sdu-mmmi-softwareengineering-Common.xml"/>
+        <file crc="3764980079" name="modules/ext/sdu.mmmi.softwareengineering.Common/com-badlogicgames-gdx/gdx.jar"/>
+        <file crc="3752924071" name="modules/sdu-mmmi-softwareengineering-Common.jar"/>
+    </module_version>
+</module>

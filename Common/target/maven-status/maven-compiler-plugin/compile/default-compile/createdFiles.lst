@@ -1,0 +1,14 @@
+sdu\mmmi\softwareengineering\common\data\GameKeys.class
+sdu\mmmi\softwareengineering\common\services\IEntityProcessingService.class
+sdu\mmmi\softwareengineering\common\data\entityparts\TimerPart.class
+sdu\mmmi\softwareengineering\common\data\entityparts\MovingPart.class
+sdu\mmmi\softwareengineering\common\data\entityparts\ProjectilePart.class
+sdu\mmmi\softwareengineering\common\services\IPostEntityProcessingService.class
+sdu\mmmi\softwareengineering\common\data\Entity.class
+sdu\mmmi\softwareengineering\common\data\entityparts\LifePart.class
+sdu\mmmi\softwareengineering\common\data\entityparts\PositionPart.class
+sdu\mmmi\softwareengineering\common\data\World.class
+sdu\mmmi\softwareengineering\common\data\entityparts\ShootingPart.class
+sdu\mmmi\softwareengineering\common\services\IGamePluginService.class
+sdu\mmmi\softwareengineering\common\data\GameData.class
+sdu\mmmi\softwareengineering\common\data\entityparts\EntityPart.class
