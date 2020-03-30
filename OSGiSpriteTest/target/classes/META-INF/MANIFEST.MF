@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1585555738267
+Build-Jdk: 13.0.2
+Built-By: andre
+Bundle-Activator: sdu.mmmi.softwareengineering.osgispritetest.Activator
+Bundle-ManifestVersion: 2
+Bundle-Name: OSGiSpriteTest
+Bundle-SymbolicName: sdu.mmmi.softwareengineering.OSGiSpriteTest
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Import-Package: org.osgi.framework;version="[1.6,2)",sdu.mmmi.softwareen
+ gineering.osgicommon.data;version="[1.0,2)",sdu.mmmi.softwareengineerin
+ g.osgicommon.data.entityParts;version="[1.0,2)",sdu.mmmi.softwareengine
+ ering.osgicommon.services;version="[1.0,2)"
+Tool: Bnd-1.50.0

@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>AsteroidsOSGi-parent</artifactId>
-        <groupId>dk.sdu.mmmi.cbse</groupId>
+        <artifactId>JoelpEternal</artifactId>
+        <groupId>sdu.mmmi.softwareengineering</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dk.sdu.mmmi.cbse</groupId>
+    <groupId>sdu.mmmi.softwareengineering</groupId>
     <artifactId>OSGiCore</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
@@ -27,14 +27,25 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiLibGDX</artifactId>
+            <artifactId>OSGiCommon</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-backend-lwjgl</artifactId>
+            <version>1.9.10</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>OSGiCommon</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>OSGiLibGDX</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

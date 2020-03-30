@@ -4,12 +4,12 @@ OpenIDE-Module-Localizing-Bundle: dk/sdu/mmmi/cbse/asteroidsnetbeansmo
 AutoUpdate-Essential-Module: true
 OpenIDE-Module-Specification-Version: 1.0
 OpenIDE-Module-Implementation-Version: 1.0-20200329
-OpenIDE-Module-Build-Version: 202003291721
-OpenIDE-Module: dk.sdu.mmmi.cbse.AsteroidsOSGi.branding
+OpenIDE-Module-Build-Version: 202003292214
+OpenIDE-Module: sdu.mmmi.softwareengineering.JoelpEternal.branding
 OpenIDE-Module-Public-Packages: -
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1
-OpenIDE-Module-Display-Category: dk.sdu.mmmi.cbse
-OpenIDE-Module-Name: AsteroidsOSGi-branding
+OpenIDE-Module-Display-Category: sdu.mmmi.softwareengineering
+OpenIDE-Module-Name: JoelpEternal-branding
 OpenIDE-Module-Short-Description: <undefined>
 OpenIDE-Module-Long-Description: <undefined>
 OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo

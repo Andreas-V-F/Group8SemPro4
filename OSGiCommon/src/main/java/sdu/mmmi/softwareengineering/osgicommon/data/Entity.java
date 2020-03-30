@@ -18,6 +18,7 @@ public class Entity implements Serializable {
     private Map<Class, EntityPart> parts;
     
     private Texture texture; 
+    
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -78,4 +79,6 @@ public class Entity implements Serializable {
     public void setTexture(Texture texture){
         this.texture = texture;
     }
+    
+   
 }
