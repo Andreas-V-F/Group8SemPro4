@@ -14,22 +14,34 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  * @author menta
  */
 public class PlayerProcessor implements IEntityProcessingService {
-    
-
 
     @Override
     public void process(GameData gameData, World world) {
 
-            for (Entity player : world.getEntities(Player.class)) {
+        for (Entity player : world.getEntities(Player.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
             LifePart lifePart = player.getPart(LifePart.class);
+            ShootingPart shootingPart = player.getPart(ShootingPart.class);
 
-            movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
-            movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
-            movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
-            movingPart.setDown(gameData.getKeys().isDown(GameKeys.DOWN));
+            movingPart.setLeft(gameData.getKeys().isDown(GameKeys.A));
+            movingPart.setRight(gameData.getKeys().isDown(GameKeys.D));
+            movingPart.setUp(gameData.getKeys().isDown(GameKeys.W));
+            movingPart.setDown(gameData.getKeys().isDown(GameKeys.S));
 
+            if (gameData.getKeys().isDown(GameKeys.UP)) {
+                shootingPart.setDirection("UP");
+                shootingPart.setIsShooting(true);
+            } else if (gameData.getKeys().isDown(GameKeys.DOWN)) {
+                shootingPart.setDirection("DOWN");
+                shootingPart.setIsShooting(true);
+            } else if (gameData.getKeys().isDown(GameKeys.LEFT)) {
+                shootingPart.setDirection("LEFT");
+                shootingPart.setIsShooting(true);
+            } else if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
+                shootingPart.setDirection("RIGHT");
+                shootingPart.setIsShooting(true);
+            }
 
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);

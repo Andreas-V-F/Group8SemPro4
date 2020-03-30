@@ -17,7 +17,7 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
 public class BulletControlSystem implements IEntityProcessingService {
 
     private Entity bullet;
-    
+
     @Override
     public void process(GameData gameData, World world) {
         for (Entity entity : world.getEntities()) {

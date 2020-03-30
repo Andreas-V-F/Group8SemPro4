@@ -73,6 +73,7 @@ public class MovingPart
     public void setUp(boolean up) {
         this.up = up;
     }
+
     public void setDown(boolean down) {
         this.down = down;
     }
@@ -92,11 +93,11 @@ public class MovingPart
         if (right) {
             x += maxSpeed * dt;
         }
-        
+
         if (up) {
             y += maxSpeed * dt;
         }
-        
+
         if (down) {
             y -= maxSpeed * dt;
         }

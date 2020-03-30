@@ -34,7 +34,6 @@ public class EnemyPlugin implements IGamePluginService {
             enemyID = world.addEntity(enemy);
             ShootingPart ep = enemy.getPart(ShootingPart.class);
             ep.setID(enemyID);
-            System.out.println(ep.getID());
         }
 
     }
@@ -46,9 +45,9 @@ public class EnemyPlugin implements IGamePluginService {
         float acceleration = 200;
         float maxSpeed = 300;
         float rotationSpeed = 5;
-        float x = gameData.getDisplayWidth() / 3 + (float) Math.random()*1000;
-        float y = gameData.getDisplayHeight() / 3 + (float) Math.random()*1000;
-        
+        float x = gameData.getDisplayWidth() / 3 + (float) Math.random() * 1000;
+        float y = gameData.getDisplayHeight() / 3 + (float) Math.random() * 1000;
+
         float radians = 3.1415f / 2;
         enemyShip.add(new LifePart(3));
         enemyShip.setRadius(4);

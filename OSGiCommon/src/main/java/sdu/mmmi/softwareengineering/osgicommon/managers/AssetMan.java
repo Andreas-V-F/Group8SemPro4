@@ -29,7 +29,7 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> enemyLeft = new AssetDescriptor<Texture>("assets/enemy/enemy_left.png", Texture.class);
     public static final AssetDescriptor<Texture> enemyRight = new AssetDescriptor<Texture>("assets/enemy/enemy_right.png", Texture.class);
 
-    public static void load() {
+    public static void loadAssets() {
         // Loads default assets
         manager.load(defaultAsset);
 
