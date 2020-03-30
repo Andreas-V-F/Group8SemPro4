@@ -6,10 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import java.io.File;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
@@ -19,9 +17,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
-import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
 
 public class Game implements ApplicationListener {
 
@@ -97,19 +95,23 @@ public class Game implements ApplicationListener {
         // Sets a texture for every entity in the "world"
         for (Entity entity : world.getEntities()) {
             PositionPart positionPart = entity.getPart(PositionPart.class);
+            LifePart lifePart = entity.getPart(LifePart.class);
 
-            if (entity.getTexture() != null) {
+            if (entity.getTexture() != null && world.getEntities().contains(entity)) {
                 spriteBatch.begin();
                 // Don't know if the math is right!
                 spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
                 spriteBatch.end();
             }
             // Sets a default asset for the entity
-            if (entity.getTexture() == null) {
+            if (entity.getTexture() == null && world.getEntities().contains(entity)) {
                 entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
                 spriteBatch.begin();
                 spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
                 spriteBatch.end();
+            }
+            if (lifePart.isDead()) {
+                world.removeEntity(entity);
             }
         }
 
