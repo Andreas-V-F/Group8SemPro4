@@ -30,7 +30,7 @@ public class EnemyPlugin implements IGamePluginService {
     public void start(GameData gameData, World world) {
 
         for (int i = 0; i < 1; i++) {
-            Entity enemy = createEnemyShip(gameData);
+            Entity enemy = createEnemy(gameData);
             enemyID = world.addEntity(enemy);
             ShootingPart ep = enemy.getPart(ShootingPart.class);
             ep.setID(enemyID);
@@ -38,24 +38,21 @@ public class EnemyPlugin implements IGamePluginService {
 
     }
 
-    private Entity createEnemyShip(GameData gameData) {
-        Entity enemyShip = new Enemy();
+    private Entity createEnemy(GameData gameData) {
+        Entity enemy = new Enemy();
 
-        float deacceleration = 10;
-        float acceleration = 200;
-        float maxSpeed = 300;
-        float rotationSpeed = 5;
+        float maxSpeed = 250;
+
         float x = gameData.getDisplayWidth() / 3 + (float) Math.random() * 1000;
         float y = gameData.getDisplayHeight() / 3 + (float) Math.random() * 1000;
 
         float radians = 3.1415f / 2;
-        enemyShip.add(new LifePart(3));
-        enemyShip.setRadius(4);
-        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
-        enemyShip.add(new PositionPart(x, y, radians));
-        enemyShip.add(new ShootingPart());
+        enemy.add(new LifePart(3));
+        enemy.add(new MovingPart(maxSpeed));
+        enemy.add(new PositionPart(x, y, radians));
+        enemy.add(new ShootingPart());
 
-        return enemyShip;
+        return enemy;
     }
 
     @Override

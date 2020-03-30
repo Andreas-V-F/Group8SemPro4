@@ -16,21 +16,19 @@ import static java.lang.Math.sqrt;
 
 /**
  *
- * @author Alexander
+ * @author Dinmor
  */
 public class MovingPart
         implements EntityPart {
 
     private float dx, dy;
-    private float deceleration, acceleration;
-    private float maxSpeed, rotationSpeed;
+    private float maxSpeed; 
     private boolean left, right, up, down;
 
-    public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
-        this.deceleration = deceleration;
-        this.acceleration = acceleration;
+    public MovingPart(float maxSpeed) {
+        
         this.maxSpeed = maxSpeed;
-        this.rotationSpeed = rotationSpeed;
+   
     }
 
     public float getDx() {
@@ -40,26 +38,13 @@ public class MovingPart
     public float getDy() {
         return dy;
     }
-
-    public void setDeceleration(float deceleration) {
-        this.deceleration = deceleration;
-    }
-
-    public void setAcceleration(float acceleration) {
-        this.acceleration = acceleration;
-    }
-
+    
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
     public void setSpeed(float speed) {
-        this.acceleration = speed;
         this.maxSpeed = speed;
-    }
-
-    public void setRotationSpeed(float rotationSpeed) {
-        this.rotationSpeed = rotationSpeed;
     }
 
     public void setLeft(boolean left) {

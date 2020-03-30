@@ -19,15 +19,21 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> characterDown = new AssetDescriptor<Texture>("assets/character/CharacterDown.png", Texture.class);
     public static final AssetDescriptor<Texture> characterLeft = new AssetDescriptor<Texture>("assets/character/CharacterLeft.png", Texture.class);
     public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("assets/character/CharacterRight.png", Texture.class);
-    
+
     // Default assets
     public static final AssetDescriptor<Texture> defaultAsset = new AssetDescriptor<Texture>("assets/default/BossMonster.png", Texture.class);
-    
-    // Enemy assets
-    public static final AssetDescriptor<Texture> enemyUp = new AssetDescriptor<Texture>("assets/enemy/enemy_up.png", Texture.class);
-    public static final AssetDescriptor<Texture> enemyDown = new AssetDescriptor<Texture>("assets/enemy/enemy_down.png", Texture.class);
-    public static final AssetDescriptor<Texture> enemyLeft = new AssetDescriptor<Texture>("assets/enemy/enemy_left.png", Texture.class);
-    public static final AssetDescriptor<Texture> enemyRight = new AssetDescriptor<Texture>("assets/enemy/enemy_right.png", Texture.class);
+
+    // Shrek assets
+    public static final AssetDescriptor<Texture> enemy_up = new AssetDescriptor<Texture>("assets/enemy/up.png", Texture.class);
+    public static final AssetDescriptor<Texture> enemy_down = new AssetDescriptor<Texture>("assets/enemy/down.png", Texture.class);
+    public static final AssetDescriptor<Texture> enemy_left = new AssetDescriptor<Texture>("assets/enemy/left.png", Texture.class);
+    public static final AssetDescriptor<Texture> enemy_right = new AssetDescriptor<Texture>("assets/enemy/right.png", Texture.class);
+
+    //HappyBoiii assets
+    public static final AssetDescriptor<Texture> happy_boiii_up = new AssetDescriptor<Texture>("assets/character/HappyBoiii_up.png", Texture.class);
+    public static final AssetDescriptor<Texture> happy_boiii_down = new AssetDescriptor<Texture>("assets/character/HappyBoiii_down.png", Texture.class);
+    public static final AssetDescriptor<Texture> happy_boiii_left = new AssetDescriptor<Texture>("assets/character/HappyBoiii_left.png", Texture.class);
+    public static final AssetDescriptor<Texture> happy_boiii_right = new AssetDescriptor<Texture>("assets/character/HappyBoiii_right.png", Texture.class);
 
     public static void loadAssets() {
         // Loads default assets
@@ -39,11 +45,18 @@ public class AssetMan {
         manager.load(characterLeft);
         manager.load(characterRight);
 
-        //Loading enemy
-        manager.load(enemyUp);
-        manager.load(enemyDown);
-        manager.load(enemyLeft);
-        manager.load(enemyRight);
+        //Loading shrek assets
+        manager.load(enemy_up);
+        manager.load(enemy_down);
+        manager.load(enemy_left);
+        manager.load(enemy_right);
+
+        //Loading HappyBoiii assets
+        manager.load(happy_boiii_up);
+        manager.load(happy_boiii_down);
+        manager.load(happy_boiii_left);
+        manager.load(happy_boiii_right);
+
     }
 
     public void dispose() {

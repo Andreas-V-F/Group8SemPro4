@@ -87,7 +87,7 @@ public class BulletControlSystem implements IEntityProcessingService {
         }
 
         bullet.add(new LifePart(1));
-        bullet.add(new MovingPart(0, 5000000, speed, 5));
+        bullet.add(new MovingPart(speed));
         bullet.add(new TimerPart(1));
 
         return bullet;
