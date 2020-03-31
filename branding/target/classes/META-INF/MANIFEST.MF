@@ -4,7 +4,7 @@ OpenIDE-Module-Localizing-Bundle: dk/sdu/mmmi/cbse/asteroidsnetbeansmo
 AutoUpdate-Essential-Module: true
 OpenIDE-Module-Specification-Version: 1.0
 OpenIDE-Module-Implementation-Version: 1.0-20200331
-OpenIDE-Module-Build-Version: 202003311758
+OpenIDE-Module-Build-Version: 202003312021
 OpenIDE-Module: sdu.mmmi.softwareengineering.JoelpEternal.branding
 OpenIDE-Module-Public-Packages: -
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1

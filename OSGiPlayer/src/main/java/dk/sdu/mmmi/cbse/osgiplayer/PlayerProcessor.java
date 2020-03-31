@@ -53,7 +53,7 @@ public class PlayerProcessor implements IEntityProcessingService {
 
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
-            lifePart.process(gameData, player);
+            
 
             updateShape(player);
 

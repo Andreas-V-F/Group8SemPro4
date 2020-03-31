@@ -53,7 +53,6 @@ public class BulletControlSystem implements IEntityProcessingService {
                 mpb.setRight(true);
             }
             btp.reduceExpiration(gameData.getDelta());
-            LifePart lpb = b.getPart(LifePart.class);
 
             //If duration is exceeded, remove the bullet.
             if (btp.getExpiration() < 0) {
@@ -64,7 +63,6 @@ public class BulletControlSystem implements IEntityProcessingService {
             ppb.process(gameData, b);
             mpb.process(gameData, b);
             btp.process(gameData, b);
-            lpb.process(gameData, b);
 
             updateShape(b);
         }
@@ -83,7 +81,7 @@ public class BulletControlSystem implements IEntityProcessingService {
         float dt = gameData.getDelta();
         float speed = 350;
 
-        Entity bullet = new Bullet();
+        Entity bullet = new Bullet(shooter.getID());
 
         if (shooterShootingPart.getDirection().equals("UP")) {
             bullet.add(new PositionPart(x, y + 50, (float) Math.PI / 2));
@@ -95,7 +93,6 @@ public class BulletControlSystem implements IEntityProcessingService {
             bullet.add(new PositionPart(x + 50, y, 0));
         }
 
-        bullet.add(new LifePart(1));
         bullet.add(new MovingPart(0, 5000000, speed, 5));
         bullet.add(new TimerPart(1));
 
@@ -121,7 +118,7 @@ public class BulletControlSystem implements IEntityProcessingService {
 
         shapex[3] = (float) (x + 1.5);
         shapey[3] = (float) (y - 1.5);
-        
+
         entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
 
         entity.setShapeX(shapex);
