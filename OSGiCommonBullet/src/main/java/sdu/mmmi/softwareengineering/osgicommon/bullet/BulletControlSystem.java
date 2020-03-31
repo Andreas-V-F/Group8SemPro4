@@ -8,6 +8,7 @@ package sdu.mmmi.softwareengineering.osgicommon.bullet;
 import static java.lang.System.currentTimeMillis;
 import sdu.mmmi.softwareengineering.osgicommon.data.*;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.*;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 /**
@@ -42,7 +43,15 @@ public class BulletControlSystem implements IEntityProcessingService {
             PositionPart ppb = b.getPart(PositionPart.class);
             MovingPart mpb = b.getPart(MovingPart.class);
             TimerPart btp = b.getPart(TimerPart.class);
-            mpb.setUp(true);
+            if (ppb.getRadians() == (float) Math.PI / 2) {
+                mpb.setUp(true);
+            } else if (ppb.getRadians() == (float) (Math.PI * 1.5)) {
+                mpb.setDown(true);
+            } else if (ppb.getRadians() == (float) Math.PI) {
+                mpb.setLeft(true);
+            } else {
+                mpb.setRight(true);
+            }
             btp.reduceExpiration(gameData.getDelta());
             LifePart lpb = b.getPart(LifePart.class);
 
@@ -101,17 +110,19 @@ public class BulletControlSystem implements IEntityProcessingService {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
 
-        shapex[0] = (float) (x - 1 * 2);
-        shapey[0] = (float) (y - 1 * 2);
+        shapex[0] = (float) (x - 1.5);
+        shapey[0] = (float) (y - 1.5);
 
-        shapex[1] = (float) (x - 1 * 2);
-        shapey[1] = (float) (y + 1 * 2);
+        shapex[1] = (float) (x - 1.5);
+        shapey[1] = (float) (y + 1.5);
 
-        shapex[2] = (float) (x + 1 * 2);
-        shapey[2] = (float) (y + 1 * 2);
+        shapex[2] = (float) (x + 1.5);
+        shapey[2] = (float) (y + 1.5);
 
-        shapex[3] = (float) (x + 1 * 2);
-        shapey[3] = (float) (y - 1 * 2);
+        shapex[3] = (float) (x + 1.5);
+        shapey[3] = (float) (y - 1.5);
+        
+        entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);

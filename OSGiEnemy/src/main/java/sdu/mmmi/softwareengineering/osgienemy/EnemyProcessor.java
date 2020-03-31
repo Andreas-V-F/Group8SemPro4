@@ -64,17 +64,17 @@ public class EnemyProcessor implements IEntityProcessingService {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
 
-        shapex[0] = (float) (x - 1 * 8);
-        shapey[0] = (float) (y - 1 * 8);
+        shapex[0] = (float) (x - 15.5);
+        shapey[0] = (float) (y - 15.5);
 
-        shapex[1] = (float) (x - 1 * 8);
-        shapey[1] = (float) (y + 1 * 8);
+        shapex[1] = (float) (x - 15.5);
+        shapey[1] = (float) (y + 15.5);
 
-        shapex[2] = (float) (x + 1 * 8);
-        shapey[2] = (float) (y + 1 * 8);
+        shapex[2] = (float) (x + 15.5);
+        shapey[2] = (float) (y + 15.5);
 
-        shapex[3] = (float) (x + 1 * 8);
-        shapey[3] = (float) (y - 1 * 8);
+        shapex[3] = (float) (x + 15.5);
+        shapey[3] = (float) (y - 15.5);
 
         // Sets the texture on the character to the way he moves
         if (gameData.getKeys().isDown(GameKeys.UP)) {

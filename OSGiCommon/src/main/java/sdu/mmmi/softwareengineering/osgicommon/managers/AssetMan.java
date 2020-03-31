@@ -28,6 +28,8 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> enemyDown = new AssetDescriptor<Texture>("assets/enemy/enemy_down.png", Texture.class);
     public static final AssetDescriptor<Texture> enemyLeft = new AssetDescriptor<Texture>("assets/enemy/enemy_left.png", Texture.class);
     public static final AssetDescriptor<Texture> enemyRight = new AssetDescriptor<Texture>("assets/enemy/enemy_right.png", Texture.class);
+    public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("assets/bullet/bullet.png", Texture.class);
+    
 
     public static void loadAssets() {
         // Loads default assets
@@ -44,6 +46,7 @@ public class AssetMan {
         manager.load(enemyDown);
         manager.load(enemyLeft);
         manager.load(enemyRight);
+        manager.load(bullet);
     }
 
     public void dispose() {

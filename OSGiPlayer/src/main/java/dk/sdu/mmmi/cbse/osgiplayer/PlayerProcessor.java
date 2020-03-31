@@ -7,6 +7,7 @@ package dk.sdu.mmmi.cbse.osgiplayer;
 
 import sdu.mmmi.softwareengineering.osgicommon.data.*;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.*;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 /**
@@ -14,7 +15,10 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  * @author menta
  */
 public class PlayerProcessor implements IEntityProcessingService {
-
+    
+    private long time;
+    private long delay = 100;
+    
     @Override
     public void process(GameData gameData, World world) {
 
@@ -28,8 +32,9 @@ public class PlayerProcessor implements IEntityProcessingService {
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.D));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.W));
             movingPart.setDown(gameData.getKeys().isDown(GameKeys.S));
-
-            if (gameData.getKeys().isDown(GameKeys.UP)) {
+            
+            if(System.currentTimeMillis() - time > delay){
+                if (gameData.getKeys().isDown(GameKeys.UP)) {
                 shootingPart.setDirection("UP");
                 shootingPart.setIsShooting(true);
             } else if (gameData.getKeys().isDown(GameKeys.DOWN)) {
@@ -42,6 +47,9 @@ public class PlayerProcessor implements IEntityProcessingService {
                 shootingPart.setDirection("RIGHT");
                 shootingPart.setIsShooting(true);
             }
+                time = System.currentTimeMillis();
+            }
+            
 
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
@@ -60,20 +68,21 @@ public class PlayerProcessor implements IEntityProcessingService {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
 
-        shapex[0] = (float) (x + Math.cos(radians) * 8);
-        shapey[0] = (float) (y + Math.sin(radians) * 8);
+        shapex[0] = (float) (x - 15.5);
+        shapey[0] = (float) (y - 15.5);
 
-        shapex[1] = (float) (x + Math.cos(radians - 4 * 3.1415f / 5) * 8);
-        shapey[1] = (float) (y + Math.sin(radians - 4 * 3.1145f / 5) * 8);
+        shapex[1] = (float) (x - 15.5);
+        shapey[1] = (float) (y + 15.5);
 
-        shapex[2] = (float) (x + Math.cos(radians + 3.1415f) * 5);
-        shapey[2] = (float) (y + Math.sin(radians + 3.1415f) * 5);
+        shapex[2] = (float) (x + 15.5);
+        shapey[2] = (float) (y + 15.5);
 
-        shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * 8);
-        shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * 8);
+        shapex[3] = (float) (x + 15.5);
+        shapey[3] = (float) (y - 15.5);
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
+        entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
     }
 
 //    //TODO: Dependency injection via Declarative Services

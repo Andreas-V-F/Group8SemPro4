@@ -44,6 +44,7 @@ public class Collision implements IPostEntityProcessingService {
                 }
 
                 if(detectCollision(e,f) ){
+                    
                     world.removeEntity(e);
                     world.removeEntity(f);
                     
