@@ -14,6 +14,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
 
 public class EnemyProcessor implements IEntityProcessingService {
 
+    int K = 0;
+    boolean hitbox_on = false;
+
     @Override
     public void process(GameData gameData, World world) {
 
@@ -32,10 +35,26 @@ public class EnemyProcessor implements IEntityProcessingService {
             positionPart.process(gameData, entity);
 
             updateEnemy(gameData, entity, AssetMan.happy_boiii_left, AssetMan.happy_boiii_right, AssetMan.happy_boiii_up, AssetMan.happy_boiii_down);
-            
-           
-                updateHitbox(gameData, entity);
-            
+
+            //Hitbox
+            if (gameData.getKeys().isDown(GameKeys.ALT)) {
+
+                if (K == 0) {
+                    hitbox_on = true;
+                    K = 1;
+
+                } else {
+                    removeHitbox(entity);
+                    K = 0;
+                    hitbox_on = false;
+                }
+                gameData.getKeys().setKey(GameKeys.ALT, false);
+
+            }
+            if (hitbox_on == true) {
+                showHitbox(entity);
+            }
+
         }
     }
 
@@ -56,51 +75,61 @@ public class EnemyProcessor implements IEntityProcessingService {
         }
     }
 
-    private void updateHitbox(GameData gameData, Entity entity) {
+    private void showHitbox(Entity entity) {
 
         float[] shapex = entity.getShapeX();
         float[] shapey = entity.getShapeY();
 
+        float x;
+        float y;
+
+        final int enemy_width = 64;
+        final int enemy_height = 64;
+
         PositionPart positionPart = entity.getPart(PositionPart.class);
 
-        float x;
-        float y; 
-        if (gameData.getKeys().isDown(GameKeys.ALT)) {
-             x = positionPart.getX();
-             y = positionPart.getY();
+        x = positionPart.getX();
+        y = positionPart.getY();
 
-            final int enemy_width = 64;
-            final int enemy_height = 64;
+        //Lower left corner
+        shapex[0] = (float) (x - enemy_width / 2);
+        shapey[0] = (float) (y - (enemy_height / 2));
 
-            //Lower left corner
-            shapex[0] = (float) (x - enemy_width / 2);
-            shapey[0] = (float) (y - (enemy_height / 2));
+        //Upper left corner
+        shapex[1] = (float) (x - enemy_width / 2);
+        shapey[1] = (float) (y + (enemy_height / 2));
 
-            //Upper left corner
-            shapex[1] = (float) (x - enemy_width / 2);
-            shapey[1] = (float) (y + (enemy_height / 2));
+        //Upper right corner 
+        shapex[2] = (float) (x + enemy_width / 2);
+        shapey[2] = (float) (y + (enemy_height / 2));
 
-            //Upper right corner 
-            shapex[2] = (float) (x + enemy_width / 2);
-            shapey[2] = (float) (y + (enemy_height / 2));
+        //Lower right corner
+        shapex[3] = (float) (x + enemy_width / 2);
+        shapey[3] = (float) (y - (enemy_height / 2));
 
-            //Lower right corner
-            shapex[3] = (float) (x + enemy_width / 2);
-            shapey[3] = (float) (y - (enemy_height / 2));
+        K = 1;
 
-        }
-                if (gameData.getKeys().isDown(GameKeys.CTRL)) {
-                    
-                    x = 0; 
-                    y = 0; 
-
-                  
-                  
-                    
-                    
-                    
-                    
-
-        }
     }
+
+    private void removeHitbox(Entity entity) {
+
+        float[] shapex = entity.getShapeX();
+        float[] shapey = entity.getShapeY();
+
+        shapex[0] = 0;
+        shapey[0] = 0;
+
+        shapex[1] = 0;
+        shapey[1] = 0;
+
+        shapex[2] = 0;
+        shapey[2] = 0;
+
+        shapex[3] = 0;
+        shapey[3] = 0;
+
+        K = 2;
+
+    }
+
 }
