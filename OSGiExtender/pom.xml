@@ -40,7 +40,17 @@
         <!--</dependency>-->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiCore</artifactId>
+            <artifactId>OSGiUpdater</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>OSGiCommonBullet</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>OSGiEnemy</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -50,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiUpdater</artifactId>
+            <artifactId>OSGiCore</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -61,16 +71,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>OSGiPlayer</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiEnemy</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiCommonBullet</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

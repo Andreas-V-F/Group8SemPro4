@@ -32,10 +32,9 @@ public class EnemyProcessor implements IEntityProcessingService {
             positionPart.process(gameData, entity);
 
             updateEnemy(gameData, entity, AssetMan.happy_boiii_left, AssetMan.happy_boiii_right, AssetMan.happy_boiii_up, AssetMan.happy_boiii_down);
-            
-           
-                updateHitbox(gameData, entity);
-            
+
+            updateHitbox(gameData, entity);
+
         }
     }
 
@@ -64,43 +63,38 @@ public class EnemyProcessor implements IEntityProcessingService {
         PositionPart positionPart = entity.getPart(PositionPart.class);
 
         float x;
-        float y; 
-        if (gameData.getKeys().isDown(GameKeys.ALT)) {
-             x = positionPart.getX();
-             y = positionPart.getY();
+        float y;
+        //if (gameData.getKeys().isDown(GameKeys.ALT)) {
+        x = positionPart.getX();
+        y = positionPart.getY();
 
-            final int enemy_width = 64;
-            final int enemy_height = 64;
+        final int enemy_width = 64;
+        final int enemy_height = 64;
 
-            //Lower left corner
-            shapex[0] = (float) (x - enemy_width / 2);
-            shapey[0] = (float) (y - (enemy_height / 2));
+        //Lower left corner
+        shapex[0] = (float) (x - enemy_width / 2);
+        shapey[0] = (float) (y - (enemy_height / 2));
 
-            //Upper left corner
-            shapex[1] = (float) (x - enemy_width / 2);
-            shapey[1] = (float) (y + (enemy_height / 2));
+        //Upper left corner
+        shapex[1] = (float) (x - enemy_width / 2);
+        shapey[1] = (float) (y + (enemy_height / 2));
 
-            //Upper right corner 
-            shapex[2] = (float) (x + enemy_width / 2);
-            shapey[2] = (float) (y + (enemy_height / 2));
+        //Upper right corner 
+        shapex[2] = (float) (x + enemy_width / 2);
+        shapey[2] = (float) (y + (enemy_height / 2));
 
-            //Lower right corner
-            shapex[3] = (float) (x + enemy_width / 2);
-            shapey[3] = (float) (y - (enemy_height / 2));
+        //Lower right corner
+        shapex[3] = (float) (x + enemy_width / 2);
+        shapey[3] = (float) (y - (enemy_height / 2));
 
-        }
-                if (gameData.getKeys().isDown(GameKeys.CTRL)) {
-                    
-                    x = 0; 
-                    y = 0; 
+        entity.setShapeX(shapex);
+        entity.setShapeY(shapey);
 
-                  
-                  
-                    
-                    
-                    
-                    
-
-        }
+        //}
+//                if (gameData.getKeys().isDown(GameKeys.CTRL)) {
+//                    
+//                    x = 0; 
+//                    y = 0; 
+        //}
     }
 }
