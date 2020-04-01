@@ -8,6 +8,7 @@ package sdu.mmmi.softwareengineering.osgicommon.bullet;
 import static java.lang.System.currentTimeMillis;
 import sdu.mmmi.softwareengineering.osgicommon.data.*;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.*;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 /**
@@ -42,9 +43,16 @@ public class BulletControlSystem implements IEntityProcessingService {
             PositionPart ppb = b.getPart(PositionPart.class);
             MovingPart mpb = b.getPart(MovingPart.class);
             TimerPart btp = b.getPart(TimerPart.class);
-            mpb.setUp(true);
+            if (ppb.getRadians() == (float) Math.PI / 2) {
+                mpb.setUp(true);
+            } else if (ppb.getRadians() == (float) (Math.PI * 1.5)) {
+                mpb.setDown(true);
+            } else if (ppb.getRadians() == (float) Math.PI) {
+                mpb.setLeft(true);
+            } else {
+                mpb.setRight(true);
+            }
             btp.reduceExpiration(gameData.getDelta());
-            LifePart lpb = b.getPart(LifePart.class);
 
             //If duration is exceeded, remove the bullet.
             if (btp.getExpiration() < 0) {
@@ -55,7 +63,6 @@ public class BulletControlSystem implements IEntityProcessingService {
             ppb.process(gameData, b);
             mpb.process(gameData, b);
             btp.process(gameData, b);
-            lpb.process(gameData, b);
 
             updateShape(b);
         }
@@ -74,7 +81,7 @@ public class BulletControlSystem implements IEntityProcessingService {
         float dt = gameData.getDelta();
         float speed = 350;
 
-        Entity bullet = new Bullet();
+        Entity bullet = new Bullet(shooter.getID());
 
         if (shooterShootingPart.getDirection().equals("UP")) {
             bullet.add(new PositionPart(x, y + 50, (float) Math.PI / 2));
@@ -86,8 +93,7 @@ public class BulletControlSystem implements IEntityProcessingService {
             bullet.add(new PositionPart(x + 50, y, 0));
         }
 
-        bullet.add(new LifePart(1));
-        bullet.add(new MovingPart(speed));
+        bullet.add(new MovingPart(0, 5000000, speed, 5));
         bullet.add(new TimerPart(1));
 
         return bullet;
@@ -101,17 +107,19 @@ public class BulletControlSystem implements IEntityProcessingService {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
 
-        shapex[0] = (float) (x - 1 * 2);
-        shapey[0] = (float) (y - 1 * 2);
+        shapex[0] = (float) (x - 1.5);
+        shapey[0] = (float) (y - 1.5);
 
-        shapex[1] = (float) (x - 1 * 2);
-        shapey[1] = (float) (y + 1 * 2);
+        shapex[1] = (float) (x - 1.5);
+        shapey[1] = (float) (y + 1.5);
 
-        shapex[2] = (float) (x + 1 * 2);
-        shapey[2] = (float) (y + 1 * 2);
+        shapex[2] = (float) (x + 1.5);
+        shapey[2] = (float) (y + 1.5);
 
-        shapex[3] = (float) (x + 1 * 2);
-        shapey[3] = (float) (y - 1 * 2);
+        shapex[3] = (float) (x + 1.5);
+        shapey[3] = (float) (y - 1.5);
+
+        entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);

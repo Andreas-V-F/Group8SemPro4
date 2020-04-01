@@ -23,6 +23,7 @@ public class AssetMan {
     // Default assets
     public static final AssetDescriptor<Texture> defaultAsset = new AssetDescriptor<Texture>("assets/default/BossMonster.png", Texture.class);
 
+
     // Shrek assets
     public static final AssetDescriptor<Texture> enemy_up = new AssetDescriptor<Texture>("assets/enemy/up.png", Texture.class);
     public static final AssetDescriptor<Texture> enemy_down = new AssetDescriptor<Texture>("assets/enemy/down.png", Texture.class);
@@ -34,6 +35,10 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> happy_boiii_down = new AssetDescriptor<Texture>("assets/character/HappyBoiii_down.png", Texture.class);
     public static final AssetDescriptor<Texture> happy_boiii_left = new AssetDescriptor<Texture>("assets/character/HappyBoiii_left.png", Texture.class);
     public static final AssetDescriptor<Texture> happy_boiii_right = new AssetDescriptor<Texture>("assets/character/HappyBoiii_right.png", Texture.class);
+
+	//Bullet asset
+    public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("assets/bullet/bullet.png", Texture.class);
+    
 
     public static void loadAssets() {
         // Loads default assets
@@ -57,6 +62,8 @@ public class AssetMan {
         manager.load(happy_boiii_left);
         manager.load(happy_boiii_right);
 
+        //Loading bullet
+        manager.load(bullet);
     }
 
     public void dispose() {
