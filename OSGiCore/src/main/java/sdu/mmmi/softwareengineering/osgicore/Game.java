@@ -89,7 +89,7 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         update();
-        //();
+        draw();
 //
         // Maybe we should make the assets load here??
         // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.

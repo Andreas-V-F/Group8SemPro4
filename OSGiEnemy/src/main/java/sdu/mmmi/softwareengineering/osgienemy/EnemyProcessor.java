@@ -13,9 +13,18 @@ import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 public class EnemyProcessor implements IEntityProcessingService {
+    
+    private boolean first = true;
 
     @Override
     public void process(GameData gameData, World world) {
+        
+        if(first){
+            for (Entity entity : world.getEntities(Enemy.class)) {
+                entity.setTexture(AssetMan.manager.get(AssetMan.happy_boiii_down));
+            }
+            first = false;
+        }
 
         for (Entity entity : world.getEntities(Enemy.class)) {
 

@@ -77,8 +77,6 @@ public class BulletControlSystem implements IEntityProcessingService {
 
         float x = shooterPos.getX();
         float y = shooterPos.getY();
-        float radians = shooterPos.getRadians();
-        float dt = gameData.getDelta();
         float speed = 350;
 
         Entity bullet = new Bullet(shooter.getID());
@@ -94,7 +92,7 @@ public class BulletControlSystem implements IEntityProcessingService {
         }
 
         bullet.add(new MovingPart(speed));
-        bullet.add(new TimerPart(1));
+        bullet.add(new TimerPart(5));
 
         return bullet;
     }
