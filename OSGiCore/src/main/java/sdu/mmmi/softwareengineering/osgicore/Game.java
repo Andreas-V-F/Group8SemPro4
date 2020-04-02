@@ -19,6 +19,8 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.Level;
+import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
@@ -89,7 +91,7 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         update();
-        //draw();
+        draw();
 //
         // Maybe we should make the assets load here??
         // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
@@ -145,6 +147,26 @@ public class Game implements ApplicationListener {
 
             sr.end();
 
+        }
+
+        for (Level level : world.getLevels()) {
+            for (UnplayableArea un : level.getUnplayableAreas()) {
+                sr.setColor(1, 1, 1, 1);
+
+                sr.begin(ShapeRenderer.ShapeType.Line);
+
+                float[] shapex = un.getShapeX();
+                float[] shapey = un.getShapeY();
+
+                for (int i = 0, j = shapex.length - 1;
+                        i < shapex.length;
+                        j = i++) {
+
+                    sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+                }
+
+                sr.end();
+            }
         }
     }
 

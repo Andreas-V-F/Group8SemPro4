@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1585718387736
+Bnd-LastModified: 1585812619919
 Build-Jdk: 1.8.0_191
 Built-By: Andreas Ibsen Cor
 Bundle-ClassPath: .,org.osgi.core-4.3.0.jar,gdx-1.9.6.jar,gdx-platform-1

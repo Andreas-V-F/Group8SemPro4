@@ -8,8 +8,11 @@ package sdu.mmmi.softwareengineering.osgicollision;
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
+import sdu.mmmi.softwareengineering.osgicommon.data.Level;
+import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingService;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.ShootingPart;
@@ -20,12 +23,7 @@ import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.ShootingPart;
  */
 public class Collision implements IPostEntityProcessingService {
 
-    public boolean detectCollision(Entity e, Entity f) {
-
-        float[] eX = e.getShapeX();
-        float[] eY = e.getShapeY();
-        float[] fX = f.getShapeX();
-        float[] fY = f.getShapeY();
+    public boolean detectCollision(float[] eX, float[] eY, float[] fX, float[] fY) {
 
         if (eX[1] > fX[3] || fX[1] > eX[3]) {
             return false;
@@ -40,6 +38,16 @@ public class Collision implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
+            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()){
+                if(detectCollision(e.getShapeX(), e.getShapeY(), un.getShapeX(), un.getShapeY())){
+                   if(e.getClass().equals(Bullet.class)){
+                       world.removeEntity(e);
+                   }
+                   MovingPart movingPart = e.getPart(MovingPart.class);
+                   movingPart.setSpeed(0);
+                }
+            }
+            
             for (Entity f : world.getEntities()) {
                 if (e.getID().equals(f.getID()) || e.getClass().equals(f.getClass())) {
                     continue;
@@ -58,7 +66,7 @@ public class Collision implements IPostEntityProcessingService {
                     }
                 }
 
-                if (detectCollision(e, f)) {
+                if (detectCollision(e.getShapeX(), e.getShapeY(), f.getShapeX(), f.getShapeY())) {
                     if (e.getPart(LifePart.class) != null) {
                         LifePart lp = e.getPart(LifePart.class);
                         lp.setIsHit(true);

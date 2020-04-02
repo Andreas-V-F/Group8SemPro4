@@ -35,3 +35,4 @@ hs_err_pid*
 /OSGiCollision/target/
 /OSGiCollisionTest/target/
 /OSGiEnemy/target/
+/OSGiLevel/target/
