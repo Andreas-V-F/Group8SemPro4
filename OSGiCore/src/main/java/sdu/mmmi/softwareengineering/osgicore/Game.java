@@ -149,8 +149,7 @@ public class Game implements ApplicationListener {
 
         }
 
-        for (Level level : world.getLevels()) {
-            for (UnplayableArea un : level.getUnplayableAreas()) {
+            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
                 sr.setColor(1, 1, 1, 1);
 
                 sr.begin(ShapeRenderer.ShapeType.Line);
@@ -167,7 +166,6 @@ public class Game implements ApplicationListener {
 
                 sr.end();
             }
-        }
     }
 
     @Override

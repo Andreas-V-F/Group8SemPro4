@@ -14,7 +14,9 @@ public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private final Map<String, Level> levelMap = new ConcurrentHashMap<>();
-
+    private String currentLevelID;
+    private Level tempLevel;
+    
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
@@ -66,7 +68,11 @@ public class World {
     }
     
     public Level getCurrentLevel(){
-        return getLevels().get(0);
+        return tempLevel;
+    }
+    
+    public void setCurrentLevel(String ID){
+        tempLevel = levelMap.get(ID);
     }
     
     public List<Level> getLevels() {

@@ -6,6 +6,7 @@
 package sdu.mmmi.softwareengineering.osgicollision;
 
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
+import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Level;
@@ -35,19 +36,64 @@ public class Collision implements IPostEntityProcessingService {
         return true;
     }
 
+    public void pushBack(Entity entity, UnplayableArea unplayableArea) {
+
+        PositionPart positionPart = entity.getPart(PositionPart.class);
+
+        float[] unplayableAreaShapeX = unplayableArea.getShapeX();
+        float[] unplayableAreaShapeY = unplayableArea.getShapeY();
+
+        //left wall
+        float[] shapeX = new float[]{unplayableAreaShapeX[0], unplayableAreaShapeX[0], unplayableAreaShapeX[1], unplayableAreaShapeX[1]};
+        float[] shapeY = new float[]{unplayableAreaShapeY[0], unplayableAreaShapeY[1], unplayableAreaShapeY[1], unplayableAreaShapeY[0]};
+
+        if (detectCollision(shapeX, shapeY, entity.getShapeX(), entity.getShapeY())) {
+            positionPart.setX(positionPart.getX() - 10);
+        }
+
+        //right wall
+        shapeX = new float[]{unplayableAreaShapeX[3], unplayableAreaShapeX[3], unplayableAreaShapeX[2], unplayableAreaShapeX[2]};
+        shapeY = new float[]{unplayableAreaShapeY[3], unplayableAreaShapeY[2], unplayableAreaShapeY[2], unplayableAreaShapeY[3]};
+
+        if (detectCollision(shapeX, shapeY, entity.getShapeX(), entity.getShapeY())) {
+            positionPart.setX(positionPart.getX() + 10);
+        }
+
+        //upper wall
+        shapeX = new float[]{unplayableAreaShapeX[1], unplayableAreaShapeX[1], unplayableAreaShapeX[2], unplayableAreaShapeX[2]};
+        shapeY = new float[]{unplayableAreaShapeY[1], unplayableAreaShapeY[2], unplayableAreaShapeY[2], unplayableAreaShapeY[1]};
+
+        if (detectCollision(shapeX, shapeY, entity.getShapeX(), entity.getShapeY())) {
+            positionPart.setY(positionPart.getY() + 10);
+        }
+        
+        //lower wall
+        shapeX = new float[]{unplayableAreaShapeX[0], unplayableAreaShapeX[0], unplayableAreaShapeX[3], unplayableAreaShapeX[3]};
+        shapeY = new float[]{unplayableAreaShapeY[0], unplayableAreaShapeY[3], unplayableAreaShapeY[3], unplayableAreaShapeY[0]};
+
+        if (detectCollision(shapeX, shapeY, entity.getShapeX(), entity.getShapeY())) {
+            positionPart.setY(positionPart.getY() - 10);
+        }
+
+    }
+
     @Override
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
-            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()){
-                if(detectCollision(e.getShapeX(), e.getShapeY(), un.getShapeX(), un.getShapeY())){
-                   if(e.getClass().equals(Bullet.class)){
-                       world.removeEntity(e);
-                   }
-                   MovingPart movingPart = e.getPart(MovingPart.class);
-                   movingPart.setSpeed(0);
+            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+                if (detectCollision(e.getShapeX(), e.getShapeY(), un.getShapeX(), un.getShapeY())) {
+                    if (e.getClass().equals(Bullet.class)) {
+                        world.removeEntity(e);
+                        continue;
+                    }
+                    if (un.getClass().equals(Door.class)){
+                        Door door = (Door) un;
+                        door.setIsActivated(true);
+                    }
+                    pushBack(e, un);
                 }
             }
-            
+
             for (Entity f : world.getEntities()) {
                 if (e.getID().equals(f.getID()) || e.getClass().equals(f.getClass())) {
                     continue;
@@ -83,9 +129,9 @@ public class Collision implements IPostEntityProcessingService {
                         LifePart lp = f.getPart(LifePart.class);
                         lp.setIsHit(true);
                         lp.process(gameData, f);
-                        
+
                         if (lp.isDead()) {
-                           
+
                             world.removeEntity(f);
                         }
                     } else {
