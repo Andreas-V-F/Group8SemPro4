@@ -7,7 +7,6 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
 
 import java.io.Serializable;
 import java.util.UUID;
-
 /**
  *
  * @author Andreas Ibsen Cor
