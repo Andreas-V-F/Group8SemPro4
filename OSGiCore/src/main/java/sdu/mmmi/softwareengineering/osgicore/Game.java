@@ -22,10 +22,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
+import sdu.mmmi.softwareengineering.osgicore.managers.GameStateManager;
 
 public class Game implements ApplicationListener {
 
-    private static OrthographicCamera cam;
+    public static OrthographicCamera cam;
     private ShapeRenderer sr;
     private final GameData gameData = new GameData();
     private static World world = new World();
@@ -34,7 +35,8 @@ public class Game implements ApplicationListener {
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
     private SpriteBatch spriteBatch;
-
+    private GameStateManager gsm;
+    
     public Game() {
         init();
     }
@@ -66,6 +68,8 @@ public class Game implements ApplicationListener {
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
+        gsm = new GameStateManager();
+        
         // Loading Assets
         AssetMan.loadAssets();
         // Printing the process on the loading
@@ -82,8 +86,11 @@ public class Game implements ApplicationListener {
     public void render() {
         // clear screen to black
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1); // Sets the background to a lightblue
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.draw();
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
