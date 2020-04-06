@@ -39,7 +39,16 @@ public class AssetMan {
 	//Bullet asset
     public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("assets/bullet/bullet.png", Texture.class);
     
-
+    //Wall asset
+    public static final AssetDescriptor<Texture> wall = new AssetDescriptor<Texture>("assets/wall/orange.png", Texture.class);
+    //public static final AssetDescriptor<Texture> wall = new AssetDescriptor<Texture>("assets/wall/wall.jpg", Texture.class);
+    
+    //Door assets
+    public static final AssetDescriptor<Texture> doorUp = new AssetDescriptor<Texture>("assets/wall/DoorUp.png", Texture.class);
+    public static final AssetDescriptor<Texture> doorDown = new AssetDescriptor<Texture>("assets/wall/DoorDown.png", Texture.class);
+    public static final AssetDescriptor<Texture> doorLeft = new AssetDescriptor<Texture>("assets/wall/DoorLeft.png", Texture.class);
+    public static final AssetDescriptor<Texture> doorRight = new AssetDescriptor<Texture>("assets/wall/DoorRight.png", Texture.class);
+    
     public static void loadAssets() {
         // Loads default assets
         manager.load(defaultAsset);
@@ -64,6 +73,16 @@ public class AssetMan {
 
         //Loading bullet
         manager.load(bullet);
+        
+        //Loading wall
+        manager.load(wall);
+        
+        //Loading Door
+        manager.load(doorUp);
+        manager.load(doorDown);
+        manager.load(doorLeft);
+        manager.load(doorRight);
+        
     }
 
     public void dispose() {

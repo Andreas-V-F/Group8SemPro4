@@ -15,7 +15,7 @@ public class World {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private final Map<String, Level> levelMap = new ConcurrentHashMap<>();
     private String currentLevelID;
-    private Level tempLevel;
+    private Level tempLevel = new Level();
     
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);

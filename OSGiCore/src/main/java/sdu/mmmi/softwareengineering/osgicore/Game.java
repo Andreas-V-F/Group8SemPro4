@@ -19,6 +19,7 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
@@ -114,6 +115,27 @@ public class Game implements ApplicationListener {
                 spriteBatch.end();
             }
         }
+        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+            //sets all unplayableareas to the same texture (should get fixed)
+
+            if (un.getTextureRegion() == null) {
+                un.setTextureRegion(AssetMan.manager.get(AssetMan.wall));
+            }
+
+            if (un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
+                spriteBatch.begin();
+                spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
+                spriteBatch.end();
+            }
+        }
+
+        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+            if (!un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
+                spriteBatch.begin();
+                spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
+                spriteBatch.end();
+            }
+        }
 
     }
 
@@ -149,23 +171,23 @@ public class Game implements ApplicationListener {
 
         }
 
-            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
-                sr.setColor(1, 1, 1, 1);
+        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+            sr.setColor(1, 1, 1, 1);
 
-                sr.begin(ShapeRenderer.ShapeType.Line);
+            sr.begin(ShapeRenderer.ShapeType.Line);
 
-                float[] shapex = un.getShapeX();
-                float[] shapey = un.getShapeY();
+            float[] shapex = un.getShapeX();
+            float[] shapey = un.getShapeY();
 
-                for (int i = 0, j = shapex.length - 1;
-                        i < shapex.length;
-                        j = i++) {
+            for (int i = 0, j = shapex.length - 1;
+                    i < shapex.length;
+                    j = i++) {
 
-                    sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-                }
-
-                sr.end();
+                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
+
+            sr.end();
+        }
     }
 
     @Override

@@ -5,19 +5,24 @@
  */
 package sdu.mmmi.softwareengineering.osgicommon.data;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.io.Serializable;
 import java.util.UUID;
+
 /**
  *
  * @author Andreas Ibsen Cor
  */
-public class UnplayableArea implements Serializable{
-    
+public class UnplayableArea implements Serializable {
+
     private final UUID ID = UUID.randomUUID();
-    
+
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
-    
+
+    private TextureRegion textureRegion;
+
     public float[] getShapeX() {
         return shapeX;
     }
@@ -37,5 +42,18 @@ public class UnplayableArea implements Serializable{
     public String getID() {
         return ID.toString();
     }
+
+    public TextureRegion getTextureRegion() {
+        return this.textureRegion;
+    }
     
+    public Texture getTexture() {
+        return this.textureRegion.getTexture();
+    }
+
+    public void setTextureRegion(Texture texture) {
+        textureRegion = new TextureRegion(texture);
+        textureRegion.setRegion(0, 0, texture.getWidth(), texture.getHeight());
+    }
+
 }

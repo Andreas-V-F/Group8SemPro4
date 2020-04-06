@@ -5,18 +5,20 @@
  */
 package sdu.mmmi.softwareengineering.osgicommon.data;
 
-import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
-
 /**
  *
  * @author Andreas Ibsen Cor
  */
-public class Door extends UnplayableArea{
+public class Door extends UnplayableArea {
+
     private String levelID;
     private boolean isActivated = false;
-    
-    public Door(String levelID){
+    private String rotation = "UP";
+    private int size = 80;
+
+    public Door(String levelID, String rotation) {
         this.levelID = levelID;
+        this.rotation = rotation.toUpperCase();
     }
 
     public String getLevelID() {
@@ -30,7 +32,14 @@ public class Door extends UnplayableArea{
     public void setIsActivated(boolean isActivated) {
         this.isActivated = isActivated;
     }
+
+    public String getRotation() {
+        return rotation;
+    }
     
+    public int getSize(){
+        return size;
+    }    
     
-    
+
 }

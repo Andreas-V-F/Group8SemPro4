@@ -5,11 +5,14 @@
  */
 package sdu.mmmi.softwareengineering.osgilevel;
 
+import com.badlogic.gdx.assets.AssetManager;
+import java.util.ArrayList;
 import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IGamePluginService;
 
 /**
@@ -23,22 +26,13 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        Level level = createLevel();
+        Level level = createLevel(gameData);
         String id = world.addLevel(level);
-
         world.setCurrentLevel(id);
-
-        Level level2 = createLevel();
-        String id2 = world.addLevel(level2);
-
-        Door door = createDoor(id2);
-        level.addUnplayableArea(door);
-
-        Door door2 = createDoor2(id);
-        level2.addUnplayableArea(door2);
-
-        addRandomStructures(level);
-
+        createDoor(level, id, "LEFT", world, gameData);
+        createDoor(level, id, "UP", world, gameData);
+        createDoor(level, id, "DOWN", world, gameData);
+        createDoor(level, id, "RIGHT", world, gameData);
     }
 
     @Override
@@ -46,53 +40,63 @@ public class LevelPlugin implements IGamePluginService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Level createLevel() {
-        return new Level();
+    public Level createLevel(GameData gameData) {
+        Level level = new Level();
+        addRandomStructures(level, 1200, 1000);
+        System.out.println("height    " + gameData.getDisplayHeight());
+        return level;
     }
 
-    public Door createDoor(String levelID) {
-        Door door = new Door(levelID);
+    public Level createDoor(Level level, String levelID, String rotation, World world, GameData gameData) {
+        Level level2 = createLevel(gameData);
+        String level2ID = world.addLevel(level2);
 
-        door.setShapeX(new float[]{600, 600, 650, 650});
-        door.setShapeY(new float[]{600, 650, 650, 600});
+        level.addUnplayableArea(new Door(level2ID, rotation));
 
-        return door;
+        switch (rotation) {
+            case "LEFT":
+                level2.addUnplayableArea(new Door(levelID, "RIGHT"));
+                break;
+            case "RIGHT":
+                level2.addUnplayableArea(new Door(levelID, "LEFT"));
+                break;
+            case "UP":
+                level2.addUnplayableArea(new Door(levelID, "DOWN"));
+                break;
+            case "DOWN":
+                level2.addUnplayableArea(new Door(levelID, "UP"));
+        }
+
+        return level2;
     }
 
-    public Door createDoor2(String levelID) {
-        Door door = new Door(levelID);
-        door.setShapeX(new float[]{800, 800, 850, 850});
-        door.setShapeY(new float[]{800, 850, 850, 800});
+    public void addRandomStructures(Level level, float width, float height) {
+        int thickness = 20;
 
-        return door;
+        //left wall
+        Wall wall = new Wall(0, height, thickness, 0);
+        level.addUnplayableArea(wall);
+
+        //right wall
+        wall = new Wall(width-thickness, height, width, 0);
+        level.addUnplayableArea(wall);
+
+        //upper wall
+        wall = new Wall(0, height, width, height-thickness);
+        level.addUnplayableArea(wall);
+
+        //lower wall
+        wall = new Wall(0, thickness, width, 0);
+        level.addUnplayableArea(wall);
+        
+        Structures structures = new Structures(width, height);
+        for (ArrayList<Wall> w : structures.getStructureList()) {
+            double num = Math.random();
+            if (num < 0.5) {
+                for (Wall walls : w) {
+                    level.addUnplayableArea(walls);
+                }
+            }
+        }
     }
-
-    public void addRandomStructures(Level level) {
-        //P
-        Wall wall = new Wall(200, 200, 210, 100);
-        level.addUnplayableArea(wall);
-        wall = new Wall(210, 200, 260, 190);
-        level.addUnplayableArea(wall);
-        wall = new Wall(250, 190, 260, 150);
-        level.addUnplayableArea(wall);
-        wall = new Wall(210, 160, 250, 150);
-        level.addUnplayableArea(wall);
-
-        //I
-        wall = new Wall(300, 170, 315, 100);
-        level.addUnplayableArea(wall);
-        wall = new Wall(300, 200, 315, 180);
-        level.addUnplayableArea(wall);
-
-        //K
-        wall = new Wall(350, 200, 360, 100);
-        level.addUnplayableArea(wall);
-        wall = new Wall(360, 160, 410, 150);
-        level.addUnplayableArea(wall);
-        wall = new Wall(400, 160, 410, 200);
-        level.addUnplayableArea(wall);
-        wall = new Wall(385, 150, 395, 100);
-        level.addUnplayableArea(wall);
-    }
-
 }

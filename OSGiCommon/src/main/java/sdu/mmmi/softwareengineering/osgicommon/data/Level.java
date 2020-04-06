@@ -24,22 +24,7 @@ public class Level implements Serializable{
     private final Map<String, UnplayableArea> unplayableAreaMap = new ConcurrentHashMap<>();
     
     public Level(){
-                
-        //left wall
-        UnplayableArea unplayableArea = createUnplayableArea(new float[]{0, 0, 20, 20}, new float[]{0, 1000, 1000, 0});
-        addUnplayableArea(unplayableArea);
         
-        //right wall
-        unplayableArea = createUnplayableArea(new float[]{1180, 1180, 1200, 1200}, new float[]{0, 1000, 1000, 0});
-        addUnplayableArea(unplayableArea);
-        
-        //upper wall
-        unplayableArea = createUnplayableArea(new float[]{0, 0, 1200, 1200}, new float[]{980, 1000, 1000, 980});
-        addUnplayableArea(unplayableArea);
-        
-        //lower wall
-        unplayableArea = createUnplayableArea(new float[]{0, 0, 1200, 1200}, new float[]{0, 20, 20, 0});
-        addUnplayableArea(unplayableArea);
     }
     
     public String addUnplayableArea(UnplayableArea unplayableArea){
