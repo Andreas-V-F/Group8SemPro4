@@ -43,8 +43,8 @@ public class EnemyPlugin implements IGamePluginService {
 
         float maxSpeed = 250;
 
-        float x = gameData.getDisplayWidth() / 3 + (float) Math.random() * 1000;
-        float y = gameData.getDisplayHeight() / 3 + (float) Math.random() * 1000;
+        float x = 300;
+        float y = 300;
 
         float radians = 3.1415f / 2;
         enemy.add(new LifePart(3));

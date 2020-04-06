@@ -45,7 +45,7 @@ public class BulletControlSystem implements IEntityProcessingService {
             TimerPart btp = b.getPart(TimerPart.class);
             if (ppb.getRadians() == (float) Math.PI / 2) {
                 mpb.setUp(true);
-            } else if (ppb.getRadians() == (float) (Math.PI * 1.5)) {
+            } else if (ppb.getRadians() == (float) (Math.PI * 10)) {
                 mpb.setDown(true);
             } else if (ppb.getRadians() == (float) Math.PI) {
                 mpb.setLeft(true);
@@ -84,7 +84,7 @@ public class BulletControlSystem implements IEntityProcessingService {
         if (shooterShootingPart.getDirection().equals("UP")) {
             bullet.add(new PositionPart(x, y + 50, (float) Math.PI / 2));
         } else if (shooterShootingPart.getDirection().equals("DOWN")) {
-            bullet.add(new PositionPart(x, y + -50, (float) (Math.PI * 1.5)));
+            bullet.add(new PositionPart(x, y + -50, (float) (Math.PI * 10)));
         } else if (shooterShootingPart.getDirection().equals("LEFT")) {
             bullet.add(new PositionPart(x - 50, y, (float) Math.PI));
         } else if (shooterShootingPart.getDirection().equals("RIGHT")) {
@@ -105,17 +105,17 @@ public class BulletControlSystem implements IEntityProcessingService {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
 
-        shapex[0] = (float) (x - 1.5);
-        shapey[0] = (float) (y - 1.5);
+        shapex[0] = (float) (x - 10);
+        shapey[0] = (float) (y - 10);
 
-        shapex[1] = (float) (x - 1.5);
-        shapey[1] = (float) (y + 1.5);
+        shapex[1] = (float) (x - 10);
+        shapey[1] = (float) (y + 10);
 
-        shapex[2] = (float) (x + 1.5);
-        shapey[2] = (float) (y + 1.5);
+        shapex[2] = (float) (x + 10);
+        shapey[2] = (float) (y + 10);
 
-        shapex[3] = (float) (x + 1.5);
-        shapey[3] = (float) (y - 1.5);
+        shapex[3] = (float) (x + 10);
+        shapey[3] = (float) (y - 10);
 
         entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
 

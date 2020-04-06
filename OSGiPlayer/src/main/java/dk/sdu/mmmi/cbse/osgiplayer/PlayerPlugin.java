@@ -18,6 +18,7 @@ public class PlayerPlugin implements IGamePluginService {
     public void start(GameData gameData, World world) {
         // Add entities to the world
         Entity player = createPlayerShip(gameData);
+        player.setIsPlayer(true);
         playerID = world.addEntity(player);
         
     }
@@ -26,8 +27,8 @@ public class PlayerPlugin implements IGamePluginService {
         Entity playerShip = new Player();
 
         float maxSpeed = 300;
-        float x = gameData.getDisplayWidth() / 2 + 1000;
-        float y = gameData.getDisplayHeight() / 2 + 1000;
+        float x = 500;
+        float y = 500;
         float radians = 3.1415f / 2;
         playerShip.add(new LifePart(3));
         playerShip.setRadius(4);

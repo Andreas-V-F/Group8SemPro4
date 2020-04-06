@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Install: sdu/mmmi/softwareengineering/osgilevel/Installer.class
+OpenIDE-Module-Localizing-Bundle: sdu/mmmi/softwareengineering/osgilevel/Bundle.properties
+

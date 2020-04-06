@@ -16,6 +16,7 @@ public class Entity implements Serializable {
     private float radius;
     private float[] colour;
     private Map<Class, EntityPart> parts;
+    private boolean isPlayer = false;
     
     private Texture texture; 
     
@@ -79,6 +80,18 @@ public class Entity implements Serializable {
     public void setTexture(Texture texture){
         this.texture = texture;
     }
+
+    public boolean getIsPlayer() {
+        return isPlayer;
+    }
+
+    public void setIsPlayer(boolean isPlayer) {
+        this.isPlayer = isPlayer;
+    }
+    
+    
+    
+    
     
    
 }

@@ -19,6 +19,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.Door;
+import sdu.mmmi.softwareengineering.osgicommon.data.Level;
+import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
@@ -89,7 +92,7 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         update();
-        //draw();
+        draw();
 //
         // Maybe we should make the assets load here??
         // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
@@ -109,6 +112,27 @@ public class Game implements ApplicationListener {
                 entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
                 spriteBatch.begin();
                 spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                spriteBatch.end();
+            }
+        }
+        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+            //sets all unplayableareas to the same texture (should get fixed)
+
+            if (un.getTextureRegion() == null) {
+                un.setTextureRegion(AssetMan.manager.get(AssetMan.wall));
+            }
+
+            if (un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
+                spriteBatch.begin();
+                spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
+                spriteBatch.end();
+            }
+        }
+
+        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+            if (!un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
+                spriteBatch.begin();
+                spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
                 spriteBatch.end();
             }
         }
@@ -145,6 +169,24 @@ public class Game implements ApplicationListener {
 
             sr.end();
 
+        }
+
+        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+            sr.setColor(1, 1, 1, 1);
+
+            sr.begin(ShapeRenderer.ShapeType.Line);
+
+            float[] shapex = un.getShapeX();
+            float[] shapey = un.getShapeY();
+
+            for (int i = 0, j = shapex.length - 1;
+                    i < shapex.length;
+                    j = i++) {
+
+                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+            }
+
+            sr.end();
         }
     }
 
