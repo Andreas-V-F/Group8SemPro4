@@ -92,8 +92,8 @@ public class PlayerProcessor implements IEntityProcessingService {
         float x = positionPart.getX();
         float y = positionPart.getY();
 
-        final int player_width = 64;
-        final int player_height = 64;
+        final int player_width = entity.getTexture().getWidth();
+        final int player_height = entity.getTexture().getHeight();
 
         //Lower left corner
         shapex[0] = (float) (x - player_width / 2);

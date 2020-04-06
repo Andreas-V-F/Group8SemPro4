@@ -17,6 +17,7 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -34,6 +35,8 @@ public class Game implements ApplicationListener {
 
     private SpriteBatch spriteBatch;
     private GameStateManager gsm;
+    
+    private boolean drawHitboxes = false;
     
     public Game() {
         init();
@@ -82,6 +85,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
+        
         // clear screen to black
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
@@ -94,7 +98,14 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         update();
-        draw();
+        if (gameData.getKeys().isDown(GameKeys.ALT) || drawHitboxes) {
+            draw();
+            drawHitboxes = true;
+        }
+        if (gameData.getKeys().isDown(GameKeys.CTRL)) {
+            drawHitboxes = false;
+        }
+
 //
         // Maybe we should make the assets load here??
         // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.

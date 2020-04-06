@@ -16,7 +16,7 @@ public class AssetMan {
     public static final AssetManager manager = new AssetManager();
 
     // font assets
-    public static final AssetDescriptor<BitmapFont> menuFont = new AssetDescriptor<BitmapFont>("assets/fonts/mnml_fnt.ttf", BitmapFont.class);
+//    public static final AssetDescriptor<BitmapFont> menuFont = new AssetDescriptor<BitmapFont>("assets/fonts/mnml_fnt.ttf", BitmapFont.class);
 
     // Character assets
     public static final AssetDescriptor<Texture> characterUp = new AssetDescriptor<Texture>("assets/character/CharacterUp.png", Texture.class);
@@ -54,7 +54,7 @@ public class AssetMan {
 
     public static void loadAssets() {
         // Loads font assets
-        manager.load(menuFont);
+//        manager.load(menuFont);
         
         // Loads default assets
         manager.load(defaultAsset);

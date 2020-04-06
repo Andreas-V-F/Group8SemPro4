@@ -5,7 +5,6 @@
  */
 package sdu.mmmi.softwareengineering.osgicommon.bullet;
 
-import static java.lang.System.currentTimeMillis;
 import sdu.mmmi.softwareengineering.osgicommon.data.*;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.*;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -98,26 +97,35 @@ public class BulletControlSystem implements IEntityProcessingService {
     }
 
     private void updateShape(Entity entity) {
+        entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
+        
         float[] shapex = new float[4];
         float[] shapey = new float[4];
         PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
+        
+        final int bullet_width = entity.getTexture().getWidth();
+        final int bullet_height = entity.getTexture().getHeight();
 
-        shapex[0] = (float) (x - 10);
-        shapey[0] = (float) (y - 10);
+        //Lower left corner
+        shapex[0] = (float) (x - bullet_width / 2);
+        shapey[0] = (float) (y - (bullet_height / 2));
 
-        shapex[1] = (float) (x - 10);
-        shapey[1] = (float) (y + 10);
+        //Upper left corner
+        shapex[1] = (float) (x - bullet_width / 2);
+        shapey[1] = (float) (y + (bullet_height / 2));
 
-        shapex[2] = (float) (x + 10);
-        shapey[2] = (float) (y + 10);
+        //Upper right corner 
+        shapex[2] = (float) (x + bullet_width / 2);
+        shapey[2] = (float) (y + (bullet_height / 2));
 
-        shapex[3] = (float) (x + 10);
-        shapey[3] = (float) (y - 10);
+        //Lower right corner
+        shapex[3] = (float) (x + bullet_width / 2);
+        shapey[3] = (float) (y - (bullet_height / 2));
 
-        entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
+        
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
