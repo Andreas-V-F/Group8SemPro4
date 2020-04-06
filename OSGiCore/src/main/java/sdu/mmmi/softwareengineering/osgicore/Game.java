@@ -6,10 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import java.io.File;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
@@ -19,12 +17,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingSer
 import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import sdu.mmmi.softwareengineering.osgicommon.data.Door;
-import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
-import static sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan.manager;
 import sdu.mmmi.softwareengineering.osgicore.managers.GameStateManager;
 
 public class Game implements ApplicationListener {

@@ -34,7 +34,7 @@ public class MenuState extends GameState {
         sb = new SpriteBatch();
         
         FreeTypeFontGenerator gen = new FreeTypeFontGenerator(
-            Gdx.files.internal("C:\\Users\\menta\\Documents\\GitHub\\Group8SemPro4\\OSGiCore\\src\\main\\java\\fonts\\mnml fnt.ttf")
+//            Gdx.files.internal("C:\\Users\\menta\\Documents\\GitHub\\Group8SemPro4\\OSGiCore\\src\\main\\java\\fonts\\mnml fnt.ttf")
         );
         
         menuItems = new String[]{
