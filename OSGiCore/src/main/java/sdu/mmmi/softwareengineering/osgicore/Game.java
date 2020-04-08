@@ -35,9 +35,9 @@ public class Game implements ApplicationListener {
 
     private SpriteBatch spriteBatch;
     private GameStateManager gsm;
-    
+
     private boolean drawHitboxes = false;
-    
+
     public Game() {
         init();
     }
@@ -70,7 +70,7 @@ public class Game implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         gsm = new GameStateManager();
-        
+
         // Loading Assets
         AssetMan.loadAssets();
         // Printing the process on the loading
@@ -85,12 +85,12 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
-        
+
         // clear screen to black
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
+        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
 
@@ -122,7 +122,7 @@ public class Game implements ApplicationListener {
             }
             // Sets a default asset for the entity
             if (entity.getTexture() == null) {
-                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
+                entity.setTexture(AssetMan.manager.get(AssetMan.noTextureAsset));
                 spriteBatch.begin();
                 spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
                 spriteBatch.end();

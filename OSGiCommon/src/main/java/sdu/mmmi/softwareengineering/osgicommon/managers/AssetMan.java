@@ -25,8 +25,8 @@ public class AssetMan {
     public static final AssetDescriptor<Texture> characterRight = new AssetDescriptor<Texture>("assets/character/CharacterRight.png", Texture.class);
 
     // Default assets
-    public static final AssetDescriptor<Texture> defaultAsset = new AssetDescriptor<Texture>("assets/default/BossMonster.png", Texture.class);
-
+    public static final AssetDescriptor<Texture> noTextureAsset = new AssetDescriptor<Texture>("assets/default/noTexture.png", Texture.class);
+    
     // Shrek assets
     public static final AssetDescriptor<Texture> enemy_up = new AssetDescriptor<Texture>("assets/enemy/up.png", Texture.class);
     public static final AssetDescriptor<Texture> enemy_down = new AssetDescriptor<Texture>("assets/enemy/down.png", Texture.class);
@@ -57,7 +57,7 @@ public class AssetMan {
 //        manager.load(menuFont);
         
         // Loads default assets
-        manager.load(defaultAsset);
+        manager.load(noTextureAsset);
 
         //Loading main character
         manager.load(characterUp);
