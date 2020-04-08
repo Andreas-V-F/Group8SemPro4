@@ -6,6 +6,7 @@
 package sdu.mmmi.softwareengineering.osgicommon.data.entityParts;
 
 import java.util.ArrayList;
+import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 
 /**
  *
@@ -13,8 +14,7 @@ import java.util.ArrayList;
  */
 public class InventoryPart {
 
-    // should maybe take a map (key:value) type, so if when an item is in there it was an ID and a name
-    private ArrayList<?> inventory;
+    private ArrayList<Entity> inventory;
 
     public InventoryPart() {
         this.inventory = inventory;
@@ -22,9 +22,5 @@ public class InventoryPart {
 
     public ArrayList<?> getList() {
         return inventory;
-    }
-
-    public void setList(ArrayList<?> list) {
-        this.inventory = list;
     }
 }
