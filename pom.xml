@@ -78,7 +78,8 @@
         <module>OSGiCollision</module>
         <module>OSGiEnemy</module>
         <module>OSGiLevel</module>
-    </modules>
+    <module>OSGiItem</module>
+  </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
