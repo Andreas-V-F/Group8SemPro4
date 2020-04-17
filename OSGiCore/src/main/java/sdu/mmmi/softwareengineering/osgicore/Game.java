@@ -73,10 +73,18 @@ public class Game implements ApplicationListener {
 
         // Loading Assets
         AssetMan.loadAssets();
+        
+        
         // Printing the process on the loading
+        float k = 0;
         while (!AssetMan.manager.update()) {
-            System.out.println(AssetMan.manager.getProgress() * 100 + "%");
+            float j = AssetMan.manager.getProgress();
+            if (j != k) {
+                System.out.println(Math.round(AssetMan.manager.getProgress() * 100) + "%");
+                k = j;
+            }
         };
+        // Printing 100% when all assets have been loaded
         if (AssetMan.manager.getProgress() == 1) {
             System.out.println("100%");
             System.out.println("All Assets has been loaded!");
@@ -128,6 +136,7 @@ public class Game implements ApplicationListener {
                 spriteBatch.end();
             }
         }
+        
         for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
             //sets all unplayableareas to the same texture (should get fixed)
 
@@ -149,7 +158,6 @@ public class Game implements ApplicationListener {
                 spriteBatch.end();
             }
         }
-
     }
 
     private void update() {
@@ -179,9 +187,7 @@ public class Game implements ApplicationListener {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
-
             sr.end();
-
         }
 
         for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
@@ -198,7 +204,6 @@ public class Game implements ApplicationListener {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
-
             sr.end();
         }
     }
@@ -238,7 +243,6 @@ public class Game implements ApplicationListener {
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
         plugin.start(gameData, world);
-
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {
