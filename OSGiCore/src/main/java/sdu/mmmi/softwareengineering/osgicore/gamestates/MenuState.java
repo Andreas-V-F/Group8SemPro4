@@ -2,6 +2,7 @@
 package sdu.mmmi.softwareengineering.osgicore.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -16,6 +17,7 @@ public class MenuState extends GameState {
    
     private SpriteBatch sb;
     private GameData gameData = new GameData();
+
     
     private final String title = "JØLP ETERNAL";
     
@@ -55,6 +57,8 @@ public class MenuState extends GameState {
     public void update(float dt){
         
         handleInput();
+        System.out.println(gameData.getDisplayWidth());
+        System.out.println(gameData.getDisplayHeight());
         
     }
     
@@ -62,16 +66,16 @@ public class MenuState extends GameState {
     public void draw(){
         sb.setProjectionMatrix(Game.cam.combined);
 
-        int i = 0;
-        int y = 700;
+        int y = 200;
         
         sb.begin();
         
-        titleFont.draw(sb, title, 500, 800);
-        
-       while ( i < menuItems.length) {
-           font.draw(sb, menuItems[i], 525, y);
-           i++;
+        titleFont.draw(sb, title, Gdx.graphics.getWidth() / 2 - 150, Gdx.graphics.getHeight() / 2 + 300);
+       
+       for(int i = 0; i < menuItems.length; i++) {
+           if(currentItem == i) font.setColor(Color.RED);
+           else font.setColor(Color.WHITE);
+           font.draw(sb, menuItems[i], Gdx.graphics.getWidth() / 2 - 125, Gdx.graphics.getHeight() / 2 + y);
            y -= 50;
        }
         
@@ -81,8 +85,34 @@ public class MenuState extends GameState {
     
     @Override
     public void handleInput(){
-        if(gameData.getKeys().isPressed(GameKeys.SPACE)){
+        if(gameData.getKeys().isPressed(GameKeys.UP)){
+            if(currentItem > 0){
+                currentItem--;
+            }
+            
+        }
+        if(gameData.getKeys().isPressed(GameKeys.DOWN)) {
+            if(currentItem < menuItems.length - 1) {
+                currentItem++;
+            }
+        }
+        if(gameData.getKeys().isPressed(GameKeys.SPACE)) {
+            select();
+        }
+    }
+    
+    private void select() {
+        //play
+        if(currentItem == 0) {
             gsm.setState(GameStateManager.PLAY);
+        }
+        //options
+        else if(currentItem == 1) {
+            //gsm.setState(GameStateManager.OPTIONS);
+        }
+        //exit game
+        else if(currentItem == 2) {
+            Gdx.app.exit();
         }
     }
     
