@@ -7,6 +7,7 @@ package sdu.mmmi.softwareengineering.osgilevel;
 
 import com.badlogic.gdx.assets.AssetManager;
 import java.util.ArrayList;
+import java.util.Random;
 import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Level;
@@ -29,10 +30,11 @@ public class LevelPlugin implements IGamePluginService {
         Level level = createLevel(gameData);
         String id = world.addLevel(level);
         world.setCurrentLevel(id);
-        createDoor(level, id, "LEFT", world, gameData);
-        createDoor(level, id, "UP", world, gameData);
-        createDoor(level, id, "DOWN", world, gameData);
-        createDoor(level, id, "RIGHT", world, gameData);
+//        createDoor(level, id, "LEFT", world, gameData);
+//        createDoor(level, id, "UP", world, gameData);
+//        createDoor(level, id, "DOWN", world, gameData);
+//        createDoor(level, id, "RIGHT", world, gameData);
+        fillMap(8, world, gameData);
     }
 
     @Override
@@ -78,17 +80,17 @@ public class LevelPlugin implements IGamePluginService {
         level.addUnplayableArea(wall);
 
         //right wall
-        wall = new Wall(width-thickness, height, width, 0);
+        wall = new Wall(width - thickness, height, width, 0);
         level.addUnplayableArea(wall);
 
         //upper wall
-        wall = new Wall(0, height, width, height-thickness);
+        wall = new Wall(0, height, width, height - thickness);
         level.addUnplayableArea(wall);
 
         //lower wall
         wall = new Wall(0, thickness, width, 0);
         level.addUnplayableArea(wall);
-        
+
         Structures structures = new Structures(width, height);
         for (ArrayList<Wall> w : structures.getStructureList()) {
             double num = Math.random();
@@ -97,6 +99,48 @@ public class LevelPlugin implements IGamePluginService {
                     level.addUnplayableArea(walls);
                 }
             }
+        }
+    }
+
+    public boolean doorIsDuplicate(Level level, String rotation) {
+        for (UnplayableArea un : level.getUnplayableAreas()) {
+            if (un.getClass().equals(Door.class)) {
+                Door d = (Door) un;
+                if (d.getRotation().equals(rotation)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void fillMap(int num, World world, GameData gameData) {
+        for (int i = 0; i < num; i++) {
+            Random r = new Random();
+            int max = world.getLevels().size();
+            int rand = r.nextInt(max);
+            Level level = world.getLevels().get(rand);
+            rand = r.nextInt(4);
+            String rota = "";
+            switch (rand) {
+                case 0:
+                    rota = "UP";
+                    break;
+                case 1:
+                    rota = "DOWN";
+                    break;
+                case 2:
+                    rota = "LEFT";
+                    break;
+                case 3:
+                    rota = "RIGHT";
+                    break;
+            }
+
+            if (!doorIsDuplicate(level, rota)) {
+                createDoor(level, level.getID(), rota, world, gameData);
+            }
+
         }
     }
 }
