@@ -35,9 +35,9 @@ public class Game implements ApplicationListener {
 
     private SpriteBatch spriteBatch;
     private GameStateManager gsm;
-    
+
     private boolean drawHitboxes = false;
-    
+
     public Game() {
         init();
     }
@@ -45,7 +45,7 @@ public class Game implements ApplicationListener {
     private void init() {
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Asteroids";
+        cfg.title = "Joelp Eternal";
         cfg.width = 1200;
         cfg.height = 1000;
         cfg.useGL30 = false;
@@ -70,13 +70,18 @@ public class Game implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         gsm = new GameStateManager();
-        
+
         // Loading Assets
         AssetMan.loadAssets();
-        // Printing the process on the loading
+        // Shows the process on the loading in the console
+        float k = 0;
         while (!AssetMan.manager.update()) {
-            System.out.println(AssetMan.manager.getProgress() * 100 + "%");
-        };
+            float j = AssetMan.manager.getProgress();
+            if (j != k) {
+                System.out.println(Math.round(AssetMan.manager.getProgress() * 100) + "%");
+                k = j;
+            }
+        }
         if (AssetMan.manager.getProgress() == 1) {
             System.out.println("100%");
             System.out.println("All Assets has been loaded!");
@@ -85,12 +90,11 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
-        
+
         // clear screen to black
-//        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
 
@@ -105,29 +109,9 @@ public class Game implements ApplicationListener {
         if (gameData.getKeys().isDown(GameKeys.CTRL)) {
             drawHitboxes = false;
         }
-
-//
-        // Maybe we should make the assets load here??
-        // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
-//        
         // Sets a texture for every entity in the "world"
-        for (Entity entity : world.getEntities()) {
-            PositionPart positionPart = entity.getPart(PositionPart.class);
+        setTexturesOnEntities();
 
-            if (entity.getTexture() != null) {
-                spriteBatch.begin();
-                // Don't know if the math is right!
-                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
-                spriteBatch.end();
-            }
-            // Sets a default asset for the entity
-            if (entity.getTexture() == null) {
-                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
-                spriteBatch.begin();
-                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
-                spriteBatch.end();
-            }
-        }
         for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
             //sets all unplayableareas to the same texture (should get fixed)
 
@@ -150,6 +134,27 @@ public class Game implements ApplicationListener {
             }
         }
 
+    }
+
+    // Sets a texture for every entity in the "world"
+    private void setTexturesOnEntities() {
+        for (Entity entity : world.getEntities()) {
+            PositionPart positionPart = entity.getPart(PositionPart.class);
+
+            if (entity.getTexture() != null) {
+                spriteBatch.begin();
+                // Don't know if the math is right!
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                spriteBatch.end();
+            }
+            // Sets a default asset for the entity
+            if (entity.getTexture() == null) {
+                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
+                spriteBatch.begin();
+                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                spriteBatch.end();
+            }
+        }
     }
 
     private void update() {
@@ -176,12 +181,9 @@ public class Game implements ApplicationListener {
             for (int i = 0, j = shapex.length - 1;
                     i < shapex.length;
                     j = i++) {
-
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
-
             sr.end();
-
         }
 
         for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
@@ -195,10 +197,8 @@ public class Game implements ApplicationListener {
             for (int i = 0, j = shapex.length - 1;
                     i < shapex.length;
                     j = i++) {
-
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
-
             sr.end();
         }
     }
@@ -245,5 +245,4 @@ public class Game implements ApplicationListener {
         this.gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }
-
 }
