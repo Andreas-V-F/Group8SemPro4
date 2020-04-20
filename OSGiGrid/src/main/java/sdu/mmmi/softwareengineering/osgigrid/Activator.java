@@ -1,4 +1,4 @@
-package sdu.mmmi.softwareengineering.osgiai;
+package sdu.mmmi.softwareengineering.osgigrid;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

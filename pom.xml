@@ -79,7 +79,8 @@
         <module>OSGiEnemy</module>
         <module>OSGiLevel</module>
         <module>OSGiAI</module>
-    </modules>
+    <module>OSGiGrid</module>
+  </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
