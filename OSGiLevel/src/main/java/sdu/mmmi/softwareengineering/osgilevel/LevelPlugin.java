@@ -27,14 +27,15 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        Level level = createLevel(gameData);
-        String id = world.addLevel(level);
-        world.setCurrentLevel(id);
+        addRandomStructures(world.getCurrentLevel(), 1200, 1000);
+//        Level level = createLevel(gameData);
+//        String id = world.addLevel(level);
+//        world.setCurrentLevel(id);
 //        createDoor(level, id, "LEFT", world, gameData);
 //        createDoor(level, id, "UP", world, gameData);
 //        createDoor(level, id, "DOWN", world, gameData);
 //        createDoor(level, id, "RIGHT", world, gameData);
-        fillMap(8, world, gameData);
+        fillMap(world.getNumberOfRooms(), world, gameData);
     }
 
     @Override

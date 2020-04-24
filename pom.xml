@@ -74,7 +74,6 @@
         <module>OSGiCommon</module>
         <module>OSGiUpdater</module>
         <module>OSGiPlayer</module>
-        <module>OSGiCommonBullet</module>
         <module>OSGiCollision</module>
         <module>OSGiEnemy</module>
         <module>OSGiLevel</module>

@@ -21,6 +21,7 @@ public class PlayerProcessor implements IEntityProcessingService {
     private long time;
     private long delay = 100;
     private boolean first = true;
+    
 
     @Override
     public void process(GameData gameData, World world) {

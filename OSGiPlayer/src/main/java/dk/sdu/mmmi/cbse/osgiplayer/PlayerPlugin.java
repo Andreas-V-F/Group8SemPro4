@@ -16,14 +16,13 @@ public class PlayerPlugin implements IGamePluginService {
     
     @Override
     public void start(GameData gameData, World world) {
-        // Add entities to the world
         Entity player = createPlayerShip(gameData);
         player.setIsPlayer(true);
         playerID = world.addEntity(player);
         
     }
 
-    private Entity createPlayerShip(GameData gameData) {
+    public Entity createPlayerShip(GameData gameData) {
         Entity playerShip = new Player();
 
         float maxSpeed = 300;
