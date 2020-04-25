@@ -36,6 +36,7 @@ public class LevelPlugin implements IGamePluginService {
 //        createDoor(level, id, "DOWN", world, gameData);
 //        createDoor(level, id, "RIGHT", world, gameData);
         fillMap(world.getNumberOfRooms(), world, gameData);
+        createMissingDoors(world, gameData);
     }
 
     @Override
@@ -44,30 +45,40 @@ public class LevelPlugin implements IGamePluginService {
     }
 
     public Level createLevel(GameData gameData) {
-        Level level = new Level();
+        Level level = new Level(0, 0);
         addRandomStructures(level, 1200, 1000);
         System.out.println("height    " + gameData.getDisplayHeight());
         return level;
     }
 
-    public Level createDoor(Level level, String levelID, String rotation, World world, GameData gameData) {
-        Level level2 = createLevel(gameData);
-        String level2ID = world.addLevel(level2);
+    public Level createDoor(Level level, Level level2, String rotation, World world, GameData gameData) {
+        if (level2 == null) {
+            level2 = createLevel(gameData);
+            world.addLevel(level2);
+        }
 
-        level.addUnplayableArea(new Door(level2ID, rotation));
+        level.addUnplayableArea(new Door(level2.getID(), rotation));
 
         switch (rotation) {
             case "LEFT":
-                level2.addUnplayableArea(new Door(levelID, "RIGHT"));
+                level2.addUnplayableArea(new Door(level.getID(), "RIGHT"));
+                level2.setX(level.getX() - 1);
+                level2.setY(level.getY());
                 break;
             case "RIGHT":
-                level2.addUnplayableArea(new Door(levelID, "LEFT"));
+                level2.addUnplayableArea(new Door(level.getID(), "LEFT"));
+                level2.setX(level.getX() + 1);
+                level2.setY(level.getY());
                 break;
             case "UP":
-                level2.addUnplayableArea(new Door(levelID, "DOWN"));
+                level2.addUnplayableArea(new Door(level.getID(), "DOWN"));
+                level2.setX(level.getX());
+                level2.setY(level.getY() + 1);
                 break;
             case "DOWN":
-                level2.addUnplayableArea(new Door(levelID, "UP"));
+                level2.setX(level.getX());
+                level2.setY(level.getY() - 1);
+                level2.addUnplayableArea(new Door(level.getID(), "UP"));
         }
 
         return level2;
@@ -115,6 +126,31 @@ public class LevelPlugin implements IGamePluginService {
         return false;
     }
 
+    public boolean roomIsDuplicate(Level level, String rotation, World world, GameData gameData) {
+        int x = level.getX();
+        int y = level.getY();
+        switch (rotation) {
+            case "UP":
+                y += 1;
+                break;
+            case "DOWN":
+                y -= 1;
+                break;
+            case "LEFT":
+                x -= 1;
+                break;
+            case "RIGHT":
+                x += 1;
+                break;
+        }
+        for (Level l : world.getLevels()) {
+            if (l.getX() == x && l.getY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void fillMap(int num, World world, GameData gameData) {
         for (int i = 0; i < num; i++) {
             Random r = new Random();
@@ -138,10 +174,42 @@ public class LevelPlugin implements IGamePluginService {
                     break;
             }
 
-            if (!doorIsDuplicate(level, rota)) {
-                createDoor(level, level.getID(), rota, world, gameData);
+            if (!doorIsDuplicate(level, rota) && !roomIsDuplicate(level, rota, world, gameData)) {
+                createDoor(level, null, rota, world, gameData);
             }
 
+        }
+    }
+
+    public void createMissingDoors(World world, GameData gameData) {
+        String rota = "";
+        for (Level l : world.getLevels()) {
+            for (Level x : world.getLevels()) {
+                if (l.getID().equals(x.getID())) {
+                    continue;
+                }
+                if (l.getX() + 1 == x.getX() && l.getY() == x.getY()) {
+                    rota = "RIGHT";
+                    if (!doorIsDuplicate(l, rota)) {
+                        createDoor(l, x, rota, world, gameData);
+                    }
+                } else if (l.getX() - 1 == x.getX() && l.getY() == x.getY()) {
+                    rota = "LEFT";
+                    if (!doorIsDuplicate(l, rota)) {
+                        createDoor(l, x, rota, world, gameData);
+                    }
+                } else if (l.getX() == x.getX() && l.getY() + 1 == x.getY()) {
+                    rota = "UP";
+                    if (!doorIsDuplicate(l, rota)) {
+                        createDoor(l, x, rota, world, gameData);
+                    }
+                } else if (l.getX() == x.getX() && l.getY() - 1 == x.getY()) {
+                    rota = "DOWN";
+                    if (!doorIsDuplicate(l, rota)) {
+                        createDoor(l, x, rota, world, gameData);
+                    }
+                }
+            }
         }
     }
 }

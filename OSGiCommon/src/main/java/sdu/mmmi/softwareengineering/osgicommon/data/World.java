@@ -15,10 +15,11 @@ public class World {
 
     private final Map<String, Level> levelMap = new ConcurrentHashMap<>();
     private String currentLevelID;
-    private Level tempLevel = new Level();
-    private int numberOfRooms = 8;
+    private Level tempLevel = new Level(0, 0);
+    private int numberOfRooms = 15;
 
     public World() {
+        tempLevel.setHasBeenVisited(true);
         addLevel(tempLevel);
     }
 
@@ -86,14 +87,14 @@ public class World {
                 player = e;
             }
         }
-    
-    tempLevel  = levelMap.get(ID);
 
-    tempLevel.addEntity (player);
+        tempLevel = levelMap.get(ID);
+        tempLevel.setHasBeenVisited(true);
+        tempLevel.addEntity(player);
 
-}
+    }
 
-public List<Level> getLevels() {
+    public List<Level> getLevels() {
         List<Level> levelList = new ArrayList<>();
         for (Level l : levelMap.values()) {
             levelList.add(l);
@@ -107,6 +108,16 @@ public List<Level> getLevels() {
 
     public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
+    }
+
+    public List<Level> getVisitedLevels() {
+        List<Level> l = new ArrayList<>();
+        for (Level level : levelMap.values()) {
+            if (level.isHasBeenVisited()) {
+                l.add(level);
+            }
+        }
+        return l;
     }
 
 }

@@ -39,6 +39,9 @@ public class PlayState extends GameState{
         if(gameData.getKeys().isPressed(GameKeys.ESCAPE)){
             Gdx.app.exit();
         }
+        if(gameData.getKeys().isDown(GameKeys.M)){
+            gsm.setState(GameStateManager.MAP);
+        }
     }
     
     @Override

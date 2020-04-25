@@ -105,6 +105,7 @@ public class Game implements ApplicationListener {
         if (gameData.getKeys().isDown(GameKeys.CTRL)) {
             drawHitboxes = false;
         }
+        
 
 //
         // Maybe we should make the assets load here??
@@ -237,7 +238,7 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        plugin.start(gameData, world);
+        plugin.start(gameData, world); 
 
     }
 
@@ -245,5 +246,10 @@ public class Game implements ApplicationListener {
         this.gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }
+
+    public static World getWorld() {
+        return world;
+    }
+    
 
 }
