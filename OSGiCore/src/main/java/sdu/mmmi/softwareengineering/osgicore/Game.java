@@ -91,13 +91,17 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
+        
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
 
-        update();
+        if (gsm.gState == 1){
+            update();   
+        }
+
         if (gameData.getKeys().isDown(GameKeys.ALT) || drawHitboxes) {
             draw();
             drawHitboxes = true;
@@ -121,12 +125,12 @@ public class Game implements ApplicationListener {
                 spriteBatch.end();
             }
             // Sets a default asset for the entity
-            if (entity.getTexture() == null) {
-                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
-                spriteBatch.begin();
-                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
-                spriteBatch.end();
-            }
+//            if (entity.getTexture() == null) {
+//                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
+//                spriteBatch.begin();
+//                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+//                spriteBatch.end();
+//            }
         }
         for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
             //sets all unplayableareas to the same texture (should get fixed)

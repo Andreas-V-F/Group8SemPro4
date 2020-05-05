@@ -37,7 +37,7 @@ public class PlayState extends GameState{
     @Override
     public void handleInput(){
         if(gameData.getKeys().isPressed(GameKeys.ESCAPE)){
-            Gdx.app.exit();
+            gsm.setState(GameStateManager.MENU);
         }
     }
     

@@ -12,6 +12,7 @@ public class GameStateManager {
     
     public static final int MENU = 0;
     public static final int PLAY = 1;
+    public int gState;
     
     public GameStateManager(){
         setState(MENU);
@@ -21,9 +22,11 @@ public class GameStateManager {
         if(gameState != null) gameState.dispose();
         if(state == MENU){
             gameState = new MenuState(this);
+            gState = 0;
         }
         if(state == PLAY){
             gameState = new PlayState(this);
+            gState = 1;
         }
     }
     
