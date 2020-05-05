@@ -26,12 +26,10 @@ public class PlayState extends GameState{
     @Override
     public void update(float dt){
         handleInput();
-        System.out.println("PLAY UPDATE");
     }
     
     @Override
     public void draw(){
-        System.out.println("PLAY DRAW");
     }
     
     @Override
