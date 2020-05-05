@@ -33,8 +33,9 @@ public class OptionsState extends GameState{
     private BitmapFont titleFont;
     private BitmapFont font;
     private String[] able;
-    private File fileEnemy1;
-    private File fileEnemy2;
+    private File enemyDest;
+    private File enemySource;
+    private String userPath = System.getProperty("user.dir");
 
     
      public OptionsState(GameStateManager gsm){
@@ -46,13 +47,18 @@ public class OptionsState extends GameState{
     public void init(){
         sb = new SpriteBatch();
         
+        File filePath;
+        int i = 3;
+        for(filePath = new File(userPath); i > 0; filePath = filePath.getParentFile()){
+            i--;
+        }
         parameterTitle.size = 55;
         parameter.size = 35;
         titleFont = generator.generateFont(parameterTitle);
         font = generator.generateFont(parameter);
         
-        fileEnemy1 = new File("C:\\ProjectJar\\OSGiEnemy-1.0-SNAPSHOT.jar");
-        fileEnemy2 = new File("C:\\Users\\menta\\Documents\\GitHub\\Group8SemPro4\\OSGiEnemy\\target\\OSGiEnemy-1.0-SNAPSHOT.jar");
+        enemyDest = new File("C:\\ProjectJar\\OSGiEnemy-1.0-SNAPSHOT.jar");
+        enemySource = new File (filePath + "\\OSGiEnemy\\target\\OSGiEnemy-1.0-SNAPSHOT.jar");
         
         able = new String[]{
             "Disabled",
@@ -90,7 +96,7 @@ public class OptionsState extends GameState{
            y -= 50;
        }
        
-        if (fileEnemy1.exists()){
+        if (enemyDest.exists()){
             menuItems[0] = "Enemies: " + able[1];
         }
         
@@ -119,15 +125,15 @@ public class OptionsState extends GameState{
     private void select() {
         //play
         if(currentItem == 0) {
-            if (!fileEnemy1.exists()){
+            if (!enemyDest.exists()){
                 try {
-                    Files.copy(fileEnemy2.toPath(), fileEnemy1.toPath());
+                    Files.copy(enemySource.toPath(), enemyDest.toPath());
                     menuItems[0] = "Enemies: " + able[1];
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
             }else{
-                fileEnemy1.delete();
+                enemyDest.delete();
                 menuItems[0] = "Enemies: " + able[0];
             }
 
