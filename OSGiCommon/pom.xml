@@ -31,11 +31,6 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiCommonBullet</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
             <version>4.3.0</version>
@@ -48,10 +43,7 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
-                    <instructions>
-                        <Export-Package>sdu.mmmi.softwareengineering.osgicommon.bullet,sdu.mmmi.softwareengineering.osgicommon.data,sdu.mmmi.softwareengineering.osgicommon.data.entityParts,sdu.mmmi.softwareengineering.osgicommon.events,sdu.mmmi.softwareengineering.osgicommon.managers,sdu.mmmi.softwareengineering.osgicommon.services</Export-Package>
-                        <Private-Package>sdu.mmmi.softwareengineering.osgicommon.bullet.*,sdu.mmmi.softwareengineering.osgicommon.data.*,sdu.mmmi.softwareengineering.osgicommon.events.*,sdu.mmmi.softwareengineering.osgicommon.managers.*,sdu.mmmi.softwareengineering.osgicommon.services.*</Private-Package>
-                    </instructions>
+                    <instructions></instructions>
                 </configuration>
             </plugin>
         </plugins>

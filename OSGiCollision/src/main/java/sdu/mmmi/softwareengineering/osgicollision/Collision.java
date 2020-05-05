@@ -9,14 +9,14 @@ import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
-import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
-import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingService;
-import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.ShootingPart;
+
+
+
 
 /**
  *
@@ -119,7 +119,7 @@ public class Collision implements IPostEntityProcessingService {
                 if (e.getID().equals(f.getID()) || e.getClass().equals(f.getClass())) {
                     continue;
                 }
-
+                
                 if (e.getClass().equals(Bullet.class)) {
                     Bullet bullet = (Bullet) e;
                     if (bullet.getShooterID().equals(f.getID())) {
