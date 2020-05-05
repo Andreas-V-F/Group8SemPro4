@@ -47,7 +47,6 @@ public class LevelPlugin implements IGamePluginService {
     public Level createLevel(GameData gameData) {
         Level level = new Level(0, 0);
         addRandomStructures(level, 1200, 1000);
-        System.out.println("height    " + gameData.getDisplayHeight());
         return level;
     }
 

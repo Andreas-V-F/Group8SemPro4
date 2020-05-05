@@ -81,6 +81,16 @@ public class Game implements ApplicationListener {
             System.out.println("100%");
             System.out.println("All Assets has been loaded!");
         }
+        for(IGamePluginService p : gamePluginList){
+            if(p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin")){
+                p.start(gameData, world);
+            }
+        }
+        for(IGamePluginService p : gamePluginList){
+            if(!p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin")){
+                p.start(gameData, world);
+            }
+        }
     }
 
     @Override
@@ -238,7 +248,7 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        plugin.start(gameData, world); 
+//        plugin.start(gameData, world); 
 
     }
 

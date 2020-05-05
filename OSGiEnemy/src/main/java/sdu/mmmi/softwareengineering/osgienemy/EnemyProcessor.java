@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
+import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
@@ -21,10 +22,12 @@ public class EnemyProcessor implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-
+        
         if (first) {
-            for (Entity entity : world.getEntities(Enemy.class)) {
-                entity.setTexture(AssetMan.manager.get(AssetMan.happy_boiii_down));
+            for(Level l : world.getLevels()){
+                for(Entity entity : l.getEntities(Enemy.class)){
+                     entity.setTexture(AssetMan.manager.get(AssetMan.happy_boiii_down));
+                }
             }
             first = false;
         }

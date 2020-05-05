@@ -5,8 +5,11 @@
  */
 package sdu.mmmi.softwareengineering.osgienemy;
 
+import java.util.Random;
+import org.openide.util.Exceptions;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
+import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.EntityPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
@@ -29,22 +32,30 @@ public class EnemyPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
 
-        for (int i = 0; i < 1; i++) {
-            Entity enemy = createEnemy(gameData);
-            enemyID = world.addEntity(enemy);
-            ShootingPart ep = enemy.getPart(ShootingPart.class);
-            ep.setID(enemyID);
+        System.out.println("Get Levels Size " + world.getLevels().size());
+        for (Level l : world.getLevels()) {
+            System.out.println("Level ID: " + l.getID());
+            if (l.getID().equals(world.getCurrentLevel().getID())) {
+                continue;
+            }
+            Random rand = new Random();
+            for (int i = 0; i < rand.nextInt(4) + 1; i++) {
+                Entity enemy = createEnemy(gameData);
+                enemyID = l.addEntity(enemy);
+                ShootingPart ep = enemy.getPart(ShootingPart.class);
+                ep.setID(enemyID);
+            }
         }
-
     }
 
     private Entity createEnemy(GameData gameData) {
         Entity enemy = new Enemy();
 
         float maxSpeed = 250;
+        Random rand = new Random();
 
-        float x = 300;
-        float y = 300;
+        float x = rand.nextInt(gameData.getDisplayWidth() - 200) + 100;
+        float y = rand.nextInt(gameData.getDisplayHeight() - 200) + 100;
 
         float radians = 3.1415f / 2;
         enemy.add(new LifePart(3));
