@@ -56,10 +56,10 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        spriteBatch = new SpriteBatch();
-
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
+
+        spriteBatch = new SpriteBatch();
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
@@ -90,7 +90,10 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
-
+        
+//        System.out.println(Gdx.graphics.getWidth() + " Render W");
+//        System.out.println(Gdx.graphics.getHeight() + " Render H");
+        
         // clear screen to black
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -102,6 +105,7 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         update();
+
         if (gameData.getKeys().isDown(GameKeys.ALT) || drawHitboxes) {
             draw();
             drawHitboxes = true;
@@ -143,7 +147,6 @@ public class Game implements ApplicationListener {
 
             if (entity.getTexture() != null) {
                 spriteBatch.begin();
-                // Don't know if the math is right!
                 spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
                 spriteBatch.end();
             }

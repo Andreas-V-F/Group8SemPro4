@@ -25,6 +25,11 @@
             <version>4.3.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>OSGiCommon</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -36,7 +41,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-Activator>sdu.mmmi.softwareengineering.osgigrid.Activator</Bundle-Activator>
+                        <!--<Bundle-Activator>sdu.mmmi.softwareengineering.osgigrid.Activator</Bundle-Activator>-->
                         <Export-Package />
                     </instructions>
                 </configuration>

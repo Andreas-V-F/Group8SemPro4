@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="dk.sdu.mmmi.cbse.osgiplayer2.plugin">
-    <implementation class="dk.sdu.mmmi.cbse.osgiplayer2.Player2Plugin"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="AIPlugin">
+    <implementation class="sdu.mmmi.softwareengineering.osgiai.AIPlugin"/>
     <service>
-        <provide interface="dk.sdu.mmmi.cbse.common.services.IGamePluginService"/>
+        <provide interface="sdu.mmmi.softwareengineering.common.services.IGamePluginService"/>
     </service>
 </scr:component>

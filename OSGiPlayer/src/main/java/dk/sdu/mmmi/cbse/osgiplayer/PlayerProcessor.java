@@ -36,6 +36,8 @@ public class PlayerProcessor implements IEntityProcessingService {
             MovingPart movingPart = player.getPart(MovingPart.class);
             ShootingPart shootingPart = player.getPart(ShootingPart.class);
 
+//            System.out.println("x: " + positionPart.getX() + "\ny:" + positionPart.getY());
+            
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.A));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.D));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.W));

@@ -57,8 +57,8 @@ public class MenuState extends GameState {
     public void update(float dt){
         
         handleInput();
-        System.out.println(gameData.getDisplayWidth());
-        System.out.println(gameData.getDisplayHeight());
+//        System.out.println(gameData.getDisplayWidth());
+//        System.out.println(gameData.getDisplayHeight());
         
     }
     
