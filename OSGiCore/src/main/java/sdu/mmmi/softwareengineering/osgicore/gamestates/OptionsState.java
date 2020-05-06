@@ -6,32 +6,39 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import org.openide.util.Exceptions;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
 import sdu.mmmi.softwareengineering.osgicore.Game;
 import sdu.mmmi.softwareengineering.osgicore.managers.GameStateManager;
 
 
-public class MenuState extends GameState {
-   
-    private SpriteBatch sb;
+public class OptionsState extends GameState{
+    
+        private SpriteBatch sb;
     private GameData gameData = new GameData();
 
     
-    private final String title = "JØLP ETERNAL";
+    private final String title = "OPTIONS";
     
     private int currentItem;
     private String[] menuItems;
     
     private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/CaviarDreams.ttf"));
-    private FreeTypeFontParameter parameterTitle = new FreeTypeFontParameter();
-    private FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameterTitle = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
     private BitmapFont titleFont;
     private BitmapFont font;
+    private String[] able;
+    private File enemyDest;
+    private File enemySource;
+    private String userPath = System.getProperty("user.dir");
 
     
-    public MenuState(GameStateManager gsm){
+     public OptionsState(GameStateManager gsm){
         super(gsm);
         init();
     }
@@ -40,16 +47,28 @@ public class MenuState extends GameState {
     public void init(){
         sb = new SpriteBatch();
         
+        File filePath;
+        int i = 3;
+        for(filePath = new File(userPath); i > 0; filePath = filePath.getParentFile()){
+            i--;
+        }
         parameterTitle.size = 55;
         parameter.size = 35;
         titleFont = generator.generateFont(parameterTitle);
         font = generator.generateFont(parameter);
+        
+        enemyDest = new File("C:\\ProjectJar\\OSGiEnemy-1.0-SNAPSHOT.jar");
+        enemySource = new File (filePath + "\\OSGiEnemy\\target\\OSGiEnemy-1.0-SNAPSHOT.jar");
+        
+        able = new String[]{
+            "Disabled",
+            "Enabled"
+        };
 
 
         menuItems = new String[]{
-            "Play",
-            "Options",
-            "Exit"
+            "Enemies: " + able[0],
+            "Back"
         };
     }
     
@@ -76,6 +95,10 @@ public class MenuState extends GameState {
            font.draw(sb, menuItems[i], Gdx.graphics.getWidth() / 2 - 125, Gdx.graphics.getHeight() / 2 + y);
            y -= 50;
        }
+       
+        if (enemyDest.exists()){
+            menuItems[0] = "Enemies: " + able[1];
+        }
         
         sb.end();
 
@@ -102,15 +125,22 @@ public class MenuState extends GameState {
     private void select() {
         //play
         if(currentItem == 0) {
-            gsm.setState(GameStateManager.PLAY);
+            if (!enemyDest.exists()){
+                try {
+                    Files.copy(enemySource.toPath(), enemyDest.toPath());
+                    menuItems[0] = "Enemies: " + able[1];
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }else{
+                enemyDest.delete();
+                menuItems[0] = "Enemies: " + able[0];
+            }
+
         }
-        //options
+        //back
         else if(currentItem == 1) {
-            gsm.setState(GameStateManager.OPTIONS);
-        }
-        //exit game
-        else if(currentItem == 2) {
-            Gdx.app.exit();
+            gsm.setState(GameStateManager.MENU);
         }
     }
     

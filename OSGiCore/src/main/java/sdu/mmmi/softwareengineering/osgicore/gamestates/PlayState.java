@@ -26,18 +26,12 @@ public class PlayState extends GameState{
     @Override
     public void update(float dt){
         handleInput();
-//        System.out.println("PLAY UPDATE");
     }
     
     @Override
     public void draw(){
-//        System.out.println("PLAY DRAW");
-    }
-    
-    @Override
-    public void handleInput(){
         if(gameData.getKeys().isPressed(GameKeys.ESCAPE)){
-            Gdx.app.exit();
+            gsm.setState(GameStateManager.MENU);
         }
         if(gameData.getKeys().isDown(GameKeys.M)){
             gsm.setState(GameStateManager.MAP);
