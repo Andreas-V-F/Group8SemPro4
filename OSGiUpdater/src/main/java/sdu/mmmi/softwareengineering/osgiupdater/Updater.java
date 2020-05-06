@@ -23,9 +23,15 @@ public class Updater implements BundleActivator {
     private final List<Bundle> failedBundles = new ArrayList<>();
 
     public void start(BundleContext bundleContext) throws Exception {
-
+        
+        
         File filePath = createDirectory("C:\\ProjectJar");
-
+        
+        for (File file : filePath.listFiles()) {
+            file.delete();
+        }
+        
+        
         Path MODULES_DIRECTORY = Paths.get(filePath.getPath());
 
         this.bundleContext = bundleContext;

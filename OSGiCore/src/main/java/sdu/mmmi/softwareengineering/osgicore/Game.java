@@ -31,13 +31,14 @@ public class Game implements ApplicationListener {
     private static World world = new World();
     private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private static final List<IGamePluginService> tempGamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
     private SpriteBatch spriteBatch;
     private GameStateManager gsm;
-    
+
     private boolean drawHitboxes = false;
-    
+
     public Game() {
         init();
     }
@@ -70,46 +71,40 @@ public class Game implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         gsm = new GameStateManager();
-        
+
         // Loading Assets
         AssetMan.loadAssets();
-        // Printing the process on the loading
+        // Shows the process on the loading in the console
+        float k = 0;
         while (!AssetMan.manager.update()) {
-            System.out.println(AssetMan.manager.getProgress() * 100 + "%");
-        };
+            float j = AssetMan.manager.getProgress();
+            if (j != k) {
+                System.out.println(Math.round(AssetMan.manager.getProgress() * 100) + "%");
+                k = j;
+            }
+        }
         if (AssetMan.manager.getProgress() == 1) {
             System.out.println("100%");
             System.out.println("All Assets has been loaded!");
-        }
-        for(IGamePluginService p : gamePluginList){
-            if(p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin")){
-                p.start(gameData, world);
-            }
-        }
-        for(IGamePluginService p : gamePluginList){
-            if(!p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin")){
-                p.start(gameData, world);
-            }
         }
     }
 
     @Override
     public void render() {
-        
+
         // clear screen to black
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Sets the background to a lightblue
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
+
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
 
-        if (gsm.gState == 1){
-            update();   
+        if (gsm.gState == 1) {
+            update();
         }
 
         if (gameData.getKeys().isDown(GameKeys.ALT) || drawHitboxes) {
@@ -119,7 +114,6 @@ public class Game implements ApplicationListener {
         if (gameData.getKeys().isDown(GameKeys.CTRL)) {
             drawHitboxes = false;
         }
-        
 
 //
         // Maybe we should make the assets load here??
@@ -168,6 +162,21 @@ public class Game implements ApplicationListener {
     }
 
     private void update() {
+        
+        for (IGamePluginService p : gamePluginList) {
+            if (p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin") && !tempGamePluginList.contains(p)) {
+                p.start(gameData, world);
+                tempGamePluginList.add(p);
+            }
+        }
+        for (IGamePluginService p : gamePluginList) {
+            if (!p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin")  && !tempGamePluginList.contains(p)) {
+                p.start(gameData, world);
+                tempGamePluginList.add(p);
+            }
+        }
+        
+        
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);
@@ -258,12 +267,12 @@ public class Game implements ApplicationListener {
 
     public void removeGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.remove(plugin);
+        this.tempGamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }
 
     public static World getWorld() {
         return world;
     }
-    
 
 }

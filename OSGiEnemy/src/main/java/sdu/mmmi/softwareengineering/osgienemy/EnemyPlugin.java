@@ -5,6 +5,7 @@
  */
 package sdu.mmmi.softwareengineering.osgienemy;
 
+import com.badlogic.gdx.Gdx;
 import java.util.Random;
 import org.openide.util.Exceptions;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
@@ -32,9 +33,9 @@ public class EnemyPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
 
-        System.out.println("Get Levels Size " + world.getLevels().size());
+//        System.out.println("Get Levels Size " + world.getLevels().size());
         for (Level l : world.getLevels()) {
-            System.out.println("Level ID: " + l.getID());
+//            System.out.println("Level ID: " + l.getID());
             if (l.getID().equals(world.getCurrentLevel().getID())) {
                 continue;
             }
@@ -53,7 +54,7 @@ public class EnemyPlugin implements IGamePluginService {
 
         float maxSpeed = 250;
         Random rand = new Random();
-
+        
         float x = rand.nextInt(gameData.getDisplayWidth() - 200) + 100;
         float y = rand.nextInt(gameData.getDisplayHeight() - 200) + 100;
 

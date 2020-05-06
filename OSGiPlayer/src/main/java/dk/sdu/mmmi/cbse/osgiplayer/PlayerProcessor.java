@@ -84,8 +84,6 @@ public class PlayerProcessor implements IEntityProcessingService {
         if (gameData.getKeys().isDown(GameKeys.D)) {
             entity.setTexture(AssetMan.manager.get(right));
         }
-        LifePart lp = entity.getPart(LifePart.class);
-        System.out.println("PP helth " + lp.getLife());
     }
 
     private void updateHitbox(Entity entity) {
