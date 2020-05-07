@@ -85,7 +85,7 @@ public class Game implements ApplicationListener {
         }
         if (AssetMan.manager.getProgress() == 1) {
             System.out.println("100%");
-            System.out.println("All Assets has been loaded!");
+            System.out.println("All Assets have been loaded!");
         }
     }
 
