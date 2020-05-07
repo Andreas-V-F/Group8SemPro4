@@ -27,7 +27,7 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        addRandomStructures(world.getCurrentLevel(), 1200, 1000);
+        addRandomStructures(world.getCurrentLevel(), gameData.getDisplayWidth(), gameData.getDisplayHeight());
 //        Level level = createLevel(gameData);
 //        String id = world.addLevel(level);
 //        world.setCurrentLevel(id);
@@ -46,7 +46,7 @@ public class LevelPlugin implements IGamePluginService {
 
     public Level createLevel(GameData gameData) {
         Level level = new Level(0, 0);
-        addRandomStructures(level, 1200, 1000);
+        addRandomStructures(level, gameData.getDisplayWidth(), gameData.getDisplayHeight());
         return level;
     }
 

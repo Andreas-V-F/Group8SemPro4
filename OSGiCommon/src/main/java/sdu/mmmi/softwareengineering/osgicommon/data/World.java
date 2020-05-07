@@ -17,6 +17,12 @@ public class World {
     private String currentLevelID;
     private Level tempLevel = new Level(0, 0);
     private int numberOfRooms = 15;
+    
+    private Grid grid = new Grid();
+
+    public Grid getGrid() {
+        return grid;
+    }
 
     public World() {
         tempLevel.setHasBeenVisited(true);

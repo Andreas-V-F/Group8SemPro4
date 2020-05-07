@@ -77,6 +77,7 @@
         <module>OSGiCollision</module>
         <module>OSGiEnemy</module>
         <module>OSGiLevel</module>
+    <module>OSGiAI</module>
   </modules>
 
     <properties>

@@ -18,6 +18,7 @@ import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
+import sdu.mmmi.softwareengineering.osgicommon.data.Grid;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -38,6 +39,7 @@ public class Game implements ApplicationListener {
     private GameStateManager gsm;
 
     private boolean drawHitboxes = false;
+    
 
     public Game() {
         init();
@@ -47,8 +49,8 @@ public class Game implements ApplicationListener {
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
-        cfg.width = 1200;
-        cfg.height = 1000;
+        cfg.width = 800;
+        cfg.height = 800;
         cfg.useGL30 = false;
         cfg.resizable = false;
 
@@ -57,11 +59,12 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+        
         spriteBatch = new SpriteBatch();
 
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
-
+        
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
@@ -69,6 +72,10 @@ public class Game implements ApplicationListener {
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+        
+        
+        world.getGrid().fillGrid();
+        
 
         gsm = new GameStateManager();
 
