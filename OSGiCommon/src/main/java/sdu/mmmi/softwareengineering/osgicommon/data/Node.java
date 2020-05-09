@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sdu.mmmi.softwareengineering.osgicommon.data;
 
 /**
@@ -14,11 +13,18 @@ public class Node {
 
     private int x;
     private int y;
-    
+
     private int height = 16;
     private int width = 16;
-    
-    private boolean walkable;
+
+    private boolean walkable = true;
+
+    private int h = 0;
+    private int g = 0;
+
+    private int f = g + h;
+
+    private Node parentNode;
 
     public Node() {
     }
@@ -32,7 +38,7 @@ public class Node {
         this.x = x;
         this.y = y;
     }
-    
+
     public int getX() {
         return x;
     }
@@ -52,6 +58,41 @@ public class Node {
     public boolean isWalkable() {
         return walkable;
     }
+
+    public void setWalkable(boolean walkable) {
+        this.walkable = walkable;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void setH(int h) {
+        this.h = h;
+    }
+
+    public int getG() {
+        return g;
+    }
+
+    public void setG(int g) {
+        this.g = g;
+    }
+
+    public int getF() {
+        return f;
+    }
+
+    public Node getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(Node parentNode) {
+        this.parentNode = parentNode;
+    }
     
-    
+    public void calcF() {
+        this.f = this.g + this.h;
+    }
+
 }

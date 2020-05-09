@@ -21,22 +21,21 @@ public class PlayerProcessor implements IEntityProcessingService {
     private long time;
     private long delay = 100;
     private boolean first = true;
-    
 
     @Override
     public void process(GameData gameData, World world) {
-        
+
         for (Entity player : world.getEntities(Player.class)) {
-            
-            if(first){
+
+            if (first) {
                 player.setTexture(AssetMan.manager.get(AssetMan.characterDown));
                 first = false;
             }
-            
+
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
             ShootingPart shootingPart = player.getPart(ShootingPart.class);
-            
+
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.A));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.D));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.W));
