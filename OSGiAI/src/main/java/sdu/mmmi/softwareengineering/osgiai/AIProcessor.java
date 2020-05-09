@@ -26,16 +26,46 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  */
 public class AIProcessor implements IEntityProcessingService {
 
+    int counter = 0;
+    int delay = 250;
+
     @Override
     public void process(GameData gameData, World world) {
-        Node goalNode = getPlayerNode(world);
+
+        ArrayList<Entity> arrayList = new ArrayList();
 
         for (Entity entity : world.getEntities()) {
             if (!entity.getIsPlayer() && !entity.getClass().equals(Bullet.class)) {
-                List l = findPath(getEnemyNode(entity, world), goalNode, world);
-                System.out.println("hej");
+                arrayList.add(entity);
             }
         }
+        
+        Node goalNode = getPlayerNode(world);
+        Entity e = null;
+
+        if (counter == delay && !(arrayList.size() < 1)) {
+            e = arrayList.get(0);
+        }
+
+        if (counter == delay * 2 && !(arrayList.size() < 2)) {
+            e = arrayList.get(1);
+        }
+
+        if (counter == delay * 3 && !(arrayList.size() < 3)) {
+            e = arrayList.get(2);
+        }
+
+        if (counter == delay * 4 && !(arrayList.size() < 4)) {
+            e = arrayList.get(3);
+            counter = 0;
+        }
+
+        if (e != null) {
+            List l = findPath(getEnemyNode(e, world), goalNode, world);
+            processEnemyMovement(e, (Node) l.get(0), gameData);
+        }
+
+        counter++;
 
     }
 
@@ -84,18 +114,18 @@ public class AIProcessor implements IEntityProcessingService {
                 boolean isClosed = closedList.contains(neighbourNode);
 
                 int costFromStart = node.getCostFromStart() + node.getCost(neighbourNode);
-                
-                if((!isOpen && !isClosed) || costFromStart < neighbourNode.getCostFromStart()){
+
+                if ((!isOpen && !isClosed) || costFromStart < neighbourNode.getCostFromStart()) {
                     neighbourNode.setParentNode(node);
                     neighbourNode.setCostFromStart(costFromStart);
                     neighbourNode.setEstimatedCostToGoal(neighbourNode.getEstimatedCost(goalNode));
-                    if(isClosed){
+                    if (isClosed) {
                         closedList.remove(neighbourNode);
                     }
-                    if(!isOpen){
+                    if (!isOpen) {
                         openList.add(neighbourNode);
                     }
-                } 
+                }
             }
             closedList.add(node);
         }
@@ -141,7 +171,7 @@ public class AIProcessor implements IEntityProcessingService {
                     newNode = n;
                 }
             }
-            if(newNode == null){
+            if (newNode == null) {
                 continue;
             }
             if (!checkIsWalkable(world, newNode)) {
@@ -181,21 +211,6 @@ public class AIProcessor implements IEntityProcessingService {
         return null;
     }
 
-    private LinkedList<Node> getPath(Node node) {
-        LinkedList<Node> path = new LinkedList<>();
-        System.out.println(node + " 1node");
-        System.out.println(node.getParentNode() + " 1nodeparent");
-        while (node.getParentNode() != null) {
-            System.out.println(node + " node");
-            System.out.println(node.getParentNode() + " nodeparent");
-
-            node = node.getParentNode();
-            path.add(node);
-        }
-        return path;
-
-    }
-
     private Node getEnemyNode(Entity e, World world) {
         PositionPart enmemyPositionPart = e.getPart(PositionPart.class
         );
@@ -211,5 +226,35 @@ public class AIProcessor implements IEntityProcessingService {
         }
 
         return null;
+    }
+
+    private void processEnemyMovement(Entity e, Node nextNode, GameData gameData) {
+        PositionPart enemyPositionPart = e.getPart(PositionPart.class);
+        MovingPart enemyMovingPart = e.getPart(MovingPart.class);
+
+        boolean inPosition = false;
+        int buffer = 10;
+
+        while (!inPosition) {
+
+            if (nextNode.getX() > enemyPositionPart.getX()) {
+                enemyMovingPart.setRight(true);
+            }
+            if (nextNode.getX() < enemyPositionPart.getX()) {
+                enemyMovingPart.setLeft(true);
+            }
+            if (nextNode.getY() > enemyPositionPart.getY()) {
+                enemyMovingPart.setUp(true);
+            }
+            if (nextNode.getY() < enemyPositionPart.getY()) {
+                enemyMovingPart.setDown(true);
+            }
+            
+            enemyMovingPart.process(gameData, e);
+
+            if (nextNode.getX() + buffer >= enemyPositionPart.getX() && nextNode.getX() - buffer <= enemyPositionPart.getX() && nextNode.getY() + buffer >= enemyPositionPart.getY() && nextNode.getY() - buffer <= enemyPositionPart.getY()) {
+                inPosition = true;
+            }
+        }
     }
 }

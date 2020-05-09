@@ -22,11 +22,11 @@ public class EnemyProcessor implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        
+
         if (first) {
-            for(Level l : world.getLevels()){
-                for(Entity entity : l.getEntities(Enemy.class)){
-                     entity.setTexture(AssetMan.manager.get(AssetMan.happy_boiii_down));
+            for (Level l : world.getLevels()) {
+                for (Entity entity : l.getEntities(Enemy.class)) {
+                    entity.setTexture(AssetMan.manager.get(AssetMan.happy_boiii_down));
                 }
             }
             first = false;
@@ -34,7 +34,6 @@ public class EnemyProcessor implements IEntityProcessingService {
 
         for (Entity entity : world.getEntities(Enemy.class)) {
 
-            PositionPart positionPart = entity.getPart(PositionPart.class);
             MovingPart movingPart = entity.getPart(MovingPart.class);
             ShootingPart shootingPart = entity.getPart(ShootingPart.class);
 
@@ -44,7 +43,6 @@ public class EnemyProcessor implements IEntityProcessingService {
             movingPart.setDown(gameData.getKeys().isDown(GameKeys.DOWN));
 
             movingPart.process(gameData, entity);
-            positionPart.process(gameData, entity);
 
             updateEnemy(gameData, entity, AssetMan.happy_boiii_left, AssetMan.happy_boiii_right, AssetMan.happy_boiii_up, AssetMan.happy_boiii_down);
 
