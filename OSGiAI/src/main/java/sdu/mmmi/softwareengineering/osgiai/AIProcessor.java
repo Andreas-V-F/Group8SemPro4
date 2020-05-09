@@ -103,7 +103,6 @@ public class AIProcessor implements IEntityProcessingService {
     }
 
     private boolean checkIsWalkable(World world, Node node) {
-
         for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
             float unMinX = un.getShapeX()[0];
             float unMinY = un.getShapeY()[0];
@@ -141,6 +140,9 @@ public class AIProcessor implements IEntityProcessingService {
                 if (n.getX() == nodePosition[0] && n.getY() == nodePosition[1]) {
                     newNode = n;
                 }
+            }
+            if(newNode == null){
+                continue;
             }
             if (!checkIsWalkable(world, newNode)) {
                 continue;
