@@ -20,6 +20,7 @@ public class BulletControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
+        System.out.println("hejsa");
         for (Entity entity : world.getEntities()) {
             if (entity.getPart(ShootingPart.class) != null) {
 
@@ -33,19 +34,20 @@ public class BulletControlSystem implements IEntityProcessingService {
                     bullet = createBullet(entity, gameData);
                     shootingPart.setIsShooting(false);
                     world.addEntity(bullet);
+                    
                 }
             }
         }
 
         for (Entity b : world.getEntities(Bullet.class)) {
-
+            
             PositionPart ppb = b.getPart(PositionPart.class);
             MovingPart mpb = b.getPart(MovingPart.class);
             TimerPart btp = b.getPart(TimerPart.class);
             if (ppb.getRadians() == (float) Math.PI / 2) {
                 mpb.setUp(true);
             } else if (ppb.getRadians() == (float) (Math.PI * 10)) {
-                mpb.setDown(true);
+                 mpb.setDown(true);
             } else if (ppb.getRadians() == (float) Math.PI) {
                 mpb.setLeft(true);
             } else {

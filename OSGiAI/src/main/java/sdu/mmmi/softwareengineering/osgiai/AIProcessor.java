@@ -17,6 +17,7 @@ import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
+import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 /**
@@ -26,8 +27,10 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  */
 public class AIProcessor implements IEntityProcessingService {
 
-    int counter = 0;
-    int delay = 250;
+    int counter = 4;
+    int delay = 1;
+    boolean canMove = true;
+    List l = null;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -39,34 +42,25 @@ public class AIProcessor implements IEntityProcessingService {
                 arrayList.add(entity);
             }
         }
-        
-        Node goalNode = getPlayerNode(world);
         Entity e = null;
 
-        if (counter == delay && !(arrayList.size() < 1)) {
+        if (!arrayList.isEmpty()) {
             e = arrayList.get(0);
         }
 
-        if (counter == delay * 2 && !(arrayList.size() < 2)) {
-            e = arrayList.get(1);
-        }
-
-        if (counter == delay * 3 && !(arrayList.size() < 3)) {
-            e = arrayList.get(2);
-        }
-
-        if (counter == delay * 4 && !(arrayList.size() < 4)) {
-            e = arrayList.get(3);
-            counter = 0;
-        }
-
         if (e != null) {
-            List l = findPath(getEnemyNode(e, world), goalNode, world);
-            processEnemyMovement(e, (Node) l.get(0), gameData);
+
+            if (counter > 3) {
+                Node goalNode = getPlayerNode(world);
+                l = findPath(getEnemyNode(e, world), goalNode, world);
+                counter = 0;
+            }
+            System.out.println(counter);
+            if (processEnemyMovement(e, (Node) l.get(counter), gameData)) {
+                counter++;
+            }
+
         }
-
-        counter++;
-
     }
 
     public static class PriorityList extends LinkedList {
@@ -228,33 +222,25 @@ public class AIProcessor implements IEntityProcessingService {
         return null;
     }
 
-    private void processEnemyMovement(Entity e, Node nextNode, GameData gameData) {
+    private boolean processEnemyMovement(Entity e, Node nextNode, GameData gameData) {
         PositionPart enemyPositionPart = e.getPart(PositionPart.class);
         MovingPart enemyMovingPart = e.getPart(MovingPart.class);
-
+        enemyMovingPart.setMaxSpeed(200);
         boolean inPosition = false;
-        int buffer = 10;
+        int buffer = 8;
 
-        while (!inPosition) {
+        enemyMovingPart.setRight(nextNode.getX() * nextNode.getWidth() + buffer > enemyPositionPart.getX());
+        
+        enemyMovingPart.setLeft(nextNode.getX() * nextNode.getWidth() - buffer < enemyPositionPart.getX());
+        
+        enemyMovingPart.setUp(nextNode.getY() * nextNode.getHeight() + buffer > enemyPositionPart.getY());
+        
+        enemyMovingPart.setDown(nextNode.getY() * nextNode.getHeight() - buffer < enemyPositionPart.getY());
 
-            if (nextNode.getX() > enemyPositionPart.getX()) {
-                enemyMovingPart.setRight(true);
-            }
-            if (nextNode.getX() < enemyPositionPart.getX()) {
-                enemyMovingPart.setLeft(true);
-            }
-            if (nextNode.getY() > enemyPositionPart.getY()) {
-                enemyMovingPart.setUp(true);
-            }
-            if (nextNode.getY() < enemyPositionPart.getY()) {
-                enemyMovingPart.setDown(true);
-            }
-            
-            enemyMovingPart.process(gameData, e);
-
-            if (nextNode.getX() + buffer >= enemyPositionPart.getX() && nextNode.getX() - buffer <= enemyPositionPart.getX() && nextNode.getY() + buffer >= enemyPositionPart.getY() && nextNode.getY() - buffer <= enemyPositionPart.getY()) {
-                inPosition = true;
-            }
+        enemyMovingPart.process(gameData, e);
+        if (nextNode.getX() * nextNode.getWidth() + buffer >= enemyPositionPart.getX() && nextNode.getX() * nextNode.getWidth() - buffer <= enemyPositionPart.getX() && nextNode.getY() * nextNode.getHeight() + buffer >= enemyPositionPart.getY() && nextNode.getY() * nextNode.getHeight() - buffer <= enemyPositionPart.getY()) {
+            inPosition = true;
         }
+        return inPosition;
     }
 }

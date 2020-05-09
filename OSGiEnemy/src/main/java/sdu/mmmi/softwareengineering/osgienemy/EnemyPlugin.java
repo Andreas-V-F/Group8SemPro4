@@ -5,14 +5,11 @@
  */
 package sdu.mmmi.softwareengineering.osgienemy;
 
-import com.badlogic.gdx.Gdx;
 import java.util.Random;
-import org.openide.util.Exceptions;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
-import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.EntityPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
@@ -40,7 +37,7 @@ public class EnemyPlugin implements IGamePluginService {
                 continue;
             }
             Random rand = new Random();
-            for (int i = 0; i < rand.nextInt(4) + 1; i++) {
+            for (int i = 0; i < rand.nextInt(1) + 1; i++) {
                 Entity enemy = createEnemy(gameData);
                 enemyID = l.addEntity(enemy);
                 ShootingPart ep = enemy.getPart(ShootingPart.class);
@@ -55,8 +52,10 @@ public class EnemyPlugin implements IGamePluginService {
         float maxSpeed = 250;
         Random rand = new Random();
         
-        float x = rand.nextInt(gameData.getDisplayWidth() - 200) + 100;
-        float y = rand.nextInt(gameData.getDisplayHeight() - 200) + 100;
+//        float x = rand.nextInt(gameData.getDisplayWidth() - 200) + 100;
+//        float y = rand.nextInt(gameData.getDisplayHeight() - 200) + 100;
+        float x = gameData.getDisplayWidth()/2;
+        float y = gameData.getDisplayHeight()/2;
 
         float radians = 3.1415f / 2;
         enemy.add(new LifePart(3));
