@@ -9,7 +9,7 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
  *
  * @author Mikkel Høyberg
  */
-public class Node {
+public class Node implements Comparable{
 
     private int x;
     private int y;
@@ -19,10 +19,8 @@ public class Node {
 
     private boolean walkable = true;
 
-    private int h = 0;
-    private int g = 0;
-
-    private int f = g + h;
+    private int costFromStart;
+    private int estimatedCostToGoal;
 
     private Node parentNode;
 
@@ -63,26 +61,6 @@ public class Node {
         this.walkable = walkable;
     }
 
-    public int getH() {
-        return h;
-    }
-
-    public void setH(int h) {
-        this.h = h;
-    }
-
-    public int getG() {
-        return g;
-    }
-
-    public void setG(int g) {
-        this.g = g;
-    }
-
-    public int getF() {
-        return f;
-    }
-
     public Node getParentNode() {
         return parentNode;
     }
@@ -91,8 +69,43 @@ public class Node {
         this.parentNode = parentNode;
     }
     
-    public void calcF() {
-        this.f = this.g + this.h;
+    public int getCost() {
+        return costFromStart + estimatedCostToGoal;
     }
+    
+    public int getCost(Node node){
+        return 1;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+        float thisValue = this.getCost();
+        float otherValue = ((Node)other).getCost();
+        
+        float v = thisValue - otherValue;
+        return (v>0)?1:(v<0)?-1:0;
+    }
+    
+    public int getEstimatedCost(Node node){
+        return Math.abs(node.getEstimatedCostToGoal() - this.getEstimatedCostToGoal());
+    }
+
+    public int getCostFromStart() {
+        return costFromStart;
+    }
+
+    public void setCostFromStart(int costFromStart) {
+        this.costFromStart = costFromStart;
+    }
+
+    public int getEstimatedCostToGoal() {
+        return estimatedCostToGoal;
+    }
+
+    public void setEstimatedCostToGoal(int estimatedCostToGoal) {
+        this.estimatedCostToGoal = estimatedCostToGoal;
+    }
+    
+    
 
 }

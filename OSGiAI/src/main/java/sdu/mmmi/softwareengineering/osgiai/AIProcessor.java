@@ -8,6 +8,7 @@ package sdu.mmmi.softwareengineering.osgiai;
 import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
@@ -27,73 +28,76 @@ public class AIProcessor implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        System.out.println(aStar(world));
-
-    }
-
-    private LinkedList<Node> aStar(World world) {
-        ArrayList<Node> openList = new ArrayList<>();
-        ArrayList<Node> closedList = new ArrayList<>();
-        ArrayList<Node> childrenList = new ArrayList<>();
-
-        Node startNode;
+        Node goalNode = getPlayerNode(world);
 
         for (Entity entity : world.getEntities()) {
             if (!entity.getIsPlayer() && !entity.getClass().equals(Bullet.class)) {
-                PositionPart enmemyPositionPart = entity.getPart(PositionPart.class);
-                int enemyNodeX = (int) Math.floor(enmemyPositionPart.getX() / world.getGrid().getGrid().get(0).getWidth());
-                int enemyNodeY = (int) Math.floor(enmemyPositionPart.getY() / world.getGrid().getGrid().get(0).getHeight());
+                List l = findPath(getEnemyNode(entity, world), goalNode, world);
+                System.out.println("hej");
+            }
+        }
 
-                for (Node node : world.getGrid().getGrid()) {
-                    if (node.getX() == enemyNodeX && node.getY() == enemyNodeY) {
-                        startNode = node;
-                        openList.add(startNode);
-                    }
-                }
+    }
 
-                while (openList.size() > 0) {
-                    Node currentNode = openList.get(0);
-                    int currentIndex = 0;
+    public static class PriorityList extends LinkedList {
 
-                    for (Node node : openList) {
-                        if (node.getF() < currentNode.getF()) {
-                            currentNode = node;
-                            currentIndex = openList.indexOf(node);
-                        }
-                    }
-
-                    openList.remove(currentIndex);
-                    closedList.add(currentNode);
-
-                    if (closedList.get(closedList.size() - 1) == getPlayerNode(world)) {
-                        System.out.println("Im here");
-                        return getPath(currentNode);
-                    }
-
-                    for (Node node : expandNode(currentNode, world)) {
-                        childrenList.add(node);
-                    }
-
-                    for (Node node : childrenList) {
-                        if (closedList.contains(node)) {
-                            continue;
-                        }
-
-                        node.setG(currentNode.getG() + 1);
-                        node.setH((int) Math.pow((node.getX() - getPlayerNode(world).getX()), 2)
-                                + (int) Math.pow((node.getY() - getPlayerNode(world).getY()), 2));
-                        node.calcF();
-
-                        for (Node openNode : openList) {
-                            if (node == openNode && node.getG() > openNode.getG()) {
-                                continue;
-                            }
-                        }
-                        openList.add(node);
-                    }
-
+        public void add(Comparable object) {
+            for (int i = 0; i < size(); i++) {
+                if (object.compareTo(get(i)) <= 0) {
+                    add(i, object);
+                    return;
                 }
             }
+            addLast(object);
+        }
+    }
+
+    protected List<Node> constructPath(Node node) {
+        LinkedList path = new LinkedList();
+        while (node.getParentNode() != null) {
+            path.addFirst(node);
+            node = node.getParentNode();
+        }
+        return path;
+    }
+
+    private List findPath(Node startNode, Node goalNode, World world) {
+        PriorityList openList = new PriorityList();
+        LinkedList closedList = new LinkedList();
+
+        startNode.setCostFromStart(0);
+        startNode.setEstimatedCostToGoal(startNode.getEstimatedCost(goalNode));
+        startNode.setParentNode(null);
+        openList.add(startNode);
+
+        while (!openList.isEmpty()) {
+            Node node = (Node) openList.removeFirst();
+            if (node == goalNode) {
+                return constructPath(goalNode);
+            }
+
+            List neighbours = getNeighbourNodes(node, world);
+            for (Object o : neighbours) {
+                Node neighbourNode = (Node) o;
+
+                boolean isOpen = openList.contains(neighbourNode);
+                boolean isClosed = closedList.contains(neighbourNode);
+
+                int costFromStart = node.getCostFromStart() + node.getCost(neighbourNode);
+                
+                if((!isOpen && !isClosed) || costFromStart < neighbourNode.getCostFromStart()){
+                    neighbourNode.setParentNode(node);
+                    neighbourNode.setCostFromStart(costFromStart);
+                    neighbourNode.setEstimatedCostToGoal(neighbourNode.getEstimatedCost(goalNode));
+                    if(isClosed){
+                        closedList.remove(neighbourNode);
+                    }
+                    if(!isOpen){
+                        openList.add(neighbourNode);
+                    }
+                } 
+            }
+            closedList.add(node);
         }
         return null;
     }
@@ -121,7 +125,7 @@ public class AIProcessor implements IEntityProcessingService {
         return node.isWalkable();
     }
 
-    private ArrayList<Node> expandNode(Node node, World world) {
+    private List<Node> getNeighbourNodes(Node node, World world) {
         ArrayList<Node> neighborNodes = new ArrayList<>();
         int[][] newPositions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
@@ -141,7 +145,6 @@ public class AIProcessor implements IEntityProcessingService {
             if (!checkIsWalkable(world, newNode)) {
                 continue;
             }
-            newNode.setParentNode(node);
             neighborNodes.add(newNode);
 
         }
@@ -155,7 +158,10 @@ public class AIProcessor implements IEntityProcessingService {
         for (Entity entity : world.getEntities()) {
             if (entity.getIsPlayer()) {
                 player = entity;
-                playerPositionPart = entity.getPart(PositionPart.class);
+                playerPositionPart
+                        = entity.getPart(PositionPart.class
+                        );
+
                 break;
             }
         }
@@ -180,11 +186,28 @@ public class AIProcessor implements IEntityProcessingService {
         while (node.getParentNode() != null) {
             System.out.println(node + " node");
             System.out.println(node.getParentNode() + " nodeparent");
-            
+
             node = node.getParentNode();
             path.add(node);
-        };
+        }
         return path;
 
+    }
+
+    private Node getEnemyNode(Entity e, World world) {
+        PositionPart enmemyPositionPart = e.getPart(PositionPart.class
+        );
+        int enemyNodeX = (int) Math.floor(enmemyPositionPart.getX() / world.getGrid().getGrid().get(0).getWidth());
+        int enemyNodeY = (int) Math.floor(enmemyPositionPart.getY() / world.getGrid().getGrid().get(0).getHeight());
+
+        for (Node node
+                : world.getGrid()
+                        .getGrid()) {
+            if (node.getX() == enemyNodeX && node.getY() == enemyNodeY) {
+                return node;
+            }
+        }
+
+        return null;
     }
 }
