@@ -50,8 +50,6 @@ public class MapState extends GameState {
         for (Level level : l) {
             
             sr.setColor(Color.BLACK);
-            
-            System.out.println(level.getX() + " " + level.getY());
             if(level.getX() == 0 && level.getY() == 0){
                 sr.setColor(Color.GOLD);
             }
