@@ -82,6 +82,7 @@ public class Collision implements IPostEntityProcessingService {
         for (Entity e : world.getEntities()) {
             for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
                 if (detectCollision(e.getShapeX(), e.getShapeY(), un.getShapeX(), un.getShapeY())) {
+                    System.out.println("col: " + un);
                     if (e.getClass().equals(Bullet.class)) {
                         world.removeEntity(e);
                         continue;
@@ -111,7 +112,7 @@ public class Collision implements IPostEntityProcessingService {
                             }
                         }
                     }
-                    pushBack(e, un);
+                    //pushBack(e, un);
                 }
             }
 

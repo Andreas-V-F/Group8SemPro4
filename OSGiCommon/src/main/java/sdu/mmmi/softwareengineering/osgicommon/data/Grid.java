@@ -8,6 +8,7 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
 
 import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -15,10 +16,11 @@ import java.util.ArrayList;
  */
 public class Grid {
 
-    private ArrayList<Node> grid = new ArrayList<>();
+    private HashMap<Index, Node> grid = new HashMap();
     private Node node = new Node();
 
-    public ArrayList<Node> getGrid() {
+
+    public HashMap getGrid() {
         return grid;
     }
     
@@ -26,7 +28,7 @@ public class Grid {
         for (int i = 0; i < (Gdx.graphics.getWidth() / node.getWidth()); i++) {
             for (int j = 0; j < (Gdx.graphics.getHeight() / node.getHeight()); j++) {
                 node = new Node(i, j);
-                grid.add(node);
+                grid.put(new Index(i,j), node);
             }
         }
     }

@@ -73,8 +73,7 @@ public class Game implements ApplicationListener {
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
         
-        
-        world.getGrid().fillGrid();
+        world.getGridTemplate().fillGrid();
         
 
         gsm = new GameStateManager();
