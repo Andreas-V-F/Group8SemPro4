@@ -31,17 +31,6 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
-//        System.out.println(world.getGrid().getGrid());
-        //addRandomStructures(world.getCurrentLevel(), gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        //setWalkableNodes(world.getCurrentLevel(), world);
-//        Level level = createLevel(gameData);
-//        String id = world.addLevel(level);
-//        world.setCurrentLevel(id);
-//        createDoor(level, id, "LEFT", world, gameData);
-//        createDoor(level, id, "UP", world, gameData);
-//        createDoor(level, id, "DOWN", world, gameData);
-//        createDoor(level, id, "RIGHT", world, gameData);
         fillMap(world.getNumberOfRooms(), world, gameData);
         createMissingDoors(world, gameData);
         world.fillLevelGrids();
@@ -56,8 +45,6 @@ public class LevelPlugin implements IGamePluginService {
 
     public Level createLevel(GameData gameData, World world) {
         Level level = new Level(0, 0);
-        //addRandomStructures(level, gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        //setWalkableNodes(level, world);
         return level;
     }
 
@@ -114,10 +101,15 @@ public class LevelPlugin implements IGamePluginService {
             //lower wall
             wall = new Wall(hash.get(new Index(0, 0)), hash.get(new Index((int) width / n.getWidth() - 1, 0)));
             l.addUnplayableArea(wall);
-            
+
             //random wall
-            wall = new Wall(hash.get(new Index(30,30)), hash.get(new Index(20,30)));
+            wall = new Wall(hash.get(new Index(30, 30)), hash.get(new Index(20, 30)));
             l.addUnplayableArea(wall);
+
+            //random wall2
+            wall = new Wall(hash.get(new Index(30, 30)), hash.get(new Index(30, 20)));
+            l.addUnplayableArea(wall);
+
         }
     }
 
@@ -229,7 +221,7 @@ public class LevelPlugin implements IGamePluginService {
 
                 float nodeMaxX = entry.getValue().getX() * entry.getValue().getWidth() + entry.getValue().getWidth();
                 float nodeMaxY = entry.getValue().getY() * entry.getValue().getHeight() + entry.getValue().getHeight();
-                
+
                 int entityWidthandHeight = 32;
 
                 for (UnplayableArea un : level.getUnplayableAreas()) {

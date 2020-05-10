@@ -29,9 +29,8 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  */
 public class AIProcessor implements IEntityProcessingService {
 
-    int counter = 4;
-    int delay = 1;
-    boolean canMove = true;
+    int delay = 5;
+    int counter = delay;
     List l = null;
 
     @Override
@@ -52,13 +51,19 @@ public class AIProcessor implements IEntityProcessingService {
 
         if (e != null) {
 
-            if (counter > 3) {
+            if (counter > delay-1) {
                 Node goalNode = getPlayerNode(world);
                 //System.out.println("not walkable: " + listNode(world));
                 l = findPath(getEnemyNode(e, world), goalNode, world);
-                if (l != null) {
-                    counter = 0;
-                }
+                counter = 0;
+            }
+            if(l == null){
+                counter = delay;
+                return;
+            }
+            if(l.size()-1 < counter){
+                counter = delay;
+                return;
             }
 
             if (processEnemyMovement(e, (Node) l.get(counter), gameData)) {
