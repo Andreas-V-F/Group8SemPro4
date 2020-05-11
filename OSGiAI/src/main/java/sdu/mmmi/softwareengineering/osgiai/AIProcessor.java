@@ -175,12 +175,7 @@ public class AIProcessor implements IEntityProcessingService {
 
     private LinkedList<Node> getPath(Node node) {
         LinkedList<Node> path = new LinkedList<>();
-        System.out.println(node + " 1node");
-        System.out.println(node.getParentNode() + " 1nodeparent");
         while (node.getParentNode() != null) {
-            System.out.println(node + " node");
-            System.out.println(node.getParentNode() + " nodeparent");
-            
             node = node.getParentNode();
             path.add(node);
         };
