@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.openide.util.Exceptions;
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
@@ -28,7 +29,6 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  *
  * @author Mikkel Høyberg
  */
-
 public class AIProcessor implements Runnable {
 
     List l = null;
@@ -80,8 +80,12 @@ public class AIProcessor implements Runnable {
                 }
             }
             
-            System.out.println("yeet");
-            
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
         }
     }
 
@@ -222,7 +226,7 @@ public class AIProcessor implements Runnable {
     private boolean processEnemyMovement(Entity e, Node nextNode, GameData gameData) {
         PositionPart enemyPositionPart = e.getPart(PositionPart.class);
         MovingPart enemyMovingPart = e.getPart(MovingPart.class);
-        enemyMovingPart.setMaxSpeed(0.1f);
+        enemyMovingPart.setMaxSpeed(20f);
         boolean inPosition = false;
         int buffer = 1;
 
