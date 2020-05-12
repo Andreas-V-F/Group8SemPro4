@@ -9,9 +9,11 @@ import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
+import sdu.mmmi.softwareengineering.osgicommon.data.Index;
 import sdu.mmmi.softwareengineering.osgicommon.data.Node;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
@@ -26,7 +28,9 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  *
  * @author Mikkel Høyberg
  */
+
 public class AIProcessor implements Runnable {
+
     List l = null;
     int delay = 5;
     int counter = delay;
@@ -56,7 +60,6 @@ public class AIProcessor implements Runnable {
             }
 
             if (e != null) {
-
                 if (counter > delay - 1) {
                     Node goalNode = getPlayerNode(world);
                     //System.out.println("not walkable: " + listNode(world));
@@ -145,28 +148,6 @@ public class AIProcessor implements Runnable {
         return null;
     }
 
-    private boolean checkIsWalkable(World world, Node node) {
-        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
-            float unMinX = un.getShapeX()[0];
-            float unMinY = un.getShapeY()[0];
-
-            float unMaxX = un.getShapeX()[1];
-            float unMaxY = un.getShapeY()[1];
-
-            int nodeMinX = node.getX() * node.getWidth();
-            int nodeMinY = node.getY() * node.getHeight();
-
-            int nodeMaxX = node.getX() * node.getWidth() + node.getWidth();
-            int nodeMaxY = node.getY() * node.getHeight() + node.getHeight();
-
-            if (nodeMinX >= unMinX && nodeMinY >= unMinY && unMaxX >= nodeMinX && unMaxY >= nodeMinY) {
-                node.setWalkable(false);
-
-            }
-        }
-        return node.isWalkable();
-    }
-
     private List<Node> getNeighbourNodes(Node node, World world) {
         ArrayList<Node> neighborNodes = new ArrayList<>();
         int[][] newPositions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
@@ -174,20 +155,20 @@ public class AIProcessor implements Runnable {
         for (int[] newPosition : newPositions) {
             int[] nodePosition = {node.getX() + newPosition[0], node.getY() + newPosition[1]};
 
-            if (nodePosition[0] > world.getGrid().getGrid().size() - 1 || nodePosition[0] < 0
+            if (nodePosition[0] > world.getGrid().size() - 1 || nodePosition[0] < 0
                     || nodePosition[1] > Gdx.graphics.getHeight() / node.getHeight() - 1 || nodePosition[1] < 0) {
                 continue;
             }
             Node newNode = null;
-            for (Node n : world.getGrid().getGrid()) {
-                if (n.getX() == nodePosition[0] && n.getY() == nodePosition[1]) {
-                    newNode = n;
+            for (Map.Entry<Index, Node> entry : world.getGrid().entrySet()) {
+                if (entry.getValue().getX() == nodePosition[0] && entry.getValue().getY() == nodePosition[1]) {
+                    newNode = entry.getValue();
                 }
             }
             if (newNode == null) {
                 continue;
             }
-            if (!checkIsWalkable(world, newNode)) {
+            if (!newNode.isWalkable()) {
                 continue;
             }
             neighborNodes.add(newNode);
@@ -213,28 +194,25 @@ public class AIProcessor implements Runnable {
         if (playerPositionPart == null) {
             return null;
         }
-        int playerNodeX = (int) Math.floor(playerPositionPart.getX() / world.getGrid().getGrid().get(0).getWidth());
-        int playerNodeY = (int) Math.floor(playerPositionPart.getY() / world.getGrid().getGrid().get(0).getHeight());
+        int playerNodeX = (int) Math.floor(playerPositionPart.getX() / new Node().getWidth());
+        int playerNodeY = (int) Math.floor(playerPositionPart.getY() / new Node().getHeight());
 
-        for (Node node : world.getGrid().getGrid()) {
-            if (node.getX() == playerNodeX && node.getY() == playerNodeY) {
-                return node;
+        for (Map.Entry<Index, Node> entry : world.getGrid().entrySet()) {
+            if (entry.getValue().getX() == playerNodeX && entry.getValue().getY() == playerNodeY) {
+                return entry.getValue();
             }
         }
         return null;
     }
 
     private Node getEnemyNode(Entity e, World world) {
-        PositionPart enmemyPositionPart = e.getPart(PositionPart.class
-        );
-        int enemyNodeX = (int) Math.floor(enmemyPositionPart.getX() / world.getGrid().getGrid().get(0).getWidth());
-        int enemyNodeY = (int) Math.floor(enmemyPositionPart.getY() / world.getGrid().getGrid().get(0).getHeight());
+        PositionPart enmemyPositionPart = e.getPart(PositionPart.class);
+        int enemyNodeX = (int) Math.floor(enmemyPositionPart.getX() / new Node().getWidth());
+        int enemyNodeY = (int) Math.floor(enmemyPositionPart.getY() / new Node().getHeight());
 
-        for (Node node
-                : world.getGrid()
-                        .getGrid()) {
-            if (node.getX() == enemyNodeX && node.getY() == enemyNodeY) {
-                return node;
+        for (Map.Entry<Index, Node> entry : world.getGrid().entrySet()) {
+            if (entry.getValue().getX() == enemyNodeX && entry.getValue().getY() == enemyNodeY) {
+                return entry.getValue();
             }
         }
 
@@ -249,11 +227,11 @@ public class AIProcessor implements Runnable {
         int buffer = 1;
 
         enemyMovingPart.setRight(nextNode.getX() * nextNode.getWidth() + buffer > enemyPositionPart.getX());
-        
+
         enemyMovingPart.setLeft(nextNode.getX() * nextNode.getWidth() - buffer < enemyPositionPart.getX());
-        
+
         enemyMovingPart.setUp(nextNode.getY() * nextNode.getHeight() + buffer > enemyPositionPart.getY());
-        
+
         enemyMovingPart.setDown(nextNode.getY() * nextNode.getHeight() - buffer < enemyPositionPart.getY());
 
         enemyMovingPart.process(gameData, e);
@@ -261,5 +239,15 @@ public class AIProcessor implements Runnable {
             inPosition = true;
         }
         return inPosition;
+    }
+
+    public ArrayList<Node> listNode(World world) {
+        ArrayList<Node> list = new ArrayList();
+        for (Map.Entry<Index, Node> entry : world.getGrid().entrySet()) {
+            if (!entry.getValue().isWalkable()) {
+                list.add(entry.getValue());
+            }
+        }
+        return list;
     }
 }

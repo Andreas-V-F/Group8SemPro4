@@ -7,10 +7,14 @@ package sdu.mmmi.softwareengineering.osgilevel;
 
 import com.badlogic.gdx.assets.AssetManager;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
+import sdu.mmmi.softwareengineering.osgicommon.data.Index;
 import sdu.mmmi.softwareengineering.osgicommon.data.Level;
+import sdu.mmmi.softwareengineering.osgicommon.data.Node;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -27,20 +31,11 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        
-//        System.out.println(world.getGrid().getGrid());
-        
-        
-        addRandomStructures(world.getCurrentLevel(), gameData.getDisplayWidth(), gameData.getDisplayHeight());
-//        Level level = createLevel(gameData);
-//        String id = world.addLevel(level);
-//        world.setCurrentLevel(id);
-//        createDoor(level, id, "LEFT", world, gameData);
-//        createDoor(level, id, "UP", world, gameData);
-//        createDoor(level, id, "DOWN", world, gameData);
-//        createDoor(level, id, "RIGHT", world, gameData);
         fillMap(world.getNumberOfRooms(), world, gameData);
         createMissingDoors(world, gameData);
+        world.fillLevelGrids();
+        addRandomStructures(world, gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        setWalkableNodes(world);
     }
 
     @Override
@@ -48,15 +43,14 @@ public class LevelPlugin implements IGamePluginService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Level createLevel(GameData gameData) {
+    public Level createLevel(GameData gameData, World world) {
         Level level = new Level(0, 0);
-        addRandomStructures(level, gameData.getDisplayWidth(), gameData.getDisplayHeight());
         return level;
     }
 
     public Level createDoor(Level level, Level level2, String rotation, World world, GameData gameData) {
         if (level2 == null) {
-            level2 = createLevel(gameData);
+            level2 = createLevel(gameData, world);
             world.addLevel(level2);
         }
 
@@ -87,33 +81,35 @@ public class LevelPlugin implements IGamePluginService {
         return level2;
     }
 
-    public void addRandomStructures(Level level, float width, float height) {
-        int thickness = 20;
+    public void addRandomStructures(World world, float width, float height) {
+        for (Level l : world.getLevels()) {
+            Node n = new Node();
+            HashMap<Index, Node> hash = l.getGrid();
 
-        //left wall
-        Wall wall = new Wall(0, height, thickness, 0);
-        level.addUnplayableArea(wall);
+            //left wall            
+            Wall wall = new Wall(hash.get(new Index(0, 0)), hash.get(new Index(0, (int) height / n.getHeight() - 1)));
+            l.addUnplayableArea(wall);
 
-        //right wall
-        wall = new Wall(width - thickness, height, width, 0);
-        level.addUnplayableArea(wall);
+            //right wall
+            wall = new Wall(hash.get(new Index((int) width / n.getWidth() - 1, (int) height / n.getHeight() - 1)), hash.get(new Index((int) width / n.getWidth() - 1, 0)));
+            l.addUnplayableArea(wall);
 
-        //upper wall
-        wall = new Wall(0, height, width, height - thickness);
-        level.addUnplayableArea(wall);
+            //upper wall
+            wall = new Wall(hash.get(new Index(0, (int) height / n.getHeight() - 1)), hash.get(new Index((int) width / n.getWidth() - 1, (int) height / n.getHeight() - 1)));
+            l.addUnplayableArea(wall);
 
-        //lower wall
-        wall = new Wall(0, thickness, width, 0);
-        level.addUnplayableArea(wall);
+            //lower wall
+            wall = new Wall(hash.get(new Index(0, 0)), hash.get(new Index((int) width / n.getWidth() - 1, 0)));
+            l.addUnplayableArea(wall);
 
-        Structures structures = new Structures(width, height);
-        for (ArrayList<Wall> w : structures.getStructureList()) {
-            double num = Math.random();
-            if (num < 0.5) {
-                for (Wall walls : w) {
-                    level.addUnplayableArea(walls);
-                }
-            }
+            //random wall
+            wall = new Wall(hash.get(new Index(30, 30)), hash.get(new Index(20, 30)));
+            l.addUnplayableArea(wall);
+
+            //random wall2
+            wall = new Wall(hash.get(new Index(30, 30)), hash.get(new Index(30, 20)));
+            l.addUnplayableArea(wall);
+
         }
     }
 
@@ -214,5 +210,41 @@ public class LevelPlugin implements IGamePluginService {
                 }
             }
         }
+    }
+
+    private void setWalkableNodes(World world) {
+        for (Level level : world.getLevels()) {
+            for (Map.Entry<Index, Node> entry : world.getGrid().entrySet()) {
+
+                float nodeMinX = entry.getValue().getX() * entry.getValue().getWidth();
+                float nodeMinY = entry.getValue().getY() * entry.getValue().getHeight();
+
+                float nodeMaxX = entry.getValue().getX() * entry.getValue().getWidth() + entry.getValue().getWidth();
+                float nodeMaxY = entry.getValue().getY() * entry.getValue().getHeight() + entry.getValue().getHeight();
+
+                int entityWidthandHeight = 32;
+
+                for (UnplayableArea un : level.getUnplayableAreas()) {
+
+//                    if (nodeMinX >= un.getShapeX()[1] && nodeMinY >= un.getShapeY()[1] && un.getShapeX()[3] >= nodeMinX && un.getShapeY()[3] >= nodeMinY) {
+//                        entry.getValue().setWalkable(false);
+//                    } else {
+//                        entry.getValue().setWalkable(true);
+//                    }
+//                    if (un.getShapeX()[1] > nodeMaxX || nodeMinX > un.getShapeX()[3]) {
+//                        entry.getValue().setWalkable(true);
+//                    } else if (un.getShapeY()[1] < nodeMaxY || nodeMinY < un.getShapeY()[3]) {
+//                        entry.getValue().setWalkable(true);
+//                    }
+//                    else{
+//                        entry.getValue().setWalkable(false);
+//                    }
+                    if ((nodeMinX >= un.getShapeX()[0] - entityWidthandHeight && nodeMaxX <= un.getShapeX()[2] + entityWidthandHeight) && (nodeMinY >= un.getShapeY()[0] - entityWidthandHeight && nodeMaxY <= un.getShapeY()[2] + entityWidthandHeight)) {
+                        entry.getValue().setWalkable(false);
+                    }
+                }
+            }
+        }
+
     }
 }

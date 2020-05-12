@@ -2,6 +2,7 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,10 +19,14 @@ public class World {
     private Level tempLevel = new Level(0, 0);
     private int numberOfRooms = 15;
     
-    private Grid grid = new Grid();
+    private Grid gridTemplate = new Grid();
 
-    public Grid getGrid() {
-        return grid;
+    public HashMap<Index, Node> getGrid() {
+        return tempLevel.getGrid();
+    }
+
+    public Grid getGridTemplate() {
+        return gridTemplate;
     }
 
     public World() {
@@ -124,6 +129,12 @@ public class World {
             }
         }
         return l;
+    }
+    
+    public void fillLevelGrids(){
+        for(Level l : levelMap.values()){
+            l.setGrid(gridTemplate.getGrid());
+        }
     }
 
 }

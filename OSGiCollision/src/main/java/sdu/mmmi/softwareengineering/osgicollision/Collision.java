@@ -15,9 +15,6 @@ import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.services.IPostEntityProcessingService;
 
-
-
-
 /**
  *
  * @author andre
@@ -111,7 +108,9 @@ public class Collision implements IPostEntityProcessingService {
                             }
                         }
                     }
-                    pushBack(e, un);
+                    if (e.getIsPlayer()) {
+                        pushBack(e, un);
+                    }
                 }
             }
 
@@ -119,7 +118,7 @@ public class Collision implements IPostEntityProcessingService {
                 if (e.getID().equals(f.getID()) || e.getClass().equals(f.getClass())) {
                     continue;
                 }
-                
+
                 if (e.getClass().equals(Bullet.class)) {
                     Bullet bullet = (Bullet) e;
                     if (bullet.getShooterID().equals(f.getID())) {

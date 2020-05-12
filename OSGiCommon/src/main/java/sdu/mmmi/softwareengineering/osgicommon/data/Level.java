@@ -8,6 +8,7 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import java.util.Map;
@@ -26,6 +27,16 @@ public class Level implements Serializable {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private boolean hasBeenVisited = false;
     private int x, y = 0;
+    
+    private HashMap grid = null;
+
+    public HashMap getGrid() {
+        return grid;
+    }
+    
+    public void setGrid(HashMap<Index, Node> hash){
+        grid = hash;
+    }
 
     public Level(int x, int y) {
         this.x = x;
