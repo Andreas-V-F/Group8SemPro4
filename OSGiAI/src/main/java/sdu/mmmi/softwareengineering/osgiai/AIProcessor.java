@@ -9,11 +9,6 @@ import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-<<<<<<< Updated upstream
-=======
-import java.util.Map;
-import org.openide.util.Exceptions;
->>>>>>> Stashed changes
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
@@ -32,13 +27,6 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  * @author Mikkel Høyberg
  */
 public class AIProcessor implements Runnable {
-
-<<<<<<< Updated upstream
-    int counter = 4;
-    int delay = 1;
-    boolean canMove = true;
-    List l = null;
-=======
     List l = null;
     int delay = 5;
     int counter = delay;
@@ -49,7 +37,6 @@ public class AIProcessor implements Runnable {
         this.world = world;
         this.gameData = gameData;
     }
->>>>>>> Stashed changes
 
     @Override
     public void run() {
@@ -70,18 +57,6 @@ public class AIProcessor implements Runnable {
 
             if (e != null) {
 
-<<<<<<< Updated upstream
-            if (counter > 3) {
-                Node goalNode = getPlayerNode(world);
-                l = findPath(getEnemyNode(e, world), goalNode, world);
-                counter = 0;
-            }
-            System.out.println(counter);
-            if (processEnemyMovement(e, (Node) l.get(counter), gameData)) {
-                counter++;
-            }
-
-=======
                 if (counter > delay - 1) {
                     Node goalNode = getPlayerNode(world);
                     //System.out.println("not walkable: " + listNode(world));
@@ -104,7 +79,6 @@ public class AIProcessor implements Runnable {
             
             System.out.println("yeet");
             
->>>>>>> Stashed changes
         }
     }
 
