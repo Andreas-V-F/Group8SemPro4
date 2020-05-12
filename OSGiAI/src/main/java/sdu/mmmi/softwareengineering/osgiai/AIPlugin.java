@@ -18,7 +18,8 @@ public class AIPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Thread t = new Thread(new AIProcessor(world, gameData));
+        t.start();
     }
 
     @Override

@@ -8,8 +8,8 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IGamePluginService;
 public class Activator implements BundleActivator {
 
     public void start(BundleContext context) throws Exception {
-//        context.registerService(IGamePluginService.class, new AIPlugin(), null);
-        context.registerService(IEntityProcessingService.class, new AIProcessor(), null);
+        context.registerService(IGamePluginService.class, new AIPlugin(), null);
+//        context.registerService(IEntityProcessingService.class, new AIProcessor(), null);
     }
 
     public void stop(BundleContext context) throws Exception {

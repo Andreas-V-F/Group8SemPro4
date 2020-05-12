@@ -9,12 +9,18 @@ import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+<<<<<<< Updated upstream
+=======
+import java.util.Map;
+import org.openide.util.Exceptions;
+>>>>>>> Stashed changes
 import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Node;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
+import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -25,31 +31,46 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService
  *
  * @author Mikkel Høyberg
  */
-public class AIProcessor implements IEntityProcessingService {
+public class AIProcessor implements Runnable {
 
+<<<<<<< Updated upstream
     int counter = 4;
     int delay = 1;
     boolean canMove = true;
     List l = null;
+=======
+    List l = null;
+    int delay = 5;
+    int counter = delay;
+    World world;
+    GameData gameData;
+
+    public AIProcessor(World world, GameData gameData) {
+        this.world = world;
+        this.gameData = gameData;
+    }
+>>>>>>> Stashed changes
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void run() {
 
-        ArrayList<Entity> arrayList = new ArrayList();
+        while (true) {
+            ArrayList<Entity> arrayList = new ArrayList();
 
-        for (Entity entity : world.getEntities()) {
-            if (!entity.getIsPlayer() && !entity.getClass().equals(Bullet.class)) {
-                arrayList.add(entity);
+            for (Entity entity : world.getEntities()) {
+                if (!entity.getIsPlayer() && !entity.getClass().equals(Bullet.class)) {
+                    arrayList.add(entity);
+                }
             }
-        }
-        Entity e = null;
+            Entity e = null;
 
-        if (!arrayList.isEmpty()) {
-            e = arrayList.get(0);
-        }
+            if (!arrayList.isEmpty()) {
+                e = arrayList.get(0);
+            }
 
-        if (e != null) {
+            if (e != null) {
 
+<<<<<<< Updated upstream
             if (counter > 3) {
                 Node goalNode = getPlayerNode(world);
                 l = findPath(getEnemyNode(e, world), goalNode, world);
@@ -60,6 +81,30 @@ public class AIProcessor implements IEntityProcessingService {
                 counter++;
             }
 
+=======
+                if (counter > delay - 1) {
+                    Node goalNode = getPlayerNode(world);
+                    //System.out.println("not walkable: " + listNode(world));
+                    l = findPath(getEnemyNode(e, world), goalNode, world);
+                    counter = 0;
+                }
+                if (l == null) {
+                    counter = delay;
+                    return;
+                }
+                if (l.size() - 1 < counter) {
+                    counter = delay;
+                    return;
+                }
+
+                if (processEnemyMovement(e, (Node) l.get(counter), gameData)) {
+                    counter++;
+                }
+            }
+            
+            System.out.println("yeet");
+            
+>>>>>>> Stashed changes
         }
     }
 
@@ -225,9 +270,9 @@ public class AIProcessor implements IEntityProcessingService {
     private boolean processEnemyMovement(Entity e, Node nextNode, GameData gameData) {
         PositionPart enemyPositionPart = e.getPart(PositionPart.class);
         MovingPart enemyMovingPart = e.getPart(MovingPart.class);
-        enemyMovingPart.setMaxSpeed(200);
+        enemyMovingPart.setMaxSpeed(0.1f);
         boolean inPosition = false;
-        int buffer = 8;
+        int buffer = 1;
 
         enemyMovingPart.setRight(nextNode.getX() * nextNode.getWidth() + buffer > enemyPositionPart.getX());
         
