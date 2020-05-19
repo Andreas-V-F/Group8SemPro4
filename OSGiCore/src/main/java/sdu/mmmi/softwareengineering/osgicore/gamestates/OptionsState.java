@@ -35,6 +35,16 @@ public class OptionsState extends GameState{
     private String[] able;
     private File enemyDest;
     private File enemySource;
+    private File aiSource;
+    private File aiDest;
+    private File collisionSource;
+    private File collisionDest;
+    private File levelSource;
+    private File levelDest;
+    private File playerSource;
+    private File playerDest;
+    private File bulletSource;
+    private File bulletDest;
     private String userPath = System.getProperty("user.dir");
 
     
@@ -58,7 +68,18 @@ public class OptionsState extends GameState{
         font = generator.generateFont(parameter);
         
         enemyDest = new File("C:\\ProjectJar\\OSGiEnemy-1.0-SNAPSHOT.jar");
+        aiDest = new File("C:\\ProjectJar\\OSGiAI-1.0-SNAPSHOT.jar");
+        collisionDest = new File ("C:\\ProjectJar\\OSGiCollision-1.0-SNAPSHOT.jar");
+        levelDest = new File ("C:\\ProjectJar\\OSGiLevel-1.0-SNAPSHOT.jar");
+        playerDest = new File ("C:\\ProjectJar\\OSGiPlayer-1.0-SNAPSHOT.jar");
+        bulletDest = new File ("C:\\ProjectJar\\OSGiCommonBullet-1.0-SNAPSHOT.jar");
+        
         enemySource = new File (filePath + "\\OSGiEnemy\\target\\OSGiEnemy-1.0-SNAPSHOT.jar");
+        aiSource = new File (filePath + "\\OSGiAI\\target\\OSGiAI-1.0-SNAPSHOT.jar");
+        collisionSource = new File (filePath + "\\OSGiCollision\\target\\OSGiCollision-1.0-SNAPSHOT.jar");
+        levelSource = new File (filePath + "\\OSGiLevel\\target\\OSGiLevel-1.0-SNAPSHOT.jar");
+        playerSource = new File (filePath + "\\OSGiPlayer\\target\\OSGiPlayer-1.0-SNAPSHOT.jar");
+        bulletSource = new File (filePath + "\\OSGiCommonBullet\\target\\OSGiCommonBullet-1.0-SNAPSHOT.jar");
         
         able = new String[]{
             "Disabled",
@@ -68,6 +89,11 @@ public class OptionsState extends GameState{
 
         menuItems = new String[]{
             "Enemies: " + able[0],
+            "AI: " + able[0],
+            "Collision: " + able[0],
+            "Level: " + able[0],
+            "Player: " + able[0],
+            "Bullet: " + able[0],
             "Back"
         };
     }
@@ -99,6 +125,21 @@ public class OptionsState extends GameState{
         if (enemyDest.exists()){
             menuItems[0] = "Enemies: " + able[1];
         }
+        if (aiDest.exists()){
+            menuItems[1] = "AI: " + able[1];
+        }
+        if (collisionDest.exists()){
+            menuItems[2] = "Collision: " + able[1];
+        }
+        if (levelDest.exists()){
+            menuItems[3] = "Level: " + able[1];
+        }
+        if (playerDest.exists()){
+            menuItems[4] = "Player: " + able[1];
+        }
+        if (bulletDest.exists()){
+            menuItems[5] = "Bullet: " + able[1];
+        }
         
         sb.end();
 
@@ -120,15 +161,17 @@ public class OptionsState extends GameState{
         if(gameData.getKeys().isPressed(GameKeys.SPACE)) {
             select();
         }
+        if(gameData.getKeys().isPressed(GameKeys.ESCAPE)) {
+            gsm.setState(GameStateManager.MENU);
+        }
     }
     
     private void select() {
-        //play
+        
         if(currentItem == 0) {
             if (!enemyDest.exists()){
                 try {
                     Files.copy(enemySource.toPath(), enemyDest.toPath());
-                    menuItems[0] = "Enemies: " + able[1];
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
@@ -136,10 +179,70 @@ public class OptionsState extends GameState{
                 enemyDest.delete();
                 menuItems[0] = "Enemies: " + able[0];
             }
-
+            
+        } else if(currentItem == 1) {
+            if (!aiDest.exists()){
+                try {
+                    Files.copy(aiSource.toPath(), aiDest.toPath());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }else{
+                aiDest.delete();
+                menuItems[1] = "AI: " + able[0];
+            }
+            
+        } else if(currentItem == 2) {
+            if (!collisionDest.exists()){
+                try {
+                    Files.copy(collisionSource.toPath(), collisionDest.toPath());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }else{
+                collisionDest.delete();
+                menuItems[2] = "Collision: " + able[0];
+            }
+            
+        } else if(currentItem == 3) {
+            if (!levelDest.exists()){
+                try {
+                    Files.copy(levelSource.toPath(), levelDest.toPath());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }else{
+                levelDest.delete();
+                menuItems[3] = "Level: " + able[0];
+            }
+            
+        } else if(currentItem == 4) {
+            if (!playerDest.exists()){
+                try {
+                    Files.copy(playerSource.toPath(), playerDest.toPath());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }else{
+                playerDest.delete();
+                menuItems[4] = "Player: " + able[0];
+            }
+            
+        } else if(currentItem == 5) {
+            if (!bulletDest.exists()){
+                try {
+                    Files.copy(bulletSource.toPath(), bulletDest.toPath());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }else{
+                bulletDest.delete();
+                menuItems[5] = "Bullet: " + able[0];
+            }
+            
         }
         //back
-        else if(currentItem == 1) {
+        else if(currentItem == 6) {
             gsm.setState(GameStateManager.MENU);
         }
     }

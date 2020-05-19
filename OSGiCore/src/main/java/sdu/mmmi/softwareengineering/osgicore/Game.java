@@ -109,10 +109,6 @@ public class Game implements ApplicationListener {
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
 
-        if (gsm.gState == 1) {
-            update();
-        }
-
         if (gameData.getKeys().isDown(GameKeys.ALT) || drawHitboxes) {
             draw();
             drawHitboxes = true;
@@ -120,8 +116,9 @@ public class Game implements ApplicationListener {
         if (gameData.getKeys().isDown(GameKeys.CTRL)) {
             drawHitboxes = false;
         }
-
-//
+     if (gsm.gState == 1) {
+            update();
+        
         // Maybe we should make the assets load here??
         // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
 //        
@@ -164,6 +161,7 @@ public class Game implements ApplicationListener {
                 spriteBatch.end();
             }
         }
+    }
 
     }
 
