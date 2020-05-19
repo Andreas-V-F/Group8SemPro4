@@ -40,7 +40,9 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Level l = new Level(0,0);
+        world.addLevel(l);
+        world.setCurrentLevel(l.getID());
     }
 
     public Level createLevel(GameData gameData, World world) {
