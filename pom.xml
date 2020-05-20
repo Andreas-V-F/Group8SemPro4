@@ -78,7 +78,8 @@
         <module>OSGiEnemy</module>
         <module>OSGiLevel</module>
     <module>OSGiAI</module>
-  </modules>
+        <module>OSGiCommonBullet</module>
+    </modules>
 
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
