@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.openide.util.Exceptions;
-import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
+import sdu.mmmi.softwareengineering.osgicommon.data.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Index;

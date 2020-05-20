@@ -5,7 +5,7 @@
  */
 package sdu.mmmi.softwareengineering.osgicollision;
 
-import sdu.mmmi.softwareengineering.osgicommon.bullet.Bullet;
+import sdu.mmmi.softwareengineering.osgicommon.data.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Door;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;

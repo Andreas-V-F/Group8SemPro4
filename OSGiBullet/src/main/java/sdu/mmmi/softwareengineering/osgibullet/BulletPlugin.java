@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.mmmi.softwareengineering.osgicommon.bullet;
+package sdu.mmmi.softwareengineering.osgibullet;
 
+import sdu.mmmi.softwareengineering.osgicommon.data.Bullet;
 import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;

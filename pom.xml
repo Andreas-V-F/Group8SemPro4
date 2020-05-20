@@ -78,7 +78,7 @@
         <module>OSGiEnemy</module>
         <module>OSGiLevel</module>
     <module>OSGiAI</module>
-        <module>OSGiCommonBullet</module>
+        <module>OSGiBullet</module>
     </modules>
 
     <properties>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.mmmi.softwareengineering.osgicommon.bullet;
+package sdu.mmmi.softwareengineering.osgibullet;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
