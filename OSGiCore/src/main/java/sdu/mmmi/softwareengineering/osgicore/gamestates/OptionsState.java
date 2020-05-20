@@ -43,8 +43,6 @@ public class OptionsState extends GameState{
     private File levelDest;
     private File playerSource;
     private File playerDest;
-    private File bulletSource;
-    private File bulletDest;
     private String userPath = System.getProperty("user.dir");
 
     
@@ -72,14 +70,12 @@ public class OptionsState extends GameState{
         collisionDest = new File ("C:\\ProjectJar\\OSGiCollision-1.0-SNAPSHOT.jar");
         levelDest = new File ("C:\\ProjectJar\\OSGiLevel-1.0-SNAPSHOT.jar");
         playerDest = new File ("C:\\ProjectJar\\OSGiPlayer-1.0-SNAPSHOT.jar");
-        bulletDest = new File ("C:\\ProjectJar\\OSGiCommonBullet-1.0-SNAPSHOT.jar");
         
         enemySource = new File (filePath + "\\OSGiEnemy\\target\\OSGiEnemy-1.0-SNAPSHOT.jar");
         aiSource = new File (filePath + "\\OSGiAI\\target\\OSGiAI-1.0-SNAPSHOT.jar");
         collisionSource = new File (filePath + "\\OSGiCollision\\target\\OSGiCollision-1.0-SNAPSHOT.jar");
         levelSource = new File (filePath + "\\OSGiLevel\\target\\OSGiLevel-1.0-SNAPSHOT.jar");
         playerSource = new File (filePath + "\\OSGiPlayer\\target\\OSGiPlayer-1.0-SNAPSHOT.jar");
-        bulletSource = new File (filePath + "\\OSGiCommonBullet\\target\\OSGiCommonBullet-1.0-SNAPSHOT.jar");
         
         able = new String[]{
             "Disabled",
@@ -93,7 +89,6 @@ public class OptionsState extends GameState{
             "Collision: " + able[0],
             "Level: " + able[0],
             "Player: " + able[0],
-            "Bullet: " + able[0],
             "Back"
         };
     }
@@ -136,9 +131,6 @@ public class OptionsState extends GameState{
         }
         if (playerDest.exists()){
             menuItems[4] = "Player: " + able[1];
-        }
-        if (bulletDest.exists()){
-            menuItems[5] = "Bullet: " + able[1];
         }
         
         sb.end();
@@ -228,21 +220,9 @@ public class OptionsState extends GameState{
                 menuItems[4] = "Player: " + able[0];
             }
             
-        } else if(currentItem == 5) {
-            if (!bulletDest.exists()){
-                try {
-                    Files.copy(bulletSource.toPath(), bulletDest.toPath());
-                } catch (IOException ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-            }else{
-                bulletDest.delete();
-                menuItems[5] = "Bullet: " + able[0];
-            }
-            
         }
         //back
-        else if(currentItem == 6) {
+        else if(currentItem == 5) {
             gsm.setState(GameStateManager.MENU);
         }
     }
