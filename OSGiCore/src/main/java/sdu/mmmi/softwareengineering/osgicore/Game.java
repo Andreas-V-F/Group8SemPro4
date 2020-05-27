@@ -18,7 +18,6 @@ import sdu.mmmi.softwareengineering.osgicore.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
-import sdu.mmmi.softwareengineering.osgicommon.data.Grid;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -39,7 +38,6 @@ public class Game implements ApplicationListener {
     private GameStateManager gsm;
 
     private boolean drawHitboxes = false;
-    
 
     public Game() {
         init();
@@ -48,7 +46,7 @@ public class Game implements ApplicationListener {
     private void init() {
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Asteroids";
+        cfg.title = "Jølp Eternal";
         cfg.width = 800;
         cfg.height = 800;
         cfg.useGL30 = false;
@@ -59,12 +57,12 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        
+
         spriteBatch = new SpriteBatch();
 
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
-        
+
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
@@ -72,14 +70,14 @@ public class Game implements ApplicationListener {
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-        
+
         world.getGridTemplate().fillGrid();
-        
 
         gsm = new GameStateManager();
 
         // Loading Assets
         AssetMan.loadAssets();
+
         // Shows the process on the loading in the console
         float k = 0;
         while (!AssetMan.manager.update()) {
@@ -116,57 +114,46 @@ public class Game implements ApplicationListener {
         if (gameData.getKeys().isDown(GameKeys.CTRL)) {
             drawHitboxes = false;
         }
-     if (gsm.gState == 1) {
+        if (gsm.gState == 1) {
             update();
-        
-        // Maybe we should make the assets load here??
-        // If any new modules is going to be loaded and they need some assets they need to be loaded too before they can be used.
-//        
-        // Sets a texture for every entity in the "world"
-        for (Entity entity : world.getEntities()) {
-            PositionPart positionPart = entity.getPart(PositionPart.class);
 
-            if (entity.getTexture() != null) {
-                spriteBatch.begin();
-                // Don't know if the math is right!
-                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
-                spriteBatch.end();
+            // Sets a texture for every entity in the "world"
+            for (Entity entity : world.getEntities()) {
+                PositionPart positionPart = entity.getPart(PositionPart.class);
+
+                if (entity.getTexture() != null) {
+                    spriteBatch.begin();
+                    // Don't know if the math is right!
+                    spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
+                    spriteBatch.end();
+                }
             }
-            // Sets a default asset for the entity
-//            if (entity.getTexture() == null) {
-//                entity.setTexture(AssetMan.manager.get(AssetMan.defaultAsset));
-//                spriteBatch.begin();
-//                spriteBatch.draw(entity.getTexture(), positionPart.getX() - (entity.getTexture().getHeight() / 2), positionPart.getY() - (entity.getTexture().getWidth() / 2));
-//                spriteBatch.end();
-//            }
-        }
-        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
-            //sets all unplayableareas to the same texture (should get fixed)
+            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+                //sets all unplayableareas to the same texture
+                if (un.getTextureRegion() == null) {
+                    un.setTextureRegion(AssetMan.manager.get(AssetMan.wall));
+                }
 
-            if (un.getTextureRegion() == null) {
-                un.setTextureRegion(AssetMan.manager.get(AssetMan.wall));
+                if (un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
+                    spriteBatch.begin();
+                    spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
+                    spriteBatch.end();
+                }
             }
 
-            if (un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
-                spriteBatch.begin();
-                spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
-                spriteBatch.end();
+            for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
+                if (!un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
+                    spriteBatch.begin();
+                    spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
+                    spriteBatch.end();
+                }
             }
         }
-
-        for (UnplayableArea un : world.getCurrentLevel().getUnplayableAreas()) {
-            if (!un.getTexture().equals(AssetMan.manager.get(AssetMan.wall))) {
-                spriteBatch.begin();
-                spriteBatch.draw(un.getTextureRegion(), un.getShapeX()[0], un.getShapeY()[0], un.getShapeX()[3] - un.getShapeX()[0], un.getShapeY()[2] - un.getShapeY()[3]);
-                spriteBatch.end();
-            }
-        }
-    }
 
     }
 
     private void update() {
-        
+
         for (IGamePluginService p : gamePluginList) {
             if (p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin") && !tempGamePluginList.contains(p)) {
                 p.start(gameData, world);
@@ -174,13 +161,12 @@ public class Game implements ApplicationListener {
             }
         }
         for (IGamePluginService p : gamePluginList) {
-            if (!p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin")  && !tempGamePluginList.contains(p)) {
+            if (!p.getClass().toString().equals("class sdu.mmmi.softwareengineering.osgilevel.LevelPlugin") && !tempGamePluginList.contains(p)) {
                 p.start(gameData, world);
                 tempGamePluginList.add(p);
             }
         }
-        
-        
+
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);

@@ -12,6 +12,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 public class FileWatcher {
+
     private WatchService watcher;
 
     private Map<WatchKey, Path> keys;
@@ -30,10 +31,11 @@ public class FileWatcher {
         listeners = new ArrayList<>();
         this.followSubdirectories = followSubdirectories;
 
-        if (followSubdirectories)
+        if (followSubdirectories) {
             registerDirectories(directory);
-        else
+        } else {
             register(directory);
+        }
     }
 
     private void register(Path directory) throws IOException {
@@ -74,8 +76,9 @@ public class FileWatcher {
                                 Files.walk(filename)
                                         .filter(filePath -> !Files.isDirectory(filePath))
                                         .forEach(filePath -> {
-                                            for (FileWatchListener listener : listeners)
+                                            for (FileWatchListener listener : listeners) {
                                                 listener.created(filePath);
+                                            }
                                         });
                             } else if (kind == ENTRY_DELETE) {
                                 registerDirectories(filename);
@@ -84,26 +87,29 @@ public class FileWatcher {
                                         .filter(filePath -> !Files.isDirectory(filePath))
                                         .forEach(filePath -> {
                                             System.out.println("Dir Delete: " + filePath);
-                                            for (FileWatchListener listener : listeners)
+                                            for (FileWatchListener listener : listeners) {
                                                 listener.deleted(filePath);
+                                            }
                                         });
                             }
                         }
                     } else {
                         for (FileWatchListener listener : listeners) {
-                            if (kind == ENTRY_CREATE)
+                            if (kind == ENTRY_CREATE) {
                                 listener.created(filename);
-                            else if (kind == ENTRY_MODIFY)
+                            } else if (kind == ENTRY_MODIFY) {
                                 listener.modified(filename);
-                            else if (kind == ENTRY_DELETE)
+                            } else if (kind == ENTRY_DELETE) {
                                 listener.deleted(filename);
+                            }
                         }
                     }
                 }
             }
 
-            if (!key.reset())
+            if (!key.reset()) {
                 keys.remove(key);
+            }
 
             key = watcher.poll();
         }

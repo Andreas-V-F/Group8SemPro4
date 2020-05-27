@@ -5,8 +5,6 @@
  */
 package dk.sdu.mmmi.cbse.osgiplayer;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.graphics.Texture;
 import sdu.mmmi.softwareengineering.osgicommon.data.*;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.*;
 import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
@@ -61,27 +59,27 @@ public class PlayerProcessor implements IEntityProcessingService {
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
 
-            updatePlayer(gameData, player, AssetMan.characterLeft, AssetMan.characterRight, AssetMan.characterUp, AssetMan.characterDown);
+            updatePlayer(gameData, player);
 
             updateHitbox(player);
 
         }
     }
 
-    private void updatePlayer(GameData gameData, Entity entity, AssetDescriptor<Texture> left, AssetDescriptor<Texture> right, AssetDescriptor<Texture> up, AssetDescriptor<Texture> down) {
+    private void updatePlayer(GameData gameData, Entity player) {
 
         // Sets the texture on the player to the way he moves
         if (gameData.getKeys().isDown(GameKeys.W)) {
-            entity.setTexture(AssetMan.manager.get(up));
+            player.setTexture(AssetMan.manager.get(AssetMan.characterUp));
         }
         if (gameData.getKeys().isDown(GameKeys.S)) {
-            entity.setTexture(AssetMan.manager.get(down));
+            player.setTexture(AssetMan.manager.get(AssetMan.characterDown));
         }
         if (gameData.getKeys().isDown(GameKeys.A)) {
-            entity.setTexture(AssetMan.manager.get(left));
+            player.setTexture(AssetMan.manager.get(AssetMan.characterLeft));
         }
         if (gameData.getKeys().isDown(GameKeys.D)) {
-            entity.setTexture(AssetMan.manager.get(right));
+            player.setTexture(AssetMan.manager.get(AssetMan.characterRight));
         }
     }
 
@@ -114,13 +112,4 @@ public class PlayerProcessor implements IEntityProcessingService {
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
     }
-
-//    //TODO: Dependency injection via Declarative Services
-//    public void setBulletService(BulletSPI bulletService) {
-//        this.bulletService = bulletService;
-//    }
-//
-//    public void removeBulletService() {
-//        this.bulletService = null;
-//    }
 }

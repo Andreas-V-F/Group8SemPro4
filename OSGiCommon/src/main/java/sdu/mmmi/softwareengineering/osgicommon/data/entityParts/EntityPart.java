@@ -13,9 +13,9 @@ import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
  * @author Alexander
  */
 public interface EntityPart {
-    
+
     int life_new = 10;
 
     void process(GameData gameData, Entity entity);
-    
+
 }

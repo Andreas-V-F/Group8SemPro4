@@ -46,7 +46,7 @@ public class UnplayableArea implements Serializable {
     public TextureRegion getTextureRegion() {
         return this.textureRegion;
     }
-    
+
     public Texture getTexture() {
         return this.textureRegion.getTexture();
     }

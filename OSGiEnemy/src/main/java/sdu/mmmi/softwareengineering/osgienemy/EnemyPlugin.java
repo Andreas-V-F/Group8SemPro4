@@ -29,10 +29,7 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
-//        System.out.println("Get Levels Size " + world.getLevels().size());
         for (Level l : world.getLevels()) {
-//            System.out.println("Level ID: " + l.getID());
             if (l.getID().equals(world.getCurrentLevel().getID())) {
                 continue;
             }
@@ -50,12 +47,8 @@ public class EnemyPlugin implements IGamePluginService {
         Entity enemy = new Enemy();
 
         float maxSpeed = 250;
-        Random rand = new Random();
-        
-//        float x = rand.nextInt(gameData.getDisplayWidth() - 200) + 100;
-//        float y = rand.nextInt(gameData.getDisplayHeight() - 200) + 100;
-        float x = gameData.getDisplayWidth()/2;
-        float y = gameData.getDisplayHeight()/2;
+        float x = gameData.getDisplayWidth() / 2;
+        float y = gameData.getDisplayHeight() / 2;
 
         float radians = 3.1415f / 2;
         enemy.add(new LifePart(3));

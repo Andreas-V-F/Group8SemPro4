@@ -9,7 +9,7 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
  *
  * @author Mikkel Høyberg
  */
-public class Node implements Comparable{
+public class Node implements Comparable {
 
     private int x;
     private int y;
@@ -68,25 +68,25 @@ public class Node implements Comparable{
     public void setParentNode(Node parentNode) {
         this.parentNode = parentNode;
     }
-    
+
     public int getCost() {
         return costFromStart + estimatedCostToGoal;
     }
-    
-    public int getCost(Node node){
+
+    public int getCost(Node node) {
         return 1;
     }
 
     @Override
     public int compareTo(Object other) {
         float thisValue = this.getCost();
-        float otherValue = ((Node)other).getCost();
-        
+        float otherValue = ((Node) other).getCost();
+
         float v = thisValue - otherValue;
-        return (v>0)?1:(v<0)?-1:0;
+        return (v > 0) ? 1 : (v < 0) ? -1 : 0;
     }
-    
-    public int getEstimatedCost(Node node){
+
+    public int getEstimatedCost(Node node) {
         return Math.abs(node.getEstimatedCostToGoal() - this.getEstimatedCostToGoal());
     }
 
@@ -105,7 +105,5 @@ public class Node implements Comparable{
     public void setEstimatedCostToGoal(int estimatedCostToGoal) {
         this.estimatedCostToGoal = estimatedCostToGoal;
     }
-    
-    
 
 }

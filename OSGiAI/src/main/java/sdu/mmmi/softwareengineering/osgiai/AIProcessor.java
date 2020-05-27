@@ -16,13 +16,9 @@ import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.Index;
 import sdu.mmmi.softwareengineering.osgicommon.data.Node;
-import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
-import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.LifePart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.MovingPart;
 import sdu.mmmi.softwareengineering.osgicommon.data.entityParts.PositionPart;
-import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
-import sdu.mmmi.softwareengineering.osgicommon.services.IEntityProcessingService;
 
 /**
  *
@@ -62,7 +58,6 @@ public class AIProcessor implements Runnable {
             if (e != null) {
                 if (counter > delay - 1) {
                     Node goalNode = getPlayerNode(world);
-                    //System.out.println("not walkable: " + listNode(world));
                     l = findPath(getEnemyNode(e, world), goalNode, world);
                     counter = 0;
                 }
@@ -79,7 +74,7 @@ public class AIProcessor implements Runnable {
                     counter++;
                 }
             }
-            
+
             try {
                 Thread.sleep(1);
             } catch (InterruptedException ex) {
@@ -231,14 +226,12 @@ public class AIProcessor implements Runnable {
         int buffer = 1;
 
         enemyMovingPart.setRight(nextNode.getX() * nextNode.getWidth() + buffer > enemyPositionPart.getX());
-
         enemyMovingPart.setLeft(nextNode.getX() * nextNode.getWidth() - buffer < enemyPositionPart.getX());
-
         enemyMovingPart.setUp(nextNode.getY() * nextNode.getHeight() + buffer > enemyPositionPart.getY());
-
         enemyMovingPart.setDown(nextNode.getY() * nextNode.getHeight() - buffer < enemyPositionPart.getY());
 
         enemyMovingPart.process(gameData, e);
+        
         if (nextNode.getX() * nextNode.getWidth() + buffer >= enemyPositionPart.getX() && nextNode.getX() * nextNode.getWidth() - buffer <= enemyPositionPart.getX() && nextNode.getY() * nextNode.getHeight() + buffer >= enemyPositionPart.getY() && nextNode.getY() * nextNode.getHeight() - buffer <= enemyPositionPart.getY()) {
             inPosition = true;
         }

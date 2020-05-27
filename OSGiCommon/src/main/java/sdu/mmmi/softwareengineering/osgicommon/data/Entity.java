@@ -17,9 +17,8 @@ public class Entity implements Serializable {
     private float[] colour;
     private Map<Class, EntityPart> parts;
     private boolean isPlayer = false;
-    
-    private Texture texture; 
-    
+
+    private Texture texture;
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -72,12 +71,12 @@ public class Entity implements Serializable {
     public void setColour(float[] c) {
         this.colour = c;
     }
-    
-    public Texture getTexture(){
+
+    public Texture getTexture() {
         return this.texture;
     }
-    
-    public void setTexture(Texture texture){
+
+    public void setTexture(Texture texture) {
         this.texture = texture;
     }
 
@@ -88,10 +87,5 @@ public class Entity implements Serializable {
     public void setIsPlayer(boolean isPlayer) {
         this.isPlayer = isPlayer;
     }
-    
-    
-    
-    
-    
-   
+
 }

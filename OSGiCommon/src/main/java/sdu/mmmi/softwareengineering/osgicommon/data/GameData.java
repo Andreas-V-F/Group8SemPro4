@@ -13,7 +13,7 @@ public class GameData {
     private int displayHeight;
     private final GameKeys keys = new GameKeys();
     private List<Event> events = new CopyOnWriteArrayList<>();
-    
+
     private AssetMan assetsMan = new AssetMan();
 
     public AssetMan getAssetsMan() {

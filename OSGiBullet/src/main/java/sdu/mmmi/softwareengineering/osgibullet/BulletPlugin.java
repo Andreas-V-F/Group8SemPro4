@@ -16,8 +16,6 @@ import sdu.mmmi.softwareengineering.osgicommon.services.IGamePluginService;
  * @author andre
  */
 public class BulletPlugin implements IGamePluginService {
-    
-    private Entity bullet;
 
     @Override
     public void start(GameData gameData, World world) {
@@ -33,5 +31,4 @@ public class BulletPlugin implements IGamePluginService {
         }
     }
 
-  
 }

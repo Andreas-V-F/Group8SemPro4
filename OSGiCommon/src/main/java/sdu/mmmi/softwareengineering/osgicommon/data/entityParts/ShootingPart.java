@@ -12,8 +12,8 @@ public class ShootingPart implements EntityPart {
     public ShootingPart(String id) {
         this.ID = id;
     }
+
     public ShootingPart() {
-       
     }
 
     public boolean isShooting() {
@@ -22,10 +22,9 @@ public class ShootingPart implements EntityPart {
 
     public void setIsShooting(boolean b) {
         this.isShooting = b;
-      
     }
+
     public void setDirection(String direction) {
-        
         this.direction = direction;
     }
 
@@ -40,12 +39,13 @@ public class ShootingPart implements EntityPart {
     public void setID(String ID) {
         this.ID = ID;
     }
-    public String getDirection(){
+
+    public String getDirection() {
         return direction;
     }
 
     public boolean getIsShooting() {
         return isShooting;
     }
-    
+
 }

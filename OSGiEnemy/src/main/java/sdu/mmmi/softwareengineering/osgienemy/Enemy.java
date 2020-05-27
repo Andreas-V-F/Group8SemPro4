@@ -11,6 +11,6 @@ import sdu.mmmi.softwareengineering.osgicommon.data.Entity;
  *
  * @author andre
  */
-public class Enemy extends Entity{
-    
+public class Enemy extends Entity {
+
 }

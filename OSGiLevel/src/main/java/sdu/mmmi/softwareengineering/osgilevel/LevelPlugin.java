@@ -5,8 +5,6 @@
  */
 package sdu.mmmi.softwareengineering.osgilevel;
 
-import com.badlogic.gdx.assets.AssetManager;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -17,7 +15,6 @@ import sdu.mmmi.softwareengineering.osgicommon.data.Level;
 import sdu.mmmi.softwareengineering.osgicommon.data.Node;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import sdu.mmmi.softwareengineering.osgicommon.data.World;
-import sdu.mmmi.softwareengineering.osgicommon.managers.AssetMan;
 import sdu.mmmi.softwareengineering.osgicommon.services.IGamePluginService;
 
 /**
@@ -40,7 +37,7 @@ public class LevelPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        Level l = new Level(0,0);
+        Level l = new Level(0, 0);
         world.addLevel(l);
         world.setCurrentLevel(l.getID());
     }
@@ -227,20 +224,6 @@ public class LevelPlugin implements IGamePluginService {
                 int entityWidthandHeight = 32;
 
                 for (UnplayableArea un : level.getUnplayableAreas()) {
-
-//                    if (nodeMinX >= un.getShapeX()[1] && nodeMinY >= un.getShapeY()[1] && un.getShapeX()[3] >= nodeMinX && un.getShapeY()[3] >= nodeMinY) {
-//                        entry.getValue().setWalkable(false);
-//                    } else {
-//                        entry.getValue().setWalkable(true);
-//                    }
-//                    if (un.getShapeX()[1] > nodeMaxX || nodeMinX > un.getShapeX()[3]) {
-//                        entry.getValue().setWalkable(true);
-//                    } else if (un.getShapeY()[1] < nodeMaxY || nodeMinY < un.getShapeY()[3]) {
-//                        entry.getValue().setWalkable(true);
-//                    }
-//                    else{
-//                        entry.getValue().setWalkable(false);
-//                    }
                     if ((nodeMinX >= un.getShapeX()[0] - entityWidthandHeight && nodeMaxX <= un.getShapeX()[2] + entityWidthandHeight) && (nodeMinY >= un.getShapeY()[0] - entityWidthandHeight && nodeMaxY <= un.getShapeY()[2] + entityWidthandHeight)) {
                         entry.getValue().setWalkable(false);
                     }

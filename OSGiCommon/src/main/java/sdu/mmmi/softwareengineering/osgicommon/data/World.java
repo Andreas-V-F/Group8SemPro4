@@ -17,7 +17,7 @@ public class World {
     private String currentLevelID;
     private Level tempLevel = new Level(0, 0);
     private int numberOfRooms = 15;
-    
+
     private Grid gridTemplate = new Grid();
 
     public HashMap<Index, Node> getGrid() {
@@ -129,9 +129,9 @@ public class World {
         }
         return l;
     }
-    
-    public void fillLevelGrids(){
-        for(Level l : levelMap.values()){
+
+    public void fillLevelGrids() {
+        for (Level l : levelMap.values()) {
             l.setGrid(gridTemplate.getGrid());
         }
     }

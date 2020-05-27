@@ -21,7 +21,6 @@ public class BulletControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-//        System.out.println("hejsa");
         for (Entity entity : world.getEntities()) {
             if (entity.getPart(ShootingPart.class) != null) {
 
@@ -29,26 +28,24 @@ public class BulletControlSystem implements IEntityProcessingService {
                 //Shoot if isShooting is true, ie. space is pressed.
 
                 if (shootingPart.isShooting()) {
-
-                    PositionPart positionPart = entity.getPart(PositionPart.class);
                     //Add entity radius to initial position to avoid immideate collision.
-                    bullet = createBullet(entity, gameData);
+                    bullet = createBullet(entity);
                     shootingPart.setIsShooting(false);
                     world.addEntity(bullet);
-                    
+
                 }
             }
         }
 
         for (Entity b : world.getEntities(Bullet.class)) {
-            
+
             PositionPart ppb = b.getPart(PositionPart.class);
             MovingPart mpb = b.getPart(MovingPart.class);
             TimerPart btp = b.getPart(TimerPart.class);
             if (ppb.getRadians() == (float) Math.PI / 2) {
                 mpb.setUp(true);
             } else if (ppb.getRadians() == (float) (Math.PI * 10)) {
-                 mpb.setDown(true);
+                mpb.setDown(true);
             } else if (ppb.getRadians() == (float) Math.PI) {
                 mpb.setLeft(true);
             } else {
@@ -71,10 +68,9 @@ public class BulletControlSystem implements IEntityProcessingService {
     }
 
     //Could potentially do some shenanigans with differing colours for differing sources.
-    private Entity createBullet(Entity shooter, GameData gameData) {
+    private Entity createBullet(Entity shooter) {
 
         PositionPart shooterPos = shooter.getPart(PositionPart.class);
-        MovingPart shooterMovingPart = shooter.getPart(MovingPart.class);
         ShootingPart shooterShootingPart = shooter.getPart(ShootingPart.class);
 
         float x = shooterPos.getX();
@@ -101,14 +97,13 @@ public class BulletControlSystem implements IEntityProcessingService {
 
     private void updateShape(Entity entity) {
         entity.setTexture(AssetMan.manager.get(AssetMan.bullet));
-        
+
         float[] shapex = new float[4];
         float[] shapey = new float[4];
         PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
-        float radians = positionPart.getRadians();
-        
+
         final int bullet_width = entity.getTexture().getWidth();
         final int bullet_height = entity.getTexture().getHeight();
 
@@ -127,8 +122,6 @@ public class BulletControlSystem implements IEntityProcessingService {
         //Lower right corner
         shapex[3] = (float) (x + bullet_width / 2);
         shapey[3] = (float) (y - (bullet_height / 2));
-
-        
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);

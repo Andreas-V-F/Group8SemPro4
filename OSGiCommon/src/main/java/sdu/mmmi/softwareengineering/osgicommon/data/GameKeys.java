@@ -18,9 +18,10 @@ public class GameKeys {
     public static final int A = 9;
     public static final int S = 10;
     public static final int D = 11;
-    public static final int ALT = 12; 
-    public static final int CTRL = 13; 
+    public static final int ALT = 12;
+    public static final int CTRL = 13;
     public static final int M = 14;
+
     public GameKeys() {
         keys = new boolean[NUM_KEYS];
         pkeys = new boolean[NUM_KEYS];

@@ -1,14 +1,11 @@
 package sdu.mmmi.softwareengineering.osgicore.gamestates;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameData;
 import sdu.mmmi.softwareengineering.osgicommon.data.GameKeys;
 import sdu.mmmi.softwareengineering.osgicore.managers.GameStateManager;
 
 public class PlayState extends GameState {
 
-    private Game game;
     private GameData gameData = new GameData();
 
     public PlayState(GameStateManager gsm) {

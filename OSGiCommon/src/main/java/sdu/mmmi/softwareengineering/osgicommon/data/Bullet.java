@@ -9,7 +9,8 @@ package sdu.mmmi.softwareengineering.osgicommon.data;
  *
  * @author andre
  */
-public class Bullet extends Entity{
+public class Bullet extends Entity {
+
     private String shooterID;
 
     public Bullet(String shooterID) {
@@ -23,6 +24,5 @@ public class Bullet extends Entity{
     public void setShooterID(String shooterID) {
         this.shooterID = shooterID;
     }
-    
-    
+
 }

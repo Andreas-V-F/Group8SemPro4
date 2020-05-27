@@ -36,10 +36,9 @@ public class Door extends UnplayableArea {
     public String getRotation() {
         return rotation;
     }
-    
-    public int getSize(){
+
+    public int getSize() {
         return size;
-    }    
-    
+    }
 
 }

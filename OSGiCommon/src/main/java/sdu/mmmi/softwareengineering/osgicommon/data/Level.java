@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,14 +26,14 @@ public class Level implements Serializable {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private boolean hasBeenVisited = false;
     private int x, y = 0;
-    
+
     private HashMap grid = null;
 
     public HashMap getGrid() {
         return grid;
     }
-    
-    public void setGrid(HashMap<Index, Node> hash){
+
+    public void setGrid(HashMap<Index, Node> hash) {
         grid = hash;
     }
 
@@ -137,6 +136,5 @@ public class Level implements Serializable {
     public void setY(int y) {
         this.y = y;
     }
-    
 
 }

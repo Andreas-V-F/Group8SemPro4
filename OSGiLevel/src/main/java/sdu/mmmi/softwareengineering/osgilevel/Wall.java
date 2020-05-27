@@ -5,7 +5,6 @@
  */
 package sdu.mmmi.softwareengineering.osgilevel;
 
-import java.util.Arrays;
 import sdu.mmmi.softwareengineering.osgicommon.data.Node;
 import sdu.mmmi.softwareengineering.osgicommon.data.UnplayableArea;
 
